@@ -1,7 +1,14 @@
+
 {
   "version": 2,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/backend/src/server.ts" },
-    { "source": "/(.*)", "destination": "/frontend/$1" }
+    {
+      "source": "/api/:match*",
+      "destination": "/backend/src/server.ts"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/frontend/$1"
+    }
   ]
 }
