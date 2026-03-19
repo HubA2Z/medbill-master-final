@@ -4,50 +4,78 @@ import cors from 'cors';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import icdRoutes from './routes/icdRoutes';
-import leadRoutes from './routes/leadRoutes'; // At top
+import leadRoutes from './routes/leadRoutes';
 
-// 1. Initialize Environment
 dotenv.config();
 
 const app = express();
+
+// Middleware
 app.use(helmet());
-app.use(cors());
 app.use(express.json());
 
-
-app.use('/api/leads', leadRoutes);
-app.use('/api/codes', icdRoutes);
+// Dynamic CORS: Allows your local machine AND your live production domain
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://enhancebilling.com',
+  'https://www.enhancebilling.com'
+];
 
 app.use(cors({
-  origin: 'http://localhost:3000' // Only allow your frontend
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
 
-// 2. Health Check Route (Internal Test)
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: "online", 
-    db_connected: mongoose.connection.readyState === 1,
-    time: new Date().toISOString() 
-  });
-});
-
-const PORT = process.env.PORT || 5000;
-
-// 3. Start Server & Connect DB
-app.listen(PORT, async () => {
-  console.log(`🚀 [Step 1] Server is running on http://localhost:${PORT}`);
+// MongoDB Connection Logic (Optimized for Serverless)
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
   
   const uri = process.env.MONGO_URI;
   if (!uri) {
-    console.error("❌ [Step 2] MONGO_URI is missing from .env file!");
+    console.error("❌ MONGO_URI is missing from Environment Variables!");
     return;
   }
 
   try {
-    console.log("⏳ [Step 3] Attempting to connect to MongoDB Atlas...");
     await mongoose.connect(uri);
-    console.log("✅ [Step 4] Milestone 1 Success: Database is Connected!");
+    console.log("✅ MongoDB Connected");
   } catch (err) {
-    console.error("❌ [Step 5] Database Connection Failed:", err);
+    console.error("❌ Database Connection Failed:", err);
   }
+};
+
+// Ensure DB is connected before processing any /api request
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
 });
+
+// Routes
+app.use('/api/leads', leadRoutes);
+app.use('/api/codes', icdRoutes);
+
+// Health Check
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: "online", 
+    db_connected: mongoose.connection.readyState === 1,
+    env: process.env.NODE_ENV || 'development'
+  });
+});
+
+// CRITICAL: Export for Vercel
+export default app;
+
+// Local Development Support
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Local Server: http://localhost:${PORT}`);
+  });
+}
