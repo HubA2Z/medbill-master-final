@@ -22,7 +22,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-bold text-slate-900">Platform</h4>
             <ul className="space-y-2 text-sm text-slate-600">
-              <li><Link href="/" className="hover:text-indigo-600 transition">Search ICD-10</Link></li>
+              <li><Link href="/icd10-intelligence" className="hover:text-indigo-600 transition">Search ICD-10</Link></li>
               <li><Link href="/audit" className="hover:text-indigo-600 transition">Revenue Audit</Link></li>
               <li><Link href="/about" className="hover:text-indigo-600 transition">Our Mission</Link></li>
             </ul>
