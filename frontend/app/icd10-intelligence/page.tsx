@@ -10,29 +10,34 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
 
-  const handleSearch = async () => {
-    if (!query) return;
-    try {
-      const res = await axios.get(`/api/codes/search?query=${query}`);
-      setResults(res.data);
-    } catch (err) {
-      console.error("Search failed", err);
-    }
-  };
+ const handleSearch = async () => {
+  if (!query) return;
+  try {
+    // ✅ This is already correct for Vercel
+    const res = await axios.get(`/api/codes/search?query=${query}`);
+    setResults(res.data);
+  } catch (err) {
+    console.error("Search failed", err);
+  }
+};
 
-  const handleLeadSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      await axios.post('http://localhost:5000/api/leads', { ...leadData, lastSearch: query });
-      setMessage("✅ Consultation Request Sent!");
-      setLeadData({ name: '', email: '', clinicName: '' });
-    } catch (err) {
-      setMessage("❌ Try again later.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+const handleLeadSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  try {
+    // ✅ FIXED: Removed 'http://localhost:5000'
+    // This now works on both your computer and enhancebilling.com
+    await axios.post('/api/leads', { ...leadData, lastSearch: query });
+    
+    setMessage("✅ Consultation Request Sent!");
+    setLeadData({ name: '', email: '', clinicName: '' });
+  } catch (err) {
+    console.error("Submission error:", err);
+    setMessage("❌ Try again later.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
