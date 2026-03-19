@@ -12,7 +12,7 @@ const billingTools = [
   {
     title: "ICD-10 Intelligence",
     description: "AI-powered diagnostic search with NCD/LCD validation and cross-walking.",
-    link: "/",
+    link: "/icd10-intelligence",
     icon: "🔍",
     tag: "Coding"
   }
