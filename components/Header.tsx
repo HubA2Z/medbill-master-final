@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Your specific MedBillMaster navigation links
+  // Your specific EnhanceBilling navigation links
   const navLinks = [
     { name: "About", href: "/about" },
     { name: "HIPAA", href: "/hipaa" },
@@ -21,7 +21,7 @@ export default function Header() {
           
           {/* Logo */}
           <Link href="/" className="font-bold text-xl text-indigo-600 tracking-tight">
-            MedBillMaster
+            EnhanceBilling
           </Link>
 
           {/* Desktop Navigation (Hidden on Mobile) */}
