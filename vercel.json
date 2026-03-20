@@ -1,10 +1,22 @@
 {
   "version": 2,
-  "public": true,
-  "cleanUrls": true,
+  "builds": [
+    {
+      "src": "backend/src/server.ts",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/next"
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/:path*",
+      "destination": "backend/src/server.ts"
+    },
+    {
+      "source": "/((?!api/).*)",
       "destination": "/frontend/$1"
     }
   ]
