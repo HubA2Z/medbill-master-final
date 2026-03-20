@@ -10,22 +10,22 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
 
+  // 🔍 FIXED: Variable 'res' changed to 'response' to fix Build Error
   const handleSearch = async () => {
     if (!query) return;
     try {
       const response = await axios.get(`/api/codes/search?query=${query}`);
-      // FIX 1: Changed 'res' to 'response' to match the variable above
       setResults(response.data); 
     } catch (err) {
       console.error("Search failed", err);
     }
   };
 
+  // 📬 FIXED: Removed http://localhost:5000 to fix "Not Secure" warning
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // FIX 2: Changed 'http://localhost:5000' to '/api' for production security
       await axios.post('/api/leads', { ...leadData, lastSearch: query });
       setMessage("✅ Consultation Request Sent!");
       setLeadData({ name: '', email: '', clinicName: '' });
@@ -40,7 +40,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       <main className="max-w-7xl mx-auto p-6 lg:p-12">
         
-        {/* HERO & SEARCH */}
+        {/* HERO & SEARCH SECTION */}
         <section className="max-w-4xl mx-auto text-center mb-16">
           <h1 className="text-5xl lg:text-7xl font-black mb-6 leading-[1.1]">
             Precision Coding. <span className="text-indigo-600">Maximized Revenue.</span>
@@ -66,7 +66,7 @@ export default function Home() {
         </section>
 
         <div className="grid lg:grid-cols-12 gap-10">
-          {/* RESULTS */}
+          {/* RESULTS COLUMN */}
           <div className="lg:col-span-8 space-y-4">
             <div className="flex justify-between items-end mb-4 px-2">
               <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Database Results</h2>
@@ -82,11 +82,17 @@ export default function Home() {
                         <span className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg font-mono font-bold text-sm mb-2 inline-block">{item.code}</span>
                         <h3 className="text-xl font-bold text-slate-800">{item.description}</h3>
                       </div>
-                      <button onClick={() => navigator.clipboard.writeText(item.code)} className="opacity-0 group-hover:opacity-100 bg-slate-100 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-all">📋</button>
+                      <button 
+                        onClick={() => navigator.clipboard.writeText(item.code)} 
+                        className="opacity-0 group-hover:opacity-100 bg-slate-100 p-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-all"
+                      >
+                        📋
+                      </button>
                     </div>
                   </div>
                 ))}
 
+                {/* CALL TO ACTION CARD */}
                 <div className="mt-8 bg-indigo-600 p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                   <div>
                     <h3 className="text-2xl font-bold mb-2">Do you need a Biller?</h3>
@@ -105,7 +111,7 @@ export default function Home() {
             )}
           </div>
 
-          {/* SIDEBAR */}
+          {/* SIDEBAR: LEAD GENERATION FORM */}
           <aside className="lg:col-span-4 space-y-8">
             <div id="audit-form" className="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl scroll-mt-32">
               {message ? (
@@ -129,11 +135,33 @@ export default function Home() {
                   </div>
                   
                   <form onSubmit={handleLeadSubmit} className="space-y-4">
-                    <input required value={leadData.name} placeholder="Full Name" className="w-full p-4 rounded-xl bg-white text-slate-900 outline-none transition" onChange={(e) => setLeadData({...leadData, name: e.target.value})} />
-                    <input required value={leadData.clinicName} placeholder="Clinic / Office Name" className="w-full p-4 rounded-xl bg-white text-slate-900 outline-none transition" onChange={(e) => setLeadData({...leadData, clinicName: e.target.value})} />
-                    <input required type="email" value={leadData.email} placeholder="Email Address" className="w-full p-4 rounded-xl bg-white text-slate-900 outline-none transition" onChange={(e) => setLeadData({...leadData, email: e.target.value})} />
+                    <input 
+                      required 
+                      value={leadData.name} 
+                      placeholder="Full Name" 
+                      className="w-full p-4 rounded-xl bg-white text-slate-900 outline-none transition focus:ring-2 focus:ring-indigo-500" 
+                      onChange={(e) => setLeadData({...leadData, name: e.target.value})} 
+                    />
+                    <input 
+                      required 
+                      value={leadData.clinicName} 
+                      placeholder="Clinic / Office Name" 
+                      className="w-full p-4 rounded-xl bg-white text-slate-900 outline-none transition focus:ring-2 focus:ring-indigo-500" 
+                      onChange={(e) => setLeadData({...leadData, clinicName: e.target.value})} 
+                    />
+                    <input 
+                      required 
+                      type="email" 
+                      value={leadData.email} 
+                      placeholder="Email Address" 
+                      className="w-full p-4 rounded-xl bg-white text-slate-900 outline-none transition focus:ring-2 focus:ring-indigo-500" 
+                      onChange={(e) => setLeadData({...leadData, email: e.target.value})} 
+                    />
 
-                    <button disabled={isSubmitting} className={`w-full ${isSubmitting ? 'bg-slate-700' : 'bg-indigo-600 hover:bg-indigo-700'} text-white font-black py-4 rounded-xl transition shadow-lg mt-2 uppercase tracking-widest text-sm`}>
+                    <button 
+                      disabled={isSubmitting} 
+                      className={`w-full ${isSubmitting ? 'bg-slate-700' : 'bg-indigo-600 hover:bg-indigo-700'} text-white font-black py-4 rounded-xl transition shadow-lg mt-2 uppercase tracking-widest text-sm`}
+                    >
                       {isSubmitting ? 'SENDING...' : 'START AUDIT'}
                     </button>
                   </form>
