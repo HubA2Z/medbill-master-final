@@ -13,7 +13,7 @@ export default function Home() {
   const handleSearch = async () => {
     if (!query) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/codes/search?query=${query}`);
+     const response = await axios.get(`/api/codes/search?query=${query}`);
       setResults(res.data);
     } catch (err) {
       console.error("Search failed", err);
