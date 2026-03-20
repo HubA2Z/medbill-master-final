@@ -10,11 +10,11 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// 🛡️ Middleware for Security and Parsing
 app.use(helmet());
 app.use(express.json());
 
-// Dynamic CORS: Allows your local machine AND your live production domain
+// 🌍 Dynamic CORS: Bridges your Frontend and Backend
 const allowedOrigins = [
   'http://localhost:3000',
   'https://enhancebilling.com',
@@ -23,6 +23,7 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl) or allowed list
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -32,7 +33,7 @@ app.use(cors({
   credentials: true
 }));
 
-// MongoDB Connection Logic (Optimized for Serverless)
+// 🗄️ MongoDB Connection (Optimized for Serverless cold-starts)
 const connectDB = async () => {
   if (mongoose.connection.readyState >= 1) return;
   
@@ -56,11 +57,11 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Routes
+// 🛣️ Route Handlers
 app.use('/api/leads', leadRoutes);
 app.use('/api/codes', icdRoutes);
 
-// Health Check
+// 🩺 Health Check (Useful for monitoring)
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: "online", 
@@ -69,10 +70,10 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// CRITICAL: Export for Vercel
+// 🚀 CRITICAL: Export for Vercel Serverless Functions
 export default app;
 
-// Local Development Support
+// 💻 Local Development Support (Only runs on your machine)
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
