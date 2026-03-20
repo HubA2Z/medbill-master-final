@@ -13,8 +13,9 @@ export default function Home() {
   const handleSearch = async () => {
     if (!query) return;
     try {
-     const response = await axios.get(`/api/codes/search?query=${query}`);
-      setResults(res.data);
+      const response = await axios.get(`/api/codes/search?query=${query}`);
+      // FIX 1: Changed 'res' to 'response' to match the variable above
+      setResults(response.data); 
     } catch (err) {
       console.error("Search failed", err);
     }
@@ -24,7 +25,8 @@ export default function Home() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await axios.post('http://localhost:5000/api/leads', { ...leadData, lastSearch: query });
+      // FIX 2: Changed 'http://localhost:5000' to '/api' for production security
+      await axios.post('/api/leads', { ...leadData, lastSearch: query });
       setMessage("✅ Consultation Request Sent!");
       setLeadData({ name: '', email: '', clinicName: '' });
     } catch (err) {
@@ -38,7 +40,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       <main className="max-w-7xl mx-auto p-6 lg:p-12">
         
-        {/* HERO & SEARCH - Restored Original Style */}
+        {/* HERO & SEARCH */}
         <section className="max-w-4xl mx-auto text-center mb-16">
           <h1 className="text-5xl lg:text-7xl font-black mb-6 leading-[1.1]">
             Precision Coding. <span className="text-indigo-600">Maximized Revenue.</span>
@@ -85,7 +87,6 @@ export default function Home() {
                   </div>
                 ))}
 
-                {/* --- NEW INJECTED LEAD CARD (Matching original design) --- */}
                 <div className="mt-8 bg-indigo-600 p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                   <div>
                     <h3 className="text-2xl font-bold mb-2">Do you need a Biller?</h3>
@@ -104,7 +105,7 @@ export default function Home() {
             )}
           </div>
 
-          {/* SIDEBAR: ADS & LEADS - Restored Original Form */}
+          {/* SIDEBAR */}
           <aside className="lg:col-span-4 space-y-8">
             <div id="audit-form" className="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl scroll-mt-32">
               {message ? (
@@ -138,7 +139,6 @@ export default function Home() {
                   </form>
                 </>
               )}
-              
               <p className="text-[10px] text-center text-slate-500 mt-6 font-bold uppercase tracking-widest pt-4 border-t border-slate-800">
                 🛡️ HIPAA COMPLIANT DATA TRANSIT
               </p>
