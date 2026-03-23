@@ -19,7 +19,7 @@ export default function RevenueAudit() {
     setLoading(true);
     try {
       // We send it to the same /api/leads endpoint
-      await axios.post('http://localhost:5000/api/leads', {
+      await axios.post('/api/leads', {
         ...auditData,
         source: 'Deep Revenue Audit Page' // Tagging the source so we know it's a high-value lead
       });
