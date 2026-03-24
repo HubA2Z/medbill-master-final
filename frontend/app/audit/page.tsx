@@ -39,7 +39,7 @@ export default function RevenueAudit() {
     setLoading(true);
     setIsError(false);
     try {
-      await axios.post(`${API_BASE_URL}/leads`, {
+      await axios.post(`${API_BASE_URL}/api/leads`, {
         ...auditData,
         source: 'Revenue Audit Page',
       });
