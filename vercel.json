@@ -16,12 +16,8 @@
       "destination": "backend/src/server.ts"
     },
     {
-      "source": "/codes/(.*)",
-      "destination": "/backend/src/server.js"
-    },
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/frontend/$1"
+      "source": "/codes/:path*",
+      "destination": "backend/src/server.ts"
     }
   ]
 }
