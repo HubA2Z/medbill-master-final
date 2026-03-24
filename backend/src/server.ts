@@ -78,10 +78,14 @@ app.use('/api/codes', icdRoutes);
 
 // 🩺 Health Check
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: "online", 
-    db_connected: mongoose.connection.readyState === 1,
-    env: process.env.NODE_ENV || 'production'
+  const dbState = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+  res.json({
+    status:    'online',
+    version:   '2.0.0',
+    db:        dbState[mongoose.connection.readyState] ?? 'unknown',
+    env:       process.env.NODE_ENV || 'production',
+    timestamp: new Date().toISOString(),
+    uptime_s:  Math.floor(process.uptime()),
   });
 });
 
