@@ -1,25 +1,28 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+// Define the interface for TypeScript
 export interface ILead extends Document {
   name: string;
   email: string;
-  clinicName?: string;
-  // 🚀 ADD THESE TWO:
-  monthlyVolume?: string; 
+  clinicName: string;
+  monthlyVolume?: string;
   source?: string;
   lastSearch?: string;
   createdAt: Date;
 }
 
-const LeadSchema = new mongoose.Schema({
-  name: String,
+const LeadSchema: Schema = new Schema({
+  name: { type: String, required: true },
   email: { type: String, required: true },
-  clinicName: String, 
-  monthlyVolume: String, // 🔍 This was in Schema but missing in ILead
-  lastSearch: String,
-  source: String,        // 🔍 This was in Schema but missing in ILead
-  createdAt: { type: Date, default: Date.now }
+  clinicName: { type: String, required: true },
+  monthlyVolume: { type: String },
+  source: { type: String, default: 'Website' },
+  lastSearch: { type: String },
+  createdAt: { type: Date, default: Date.now },
 });
 
-// Important: Use 'models' check to prevent re-compilation errors in Next.js development
-export default mongoose.models.Lead || mongoose.model<ILead>('Lead', LeadSchema);
+// ✅ THIS IS THE CRITICAL PART
+// It checks if the model is already compiled to prevent "OverwriteModelError"
+const Lead = mongoose.models.Lead || mongoose.model<ILead>('Lead', LeadSchema);
+
+export default Lead;
