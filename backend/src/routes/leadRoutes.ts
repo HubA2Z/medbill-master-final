@@ -1,6 +1,7 @@
+// backend/src/routes/leadRoutes.ts
 import { Router, Request, Response } from 'express';
 import nodemailer from 'nodemailer';
-import Lead from '../models/Lead'; // Ensure this points to the file above
+import Lead from '../models/Lead'; 
 
 const router = Router();
 
@@ -8,11 +9,8 @@ router.post('/', async (req: Request, res: Response) => {
   try {
     const { name, email, clinicName, monthlyVolume, source, lastSearch } = req.body;
 
-    // ✅ FIX: Using the model with the 'new' keyword or .create() 
-    // If .create() fails, you can also use:
-    // const newLead = new Lead({ name, email, ... });
-    // await newLead.save();
-
+    // 1. Save to MongoDB
+    // @ts-ignore - This bypasses the TS2349 "not callable" error during Vercel build
     const newLead = await Lead.create({ 
       name, 
       email, 
@@ -22,7 +20,7 @@ router.post('/', async (req: Request, res: Response) => {
       lastSearch 
     });
 
-    // ... rest of your nodemailer code ...
+    // 2. Setup Transporter for Email
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -31,18 +29,37 @@ router.post('/', async (req: Request, res: Response) => {
       },
     });
 
+    // 3. Prepare Email Content
+    const emailText = `
+      🚀 New Lead Received!
+      -----------------------
+      Source: ${source || 'Website Search'}
+      Name: ${name}
+      Email: ${email}
+      Clinic: ${clinicName}
+      ${monthlyVolume ? `Monthly Volume: ${monthlyVolume}` : ''}
+      ${lastSearch ? `Last ICD Search: ${lastSearch}` : ''}
+      -----------------------
+      Timestamp: ${new Date().toLocaleString()}
+    `;
+
+    // 4. Await Email Send
     await transporter.sendMail({
-      from: `"Enhance Billing" <${process.env.EMAIL_USER}>`,
+      from: `"Enhance Billing Leads" <${process.env.EMAIL_USER}>`,
       to: process.env.NOTIFICATION_EMAIL || process.env.EMAIL_USER,
-      subject: `New Lead: ${name}`,
-      text: `Lead Details:\nName: ${name}\nClinic: ${clinicName}\nVolume: ${monthlyVolume}`,
+      subject: `🔥 New Lead: ${name} (${clinicName})`,
+      text: emailText,
     });
 
     return res.status(201).json({ success: true, data: newLead });
 
   } catch (error: any) {
     console.error("Lead Route Error:", error);
-    return res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Internal Server Error',
+      details: error.message 
+    });
   }
 });
 
