@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api';
+// ✅ Using a relative path is safer for Vercel/Production 
+// to avoid "double /api" or localhost fallback issues.
+const API_BASE_URL = '/api';
 
 const reasons = [
   {
@@ -26,9 +27,9 @@ const reasons = [
 export default function RevenueAudit() {
   const [auditData, setAuditData] = useState({
     name:          '',
-    email:         '',
+    email:          '',
     clinicName:    '',
-    monthlyVolume: '0-500',
+    monthlyVolume: '0-500', // Default matches the first select option
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError,     setIsError]     = useState(false);
@@ -38,13 +39,16 @@ export default function RevenueAudit() {
     e.preventDefault();
     setLoading(true);
     setIsError(false);
+
     try {
-     await axios.post(`${API_BASE_URL}/leads`, {
-  ...auditData,
-  source: 'Revenue Audit Page',
-});
+      // ✅ This hits https://www.enhancebilling.com/api/leads
+      await axios.post(`${API_BASE_URL}/leads`, {
+        ...auditData,
+        source: 'Revenue Audit Page',
+      });
       setIsSubmitted(true);
-    } catch {
+    } catch (error: any) {
+      console.error("Submission Error:", error.response?.data || error.message);
       setIsError(true);
     } finally {
       setLoading(false);
@@ -53,8 +57,7 @@ export default function RevenueAudit() {
 
   return (
     <div className="bg-white min-h-screen font-sans">
-
-      {/* Hero */}
+      {/* Hero Section */}
       <section className="relative py-24 px-6 bg-slate-900 text-white text-center overflow-hidden">
         <div className="absolute -top-20 -left-20 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
@@ -73,7 +76,7 @@ export default function RevenueAudit() {
         </div>
       </section>
 
-      {/* Trust strip */}
+      {/* Trust Strip */}
       <div className="bg-indigo-600 py-4 px-6">
         <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-8 text-white text-sm font-semibold">
           {['No Credit Card Required', '48-Hour Report Delivery', 'Certified Billing Specialists', 'HIPAA Compliant'].map((item) => (
@@ -87,18 +90,17 @@ export default function RevenueAudit() {
         </div>
       </div>
 
-      {/* Content + Form */}
+      {/* Content + Form Grid */}
       <section className="max-w-5xl mx-auto py-16 px-6">
         <div className="grid md:grid-cols-2 gap-14 items-start">
 
-          {/* Left: Why clinics fail */}
+          {/* Left Side: Educational Content */}
           <div>
             <p className="text-xs font-black uppercase tracking-widest text-indigo-600 mb-3">The Problem</p>
             <h2 className="text-3xl font-black text-slate-900 mb-4 tracking-tight">Why Clinics Lose Revenue</h2>
             <p className="text-slate-500 leading-relaxed mb-8">
               <strong className="text-slate-700">30% of medical claims are denied</strong> on first submission.
-              This &ldquo;silent leak&rdquo; costs the average mid-sized practice over $150,000 annually — and most
-              never know it&apos;s happening.
+              This &ldquo;silent leak&rdquo; costs the average mid-sized practice over $150,000 annually.
             </p>
 
             <div className="space-y-5">
@@ -113,7 +115,6 @@ export default function RevenueAudit() {
               ))}
             </div>
 
-            {/* Bottom note */}
             <div className="mt-10 p-5 bg-emerald-50 border border-emerald-200 rounded-2xl">
               <p className="text-sm text-emerald-800 font-semibold leading-relaxed">
                 On average, clinics that complete a revenue audit recover <strong>12–18%</strong> in
@@ -122,7 +123,7 @@ export default function RevenueAudit() {
             </div>
           </div>
 
-          {/* Right: Form */}
+          {/* Right Side: Lead Generation Form */}
           <div className="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl">
             {isSubmitted ? (
               <div className="text-center py-10">
@@ -133,8 +134,7 @@ export default function RevenueAudit() {
                 </div>
                 <h3 className="text-xl font-black mb-2">You&apos;re on the list!</h3>
                 <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                  Our billing team will review your profile and reach out within one business day
-                  to begin your free revenue audit.
+                  Our billing team will review your profile and reach out within one business day.
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
@@ -152,35 +152,48 @@ export default function RevenueAudit() {
 
                 {isError && (
                   <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm font-medium">
-                    Something went wrong. Please try again.
+                    Oops! Something went wrong. Please check your internet and try again.
                   </div>
                 )}
 
                 <form onSubmit={handleAuditSubmit} className="space-y-4">
-                  {[
-                    { key: 'name',       placeholder: 'Your Full Name',         type: 'text',  label: 'Full Name' },
-                    { key: 'clinicName', placeholder: 'Clinic / Practice Name', type: 'text',  label: 'Clinic Name' },
-                    { key: 'email',      placeholder: 'you@clinic.com',         type: 'email', label: 'Work Email' },
-                  ].map((field) => (
-                    <div key={field.key}>
-                      <label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-widest">
-                        {field.label}
-                      </label>
-                      <input
-                        required
-                        type={field.type}
-                        placeholder={field.placeholder}
-                        className="w-full p-3.5 rounded-xl bg-slate-800 text-white placeholder:text-slate-600 outline-none transition focus:ring-2 focus:ring-indigo-500 text-sm border border-slate-700 focus:border-indigo-500"
-                        onChange={(e) => setAuditData({ ...auditData, [field.key]: e.target.value })}
-                      />
-                    </div>
-                  ))}
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-widest">Full Name</label>
+                    <input
+                      required
+                      type="text"
+                      placeholder="Enter your name"
+                      className="w-full p-3.5 rounded-xl bg-slate-800 text-white placeholder:text-slate-600 outline-none transition focus:ring-2 focus:ring-indigo-500 text-sm border border-slate-700"
+                      onChange={(e) => setAuditData({ ...auditData, name: e.target.value })}
+                    />
+                  </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-widest">
-                      Monthly Claim Volume
-                    </label>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-widest">Clinic Name</label>
+                    <input
+                      required
+                      type="text"
+                      placeholder="Your Practice Name"
+                      className="w-full p-3.5 rounded-xl bg-slate-800 text-white placeholder:text-slate-600 outline-none transition focus:ring-2 focus:ring-indigo-500 text-sm border border-slate-700"
+                      onChange={(e) => setAuditData({ ...auditData, clinicName: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-widest">Work Email</label>
+                    <input
+                      required
+                      type="email"
+                      placeholder="you@clinic.com"
+                      className="w-full p-3.5 rounded-xl bg-slate-800 text-white placeholder:text-slate-600 outline-none transition focus:ring-2 focus:ring-indigo-500 text-sm border border-slate-700"
+                      onChange={(e) => setAuditData({ ...auditData, email: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-widest">Monthly Claim Volume</label>
                     <select
+                      value={auditData.monthlyVolume}
                       className="w-full p-3.5 rounded-xl bg-slate-800 text-white outline-none border border-slate-700 focus:ring-2 focus:ring-indigo-500 text-sm"
                       onChange={(e) => setAuditData({ ...auditData, monthlyVolume: e.target.value })}
                     >
@@ -199,15 +212,7 @@ export default function RevenueAudit() {
                         : 'bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] text-white'
                     }`}
                   >
-                    {loading ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                        </svg>
-                        Preparing Report…
-                      </span>
-                    ) : 'Generate My Free Report'}
+                    {loading ? 'Sending Request...' : 'Generate My Free Report'}
                   </button>
                 </form>
               </>
@@ -217,8 +222,8 @@ export default function RevenueAudit() {
               <svg className="w-3 h-3 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                HIPAA Compliant · No Spam · Free Forever
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">
+                HIPAA Compliant · No Spam · Secure Connection
               </p>
             </div>
           </div>
