@@ -12,11 +12,11 @@
   ],
   "rewrites": [
     {
-      "source": "/api/:path*",
+      "source": "/api/(.*)",
       "destination": "backend/src/server.ts"
     },
     {
-      "source": "/codes/:path*",
+      "source": "/codes/(.*)",
       "destination": "backend/src/server.ts"
     }
   ]
