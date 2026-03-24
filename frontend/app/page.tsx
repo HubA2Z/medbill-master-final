@@ -75,7 +75,7 @@ export default function Home() {
     setIsSearching(true);
     try {
       const response = await axios.get<SearchResult[]>(
-        `${API_BASE_URL}/codes/search?query=${encodeURIComponent(searchTerm)}`
+        `${API_BASE_URL}/api/codes/search?query=${encodeURIComponent(searchTerm)}`
       );
       setResults(response.data);
       setSuggestions(response.data.slice(0, 6));
@@ -119,7 +119,7 @@ export default function Home() {
     const timer = window.setTimeout(async () => {
       try {
         const response = await axios.get<SearchResult[]>(
-          `${API_BASE_URL}/codes/search?query=${encodeURIComponent(query)}`
+          `${API_BASE_URL}/api/codes/search?query=${encodeURIComponent(query)}`
         );
         const next = response.data.slice(0, 6);
         setSuggestions(next);
