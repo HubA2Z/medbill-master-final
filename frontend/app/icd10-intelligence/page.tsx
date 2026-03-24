@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 type SearchResult = { code: string; description: string };
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api';
+// FIXED: Using relative path for Vercel production and local proxy
+const API_BASE_URL = '/api';
 
 const EXAMPLES = ['Asthma', 'Diabetes', 'COVID-19', 'Back Pain', 'Anxiety', 'Hypertension'];
 
@@ -29,7 +29,7 @@ export default function ICD10Intelligence() {
   const [query,        setQuery]        = useState('');
   const [results,      setResults]      = useState<SearchResult[]>([]);
   const [suggestions,  setSuggestions]  = useState<SearchResult[]>([]);
-  const [showDrop,     setShowDrop]     = useState(false);
+  const [showDrop,      setShowDrop]     = useState(false);
   const [activeIdx,    setActiveIdx]    = useState(-1);
   const [isSearching,  setIsSearching]  = useState(false);
   const [hasSearched,  setHasSearched]  = useState(false);
@@ -40,6 +40,7 @@ export default function ICD10Intelligence() {
     if (!term.trim()) { setResults([]); setHasSearched(false); return; }
     setIsSearching(true);
     try {
+      // Points to /api/codes/search via relative path
       const res = await axios.get<SearchResult[]>(`${API_BASE_URL}/codes/search?query=${encodeURIComponent(term)}`);
       setResults(res.data);
       setHasSearched(true);
@@ -71,6 +72,7 @@ export default function ICD10Intelligence() {
     });
   };
 
+  // Debounced suggestions logic
   useEffect(() => {
     if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
     const t = window.setTimeout(async () => {
@@ -83,7 +85,7 @@ export default function ICD10Intelligence() {
       } catch {
         setSuggestions([]); setShowDrop(false);
       }
-    }, 220);
+    }, 250); // Balanced debounce for responsiveness
     return () => window.clearTimeout(t);
   }, [query]);
 
@@ -98,22 +100,22 @@ export default function ICD10Intelligence() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
 
-      {/* Hero */}
+      {/* Hero Section */}
       <section className="bg-slate-900 text-white py-16 px-6 text-center">
         <div className="max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 border border-indigo-500/30 bg-indigo-500/10 rounded-full text-indigo-400 text-xs font-bold mb-5 uppercase tracking-widest">
             <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse" />
-            Live NLM Database · 70,000+ Codes
+            Live Database · 70,000+ Codes
           </div>
           <h1 className="text-3xl sm:text-5xl font-black mb-4 tracking-tight leading-[1.05]">
             ICD-10 <span className="text-indigo-400">Intelligence</span>
           </h1>
           <p className="text-slate-400 text-base mb-8 max-w-lg mx-auto leading-relaxed">
-            Instant ICD-10-CM lookup powered by the National Library of Medicine.
+            Instant ICD-10-CM lookup powered by precise coding data.
             Search by condition, symptom, or code.
           </p>
 
-          {/* Search bar */}
+          {/* Search bar Container */}
           <div ref={containerRef} className="relative max-w-xl mx-auto">
             <div className="flex bg-white rounded-2xl overflow-hidden shadow-xl border border-slate-200">
               <span className="flex items-center pl-4 text-slate-400 shrink-0">
@@ -151,6 +153,7 @@ export default function ICD10Intelligence() {
               </button>
             </div>
 
+            {/* Dropdown Suggestions */}
             {showDrop && suggestions.length > 0 && (
               <div className="absolute z-30 mt-2 w-full rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden text-slate-900">
                 {suggestions.map((item, i) => (
@@ -169,7 +172,7 @@ export default function ICD10Intelligence() {
             )}
           </div>
 
-          {/* Example pills */}
+          {/* Quick Examples */}
           <div className="flex flex-wrap justify-center gap-2 mt-4">
             <span className="text-xs text-slate-500 font-semibold self-center">Try:</span>
             {EXAMPLES.map((t) => (
@@ -185,11 +188,11 @@ export default function ICD10Intelligence() {
         </div>
       </section>
 
-      {/* Results */}
+      {/* Main Results Area */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <div className="grid lg:grid-cols-12 gap-8">
 
-          {/* Table */}
+          {/* Table Column */}
           <div className="lg:col-span-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">Search Results</h2>
@@ -257,7 +260,7 @@ export default function ICD10Intelligence() {
                                 {hasSearched ? 'No matches found' : 'Search to see results'}
                               </p>
                               <p className="text-xs mt-1 text-slate-400">
-                                {hasSearched ? 'Try a shorter or different keyword.' : 'Enter a condition or ICD code above.'}
+                                {hasSearched ? 'Try a shorter keyword.' : 'Enter a condition or code above.'}
                               </p>
                             </div>
                           </div>
@@ -267,30 +270,19 @@ export default function ICD10Intelligence() {
                   </tbody>
                 </table>
               </div>
-              {results.length > 0 && (
-                <div className="px-5 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-                  <p className="text-xs text-slate-400">
-                    <span className="font-bold text-slate-600">{results.length}</span> result{results.length !== 1 ? 's' : ''} for{' '}
-                    <span className="font-bold text-indigo-600">&ldquo;{query}&rdquo;</span>
-                  </p>
-                  <span className="text-xs text-emerald-600 font-bold flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />Ready to use
-                  </span>
-                </div>
-              )}
             </div>
           </div>
 
-          {/* Sidebar CTA */}
-          <div className="lg:col-span-4">
-            <div className="bg-slate-900 rounded-2xl p-6 text-white sticky top-24">
-              <p className="text-indigo-400 text-[10px] font-bold uppercase tracking-widest mb-4">Revenue Cycle Management</p>
-              <h3 className="text-lg font-black mb-2 leading-tight">Do you need a Biller?</h3>
+          {/* Sidebar Area */}
+          <aside className="lg:col-span-4">
+            <div className="bg-slate-900 rounded-2xl p-6 text-white sticky top-24 shadow-xl">
+              <p className="text-indigo-400 text-[10px] font-bold uppercase tracking-widest mb-4">Revenue Optimization</p>
+              <h3 className="text-lg font-black mb-2 leading-tight">Expert Billing Support</h3>
               <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                Our certified billers manage your complete revenue cycle so you can focus on patient care.
+                Our certified team handles full-cycle revenue management. Focus on patients while we handle the codes.
               </p>
               <ul className="space-y-2.5 mb-6">
-                {['Full Claim Outsourcing', 'Denial Management', '24-hr Coding Audits'].map((item) => (
+                {['HIPAA Compliant', 'Denial Recovery', 'Fast Turnaround'].map((item) => (
                   <li key={item} className="flex items-center gap-2.5 text-sm text-slate-300 font-medium">
                     <svg className="w-4 h-4 text-indigo-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -303,16 +295,10 @@ export default function ICD10Intelligence() {
                 href="/#audit-form"
                 className="block w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3 rounded-xl text-center text-xs uppercase tracking-widest transition-all active:scale-95"
               >
-                Book Free Consultation
+                Free Coding Audit
               </Link>
-              <div className="flex items-center justify-center gap-1.5 mt-5 pt-5 border-t border-slate-800">
-                <svg className="w-3 h-3 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">HIPAA Compliant</p>
-              </div>
             </div>
-          </div>
+          </aside>
 
         </div>
       </div>
