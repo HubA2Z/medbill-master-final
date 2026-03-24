@@ -19,6 +19,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://enhancebilling.com',
   'https://www.enhancebilling.com',
+  'https://medbill-master-final-qgzl.vercel.app',
+  'https://medbill-master-final.vercel.app',
   // Allow all Vercel subdomains (useful for preview deployments)
   /\.vercel\.app$/ 
 ];
