@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script"; // ✅ Import the Script component
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -10,10 +11,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth"> 
+    <html lang="en" className="scroll-smooth">
+      <head>
+        {/* ✅ Google AdSense Auto Ads Script */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9762733555560266"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="antialiased bg-slate-50 flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow">{children}</main>
+        <ul className="flex-grow">{children}</ul>
         <Footer />
       </body>
     </html>
