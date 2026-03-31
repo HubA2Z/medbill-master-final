@@ -7,8 +7,8 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   // Fixes: "Title is too short" & "Canonical issues"
   metadataBase: new URL('https://www.enhancebilling.com'),
-  title: "Free Medical Billing Call Note Builder & RCM Tools | Enhancebilling",
-  description: "Boost RCM efficiency with our free Medical Billing Call Note Builder, ICD-10 search, and revenue audit tools. Standardize documentation and reduce denials.",
+  title: "Standardized RCM Call Note Builder Tool | Enhancebilling",
+  description: "Generate professional, standardized medical billing call notes instantly. Improve RCM efficiency and audit trails for free.",
   
   // Fixes: "Canonical" & "Hreflang"
   alternates: {
