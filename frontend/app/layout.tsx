@@ -1,21 +1,38 @@
 import type { Metadata } from "next";
-import Script from "next/script"; // ✅ Import the Script component
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "MedBillMaster | ICD-10 Coding Intelligence",
-  description: "Advanced medical billing search engine and revenue audit tool.",
+  // Fixes: "Title is too short" & "Canonical issues"
+  metadataBase: new URL('https://www.enhancebilling.com'),
+  title: "Free Medical Billing Call Note Builder & RCM Tools | Enhancebilling",
+  description: "Boost RCM efficiency with our free Medical Billing Call Note Builder, ICD-10 search, and revenue audit tools. Standardize documentation and reduce denials.",
+  
+  // Fixes: "Canonical" & "Hreflang"
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+    },
+  },
+  
+  // Open Graph for better social media sharing
+  openGraph: {
+    title: 'Enhancebilling | Advanced RCM & Medical Billing Tools',
+    description: 'Professional tools designed for medical billers and RCM managers.',
+    url: 'https://www.enhancebilling.com',
+    siteName: 'Enhancebilling',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-
-
-{/* Google Analytics Script */}
+        {/* Google Analytics Script */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-21RM0ZXDG5"
           strategy="afterInteractive"
@@ -29,9 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
 
-
-        
-        {/* ✅ Google AdSense Auto Ads Script */}
+        {/* Google AdSense Auto Ads Script */}
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9762733555560266"
@@ -41,7 +56,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased bg-slate-50 flex flex-col min-h-screen">
         <Header />
-        <ul className="flex-grow">{children}</ul>
+        {/* Changed <ul> to <main> for better semantic HTML/SEO */}
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>
