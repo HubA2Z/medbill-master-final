@@ -17,30 +17,37 @@ export default function BillingResumeAndProviderGuide() {
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-  setLoading(true);
-
+  setLoading(false); // Set to true to show loading state
+  
   try {
-    // CHANGE THIS URL to your actual backend address
-    // Example: 'http://localhost:5000/api/leads' or your production URL
-    const BACKEND_URL = "https://your-backend-api.com/api/leads"; 
-
-    const response = await fetch(BACKEND_URL, { 
+    // This MUST match your server.ts + leadRoutes.ts configuration
+    const response = await fetch('/api/leads', { 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         email: email, 
-        source: "Checklist Download",
-        message: "User requested 2026 Revenue Leak Checklist"
+        // These fields should match what your leadRoutes.ts controller expects
+        source: "Resume-Tips-Checklist",
+        message: "User requested 2026 Revenue Leak Checklist PDF"
       }),
     });
 
     if (response.ok) {
       setIsSubmitted(true);
+      // Trigger the actual file download
       window.open('/revenue-leak-checklist-2026.pdf', '_blank'); 
-      // ... rest of your success logic
+      
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setIsSubmitted(false);
+        setEmail('');
+      }, 3000);
+    } else {
+      console.error("Server Error:", response.status);
+      alert("Something went wrong. Please try again.");
     }
   } catch (error) {
-    console.error("Backend Connection Error:", error);
+    console.error("Network Error:", error);
   } finally {
     setLoading(false);
   }
