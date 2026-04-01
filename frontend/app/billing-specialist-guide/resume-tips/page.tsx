@@ -16,39 +16,35 @@ export default function BillingResumeAndProviderGuide() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      // Connects to your existing Nodemailer API
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email: email, 
-          subject: "NEW LEAD: Revenue Checklist Request",
-          message: `User ${email} requested the 2026 Revenue Leak Checklist.`
-        }),
-      });
+  try {
+    // CHANGE THIS URL to your actual backend address
+    // Example: 'http://localhost:5000/api/leads' or your production URL
+    const BACKEND_URL = "https://your-backend-api.com/api/leads"; 
 
-      if (response.ok) {
-        setIsSubmitted(true);
-        // Triggers the download of your file from /public
-        window.open('/revenue-leak-checklist-2026.pdf', '_blank'); 
-        
-        // Auto-close modal after success message
-        setTimeout(() => {
-          setIsModalOpen(false);
-          setIsSubmitted(false);
-          setEmail('');
-        }, 3000);
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-    } finally {
-      setLoading(false);
+    const response = await fetch(BACKEND_URL, { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        email: email, 
+        source: "Checklist Download",
+        message: "User requested 2026 Revenue Leak Checklist"
+      }),
+    });
+
+    if (response.ok) {
+      setIsSubmitted(true);
+      window.open('/revenue-leak-checklist-2026.pdf', '_blank'); 
+      // ... rest of your success logic
     }
-  };
+  } catch (error) {
+    console.error("Backend Connection Error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 relative">
