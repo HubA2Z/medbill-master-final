@@ -92,6 +92,29 @@ export default function ToolsHub() {
           ))}
         </div>
 
+        {/* --- NEW CAREER AUTHORITY SECTION --- */}
+        <div className="mb-14 bg-white border border-slate-200 rounded-[32px] p-8 md:p-12 shadow-sm flex flex-col md:flex-row items-center gap-8">
+          <div className="w-16 h-16 md:w-20 md:h-20 bg-indigo-600 rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-indigo-100">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div className="flex-1 text-center md:text-left space-y-3">
+            <h2 className="text-2xl font-black text-slate-900 leading-tight">
+              What does a <span className="text-indigo-600">Billing Specialist</span> actually do?
+            </h2>
+            <p className="text-slate-500 text-sm md:text-base max-w-2xl leading-relaxed">
+              Explore the <strong>billing specialist job description</strong>, average salaries for 2026, and the certifications you need to lead a successful career in Revenue Cycle Management.
+            </p>
+          </div>
+          <Link 
+            href="/billing-specialist-guide" 
+            className="w-full md:w-auto bg-slate-100 hover:bg-slate-200 text-slate-900 px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all text-center"
+          >
+            Explore Career Guide
+          </Link>
+        </div>
+
         {/* Lead card */}
         <div className="relative bg-slate-900 rounded-3xl p-10 text-white overflow-hidden">
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-600/10 rounded-full blur-3xl" />
