@@ -17,24 +17,25 @@ export default function BillingResumeAndProviderGuide() {
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-  setLoading(false); // Set to true to show loading state
-  
+  setLoading(true);
+
   try {
-    // This MUST match your server.ts + leadRoutes.ts configuration
     const response = await fetch('/api/leads', { 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
+        // Satisfying the requirements of your Lead model/Email template
+        name: "Checklist Requester", 
         email: email, 
-        // These fields should match what your leadRoutes.ts controller expects
-        source: "Resume-Tips-Checklist",
-        message: "User requested 2026 Revenue Leak Checklist PDF"
+        clinicName: "N/A (Checklist Download)", 
+        source: "Revenue Leak Checklist",
+        monthlyVolume: "Requested PDF",
+        lastSearch: "N/A"
       }),
     });
 
     if (response.ok) {
       setIsSubmitted(true);
-      // Trigger the actual file download
       window.open('/revenue-leak-checklist-2026.pdf', '_blank'); 
       
       setTimeout(() => {
@@ -43,8 +44,9 @@ export default function BillingResumeAndProviderGuide() {
         setEmail('');
       }, 3000);
     } else {
-      console.error("Server Error:", response.status);
-      alert("Something went wrong. Please try again.");
+      // Log the error details from your backend's catch block
+      const errorData = await response.json();
+      console.error("Backend Error Details:", errorData.details);
     }
   } catch (error) {
     console.error("Network Error:", error);
@@ -52,7 +54,6 @@ export default function BillingResumeAndProviderGuide() {
     setLoading(false);
   }
 };
-
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 relative">
       {/* 1. HERO SECTION */}
