@@ -9,6 +9,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/call-note-builder',
     '/icd-10-search',
     '/revenue-audit',
+    '/tools',
+    '/billing-specialist-guide',
+    '/billing-specialist-guide/salary',
+    '/billing-specialist-guide/certification',
+    '/billing-specialist-guide/resume-tips',
+    '/hipaa',
+    '/about',
+    '/terms',
+    '/privacy',
     // Add new features here as you build them
   ]
 
