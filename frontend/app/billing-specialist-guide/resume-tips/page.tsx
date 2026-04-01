@@ -1,107 +1,147 @@
 import Link from 'next/link';
 
-export default function JobDescriptionGuide() {
+export default function BillingResumeAndProviderGuide() {
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900">
-      {/* HEADER */}
-      <header className="bg-indigo-600 py-20 px-6 text-white">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      {/* 1. HERO SECTION */}
+      <header className="bg-white border-b border-slate-200 pt-20 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <nav className="mb-8">
-            <Link href="/billing-specialist-guide" className="text-xs font-bold text-indigo-200 uppercase tracking-widest hover:text-white transition-colors">
-              ← Back to Main Guide
+          <nav className="mb-6">
+            <Link href="/billing-specialist-guide" className="text-xs font-bold text-indigo-600 uppercase tracking-widest hover:underline">
+              ← Back to Career Guide
             </Link>
           </nav>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
-            The 2026 <span className="text-indigo-200">Billing Specialist</span> Job Description
+          <h1 className="text-4xl md:text-6xl font-black tracking-tight text-slate-900 mb-6 leading-tight">
+            The 2026 <span className="text-indigo-600">Biller’s Edge</span>: Skills & Professional Strategy
           </h1>
-          <p className="text-indigo-100 text-lg max-w-2xl mx-auto leading-relaxed">
-            Whether you are a clinic looking to hire or a specialist building a resume, these are the high-impact requirements for modern RCM.
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            Whether you are crafting a world-class resume or a provider looking for elite RCM results, 
+            precision is the only metric that matters.
           </p>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-16">
+      <main className="max-w-5xl mx-auto px-6 py-16">
         
-        {/* HIRING MANAGER ADVISORY (THE CONVERSION HOOK) */}
-        <section className="mb-16 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[40px] p-10 text-center">
-          <h2 className="text-2xl font-black mb-4 tracking-tight">Hiring a Biller is expensive. <span className="text-indigo-600">Outsourcing is efficient.</span></h2>
-          <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
-            The average cost of a full-time billing specialist in 2026 exceeds <strong>$65,000/year</strong> plus benefits. Most clinics see a 15% increase in collections by switching to a dedicated RCM partner instead of hiring in-house.
-          </p>
-          <Link href="/#audit-form" className="inline-block bg-slate-900 text-white px-10 py-4 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-indigo-600 transition-all shadow-xl">
-            Skip the Hire - Request an Audit
-          </Link>
-        </section>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* LEFT COLUMN: THE SPECIALIST GUIDE (7 UNITS) */}
+          <div className="lg:col-span-7 space-y-12">
+            <section>
+              <h2 className="text-2xl font-black mb-6 flex items-center gap-3">
+                <span className="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center text-sm">01</span>
+                The 2026 Skill Stack
+              </h2>
+              <p className="text-slate-600 mb-6 italic border-l-4 border-indigo-100 pl-4">
+                "In 2026, a resume that only mentions 'Data Entry' will be ignored. Modern RCM requires technical mastery."
+              </p>
+              
+              <div className="space-y-6">
+                <div className="p-5 bg-white border border-slate-200 rounded-2xl">
+                  <h4 className="font-bold text-slate-900 mb-1">Advanced Denial Analytics</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">Don't just fix denials; prevent them. Highlight your ability to use root-cause analysis to identify payer patterns and NCCI unbundling errors.</p>
+                </div>
+                <div className="p-5 bg-white border border-slate-200 rounded-2xl">
+                  <h4 className="font-bold text-slate-900 mb-1">Eligibility & Pre-Auth Logic</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">Showcase experience with real-time eligibility verification to reduce "Member Not Eligible" rejections—the #1 revenue killer in 2026.</p>
+                </div>
+                <div className="p-5 bg-white border border-slate-200 rounded-2xl">
+                  <h4 className="font-bold text-slate-900 mb-1">Compliance & Ethics</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">Ensure HIPAA, False Claims Act, and OIG guidelines are front and center. Precision coding is a legal requirement, not a suggestion.</p>
+                </div>
+              </div>
+            </section>
 
-        {/* THE TEMPLATE SECTION */}
-        <section className="mb-20">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-black text-slate-900">Standard Job Description</h2>
-            <span className="hidden sm:block text-[10px] font-bold text-slate-400 uppercase tracking-widest border border-slate-200 px-3 py-1 rounded-full">
-              Copy-Paste Ready
-            </span>
+            <section>
+              <h2 className="text-2xl font-black mb-6 flex items-center gap-3">
+                <span className="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center text-sm">02</span>
+                Resume Power-Phrases
+              </h2>
+              <div className="bg-slate-900 rounded-3xl p-8 text-indigo-100 font-mono text-sm leading-relaxed">
+                <p className="mb-4 text-indigo-400">// Replace "Responsible for billing" with:</p>
+                <ul className="space-y-3">
+                  <li>• "Maintained a 98.5% first-pass clean claim rate across 500+ weekly submissions."</li>
+                  <li>• "Reduced Days in A/R from 45 to 31 through strategic payer follow-up."</li>
+                  <li>• "Managed complex appeals for surgical modifiers 51, 59, and XS, recovering $45k in lost revenue."</li>
+                </ul>
+              </div>
+            </section>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm prose prose-slate max-w-none">
-            <h3 className="text-xl font-bold mb-4">Role Overview</h3>
-            <p>We are seeking a <strong>Medical Billing Specialist</strong> to manage the full revenue cycle, ensuring claim accuracy and maximum reimbursement through meticulous follow-up and denial management.</p>
-            
-            <h4 className="font-bold">Key Responsibilities:</h4>
-            <ul className="space-y-2 text-slate-600">
-              <li>• Audit clinical documentation for ICD-10 and CPT code accuracy.</li>
-              <li>• Submit electronic and paper claims to primary and secondary payers.</li>
-              <li>• Conduct <strong>Insurance Follow-up</strong> using standardized call note builders.</li>
-              <li>• Resolve <strong>NCCI Edits</strong> and manage complex modifier logic (59, XS, XP).</li>
-              <li>• Identify denial patterns and provide root-cause analysis for clinic leadership.</li>
-            </ul>
+          {/* RIGHT COLUMN: THE PROVIDER'S PERSPECTIVE (5 UNITS) */}
+          <div className="lg:col-span-5">
+            <div className="sticky top-8 space-y-8">
+              
+              {/* PROVIDER CARD */}
+              <div className="bg-white border-2 border-indigo-600 rounded-[32px] p-8 shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4">
+                  <span className="bg-indigo-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Expert Partner</span>
+                </div>
+                <h3 className="text-2xl font-black text-slate-900 mb-4">Are you a Provider?</h3>
+                <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                  Stop settling for "good enough" billing. We provide a team of <strong>proven billing experts</strong> who treat your revenue as their own.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2 text-sm font-medium">
+                    <span className="text-indigo-600">✓</span> 98% First-Pass Clean Claims
+                  </li>
+                  <li className="flex items-start gap-2 text-sm font-medium">
+                    <span className="text-indigo-600">✓</span> Dedicated Denial Recovery Team
+                  </li>
+                  <li className="flex items-start gap-2 text-sm font-medium">
+                    <span className="text-indigo-600">✓</span> Full HIPAA & Security Compliance
+                  </li>
+                </ul>
+                <Link href="/#audit-form" className="block text-center bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all">
+                  Request Free Practice Audit
+                </Link>
+              </div>
 
-            <h4 className="font-bold mt-8">Required Qualifications:</h4>
-            <ul className="space-y-2 text-slate-600">
-              <li>• 2+ years of experience in Medical Billing or Revenue Cycle Management.</li>
-              <li>• Proficiency with modern RCM tools and EHR/PMS systems.</li>
-              <li>• Certification preferred: <strong>AAPC CPC</strong> or <strong>AHIMA CCS</strong>.</li>
-              <li>• Strong understanding of HIPAA compliance and False Claims Act regulations.</li>
-            </ul>
-          </div>
-        </section>
+              {/* LEAD MAGNET CHECKLIST BOX */}
+              <div className="bg-indigo-900 rounded-[32px] p-8 text-white">
+                <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">Free Resource</p>
+                <h3 className="text-xl font-black mb-4">2026 Revenue Leak Checklist</h3>
+                <p className="text-indigo-200 text-xs leading-relaxed mb-6">
+                  Is your current process losing money? Audit your practice in 10 minutes with our professional checklist.
+                </p>
+                <div className="space-y-4 mb-8">
+                   <div className="flex items-center gap-3 text-xs">
+                     <div className="w-5 h-5 rounded bg-indigo-500/30 flex items-center justify-center">1</div>
+                     <span>Check Days in A/R Trends</span>
+                   </div>
+                   <div className="flex items-center gap-3 text-xs">
+                     <div className="w-5 h-5 rounded bg-indigo-500/30 flex items-center justify-center">2</div>
+                     <span>Identify Unworked Denials</span>
+                   </div>
+                </div>
+                <Link href="/#audit-form" className="flex items-center justify-center gap-2 w-full bg-white text-indigo-900 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-indigo-50 transition-all">
+                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                   Download Checklist
+                </Link>
+              </div>
 
-        {/* WHY OUTSOURCE SECTION (SALES COPY) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          <div className="space-y-4">
-            <h3 className="text-2xl font-black">Why Providers are Moving Away from In-House Billing</h3>
-            <p className="text-slate-500 leading-relaxed text-sm">
-              In 2026, the complexity of payer rules changes weekly. In-house staff often lack the specialized tools (like real-time ICD-10 intelligence) required to stay ahead of AI-driven denials. 
-            </p>
-          </div>
-          <div className="bg-indigo-50 p-8 rounded-3xl space-y-4">
-            <h4 className="font-black text-indigo-900">The Outsourcing Advantage:</h4>
-            <ul className="space-y-3 text-sm text-indigo-800/80">
-              <li className="flex items-center gap-2">✓ Lower Overhead (No benefits/office space)</li>
-              <li className="flex items-center gap-2">✓ Advanced Denial Management Tech</li>
-              <li className="flex items-center gap-2">✓ 98% First-Pass Clean Claim Rate</li>
-              <li className="flex items-center gap-2">✓ Monthly Performance Reporting</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* FINAL CONVERSION CARD */}
-        <section className="bg-slate-900 rounded-[40px] p-12 text-center text-white relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500 via-transparent to-transparent"></div>
-          <div className="relative z-10">
-            <h2 className="text-3xl font-black mb-4 tracking-tight">Stop Managing Billers. Start Managing Patients.</h2>
-            <p className="text-slate-400 mb-8 max-w-xl mx-auto">
-              We provide the expertise and the tools (Call Note Builders, Coding Intelligence) so your clinic can thrive without the HR headache.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/#audit-form" className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all">
-                Get a Custom Quote
-              </Link>
-              <Link href="/tools" className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all border border-white/20">
-                Explore our Tools
-              </Link>
             </div>
           </div>
+
+        </div>
+
+        {/* BOTTOM SECTION: THE PROMISE */}
+        <section className="mt-24 bg-white border border-slate-200 rounded-[40px] p-12 text-center">
+          <h2 className="text-3xl font-black mb-4">Precision is Profit.</h2>
+          <p className="text-slate-500 max-w-2xl mx-auto mb-8">
+            Whether you are looking to advance your career or optimize your clinic's collections, 
+            Enhancebilling provides the tools and expertise to make it happen.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link href="/tools" className="bg-slate-900 text-white px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-indigo-600 transition-all">
+              Try Coding Tools
+            </Link>
+            <Link href="/#audit-form" className="bg-white border border-slate-300 text-slate-900 px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:border-indigo-600 transition-all">
+              Consult with our Team
+            </Link>
+          </div>
         </section>
+
       </main>
     </div>
   );
