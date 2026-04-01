@@ -21,10 +21,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Add new features here as you build them
   ]
 
-  return routes.map((route) => ({
+ return routes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
+    // Logic: Homepage (1) > Pillar (0.9) > Everything else (0.8)
+    priority: route === '' ? 1 : route === '/billing-specialist-guide' ? 0.9 : 0.8,
   }))
 }
