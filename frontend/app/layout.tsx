@@ -33,12 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="scroll-smooth">
       <head>
         <meta name="google-site-verification" content="U5-_BabALTrXe-pVP1Jn3B21DAl614qbByTt7IkrHVw" />
-       
-
-        {/* Google AdSense Auto Ads Script */}
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2477127741276998"
-     crossorigin="anonymous">
-      </script>
       </head>
       <body className="antialiased bg-slate-50 flex flex-col min-h-screen">
         <Header />
