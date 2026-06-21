@@ -32,28 +32,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <meta name="google-site-verification" content="tV9us34qWnCKW4qddy2TRIA6RDEM5Ma--cN2mwTQSDo" />
-        {/* Google Analytics Script */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-21RM0ZXDG5"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-21RM0ZXDG5');
-          `}
-        </Script>
+        <meta name="google-site-verification" content="U5-_BabALTrXe-pVP1Jn3B21DAl614qbByTt7IkrHVw" />
+       
 
         {/* Google AdSense Auto Ads Script */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9762733555560266"
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2477127741276998"
+     crossorigin="anonymous">
+      </script>
       </head>
       <body className="antialiased bg-slate-50 flex flex-col min-h-screen">
         <Header />
