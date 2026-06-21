@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.enhancebilling.com'
+  const baseUrl = 'https://www.enhancely.in'
   
   // Add all your tool routes here
   const routes = [
