@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Light Mode Palette: Soft, low-fatigue off-white and deep slate */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --muted-foreground: #475569;
+  
+  /* Brand Accents */
+  --primary: #4f46e5;         /* Indigo 600 */
+  --primary-hover: #4338ca;   /* Indigo 700 */
+  --accent: #06b6d4;          /* Cyan 500 */
+  --border: #e2e8f0;          /* Slate 200 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Dark Mode Palette: Deep, rich zinc/slate hybrid to reduce eye strain */
+    --background: #09090b;
+    --foreground: #f4f4f5;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    
+    /* Dark Mode Brand Accents */
+    --primary: #6366f1;       /* Indigo 500 */
+    --primary-hover: #4f46e5; /* Indigo 600 */
+    --accent: #22d3ee;        /* Cyan 400 */
+    --border: #27272a;        /* Zinc 800 */
   }
 }
 
+@theme inline {
+  /* Custom utility mappings for Tailwind v4 */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+
+  --font-sans: "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Base resets & global styles */
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Smoothly transition colors when user toggles dark mode */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Clean, modern scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
 }
