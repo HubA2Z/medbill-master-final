@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/navigation"; // Or "next/link" depending on your Next.js setup
+import Link from "next/link"; // Changed from "next/navigation"
 import { usePathname } from "next/navigation";
 
 export default function Header() {
