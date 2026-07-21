@@ -16,7 +16,7 @@ const safeguards = [
   },
   {
     title: 'Transmission Security',
-    body:  'Every search on EnhanceBilling is routed via a secure HTTPS / TLS 1.3 connection, ensuring data remains confidential between the provider and our NLM gateway.',
+    body:  'Every search on Enhancely is routed via a secure HTTPS / TLS 1.3 connection, ensuring data remains confidential between the provider and our NLM gateway.',
   },
   {
     title: 'Data Minimization',
@@ -45,7 +45,7 @@ export default function HIPAACompliance() {
             HIPAA <span className="text-indigo-400">Compliance</span><br />& Data Integrity
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            EnhanceBilling operates under strict adherence to the Administrative Simplification
+            Enhancely operates under strict adherence to the Administrative Simplification
             provisions of the Health Insurance Portability and Accountability Act.
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function HIPAACompliance() {
                 1. Non-PHI Environment Declaration
               </h2>
               <blockquote className="border-l-4 border-indigo-600 pl-6 py-4 bg-slate-50 rounded-r-2xl text-slate-600 italic text-base leading-relaxed mb-5">
-                &ldquo;EnhanceBilling is engineered as a reference utility for the healthcare billing industry.
+                &ldquo;Enhancely is engineered as a reference utility for the healthcare billing industry.
                 Our public search infrastructure does not require, request, or store Protected Health Information (PHI).&rdquo;
               </blockquote>
               <p className="text-slate-600 leading-relaxed">
@@ -144,7 +144,7 @@ export default function HIPAACompliance() {
                 3. Administrative Simplification
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                In alignment with 2026 CMS standards, EnhanceBilling streamlines the administrative
+                In alignment with 2026 CMS standards, Enhancely streamlines the administrative
                 burden of medical coding. By providing a secure portal for ICD-10-CM research, we help
                 clinics maintain their own HIPAA compliance by reducing human error in the coding
                 process — a major source of data breaches and audit failures.
