@@ -2,23 +2,23 @@ import Link from 'next/link';
 
 const billingTools = [
   {
-    title:       'ICD-10 Intelligence',
-    description: 'Search 70,000+ ICD-10-CM codes in real time via NLM Clinical Tables. Autocomplete, synonym mapping, and one-click copy.',
-    link:        '/icd10-intelligence',
-    tag:         'Coding',
+    title: 'ICD-10 Intelligence',
+    description: 'Real-time search across 70,000+ ICD-10-CM codes via live NLM Clinical Tables. Smart synonyms, autocomplete, and instant copy.',
+    link: '/icd10-intelligence',
+    tag: 'Core Tool',
     icon: (
-      <svg className="w-7 h-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
       </svg>
     ),
   },
   {
-    title:       'Call Note Builder',
-    description: 'Structured templates for insurance follow-up calls, claim appeals, denial tracking, and representative notes.',
-    link:        '/call-note-builder',
-    tag:         'Insurance Follow-up',
+    title: 'Call Note Builder',
+    description: 'Professional templates for insurance calls, appeals, denial tracking, and payer correspondence.',
+    link: '/call-note-builder',
+    tag: 'Workflow',
     icon: (
-      <svg className="w-7 h-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
       </svg>
     ),
@@ -26,50 +26,73 @@ const billingTools = [
 ];
 
 const comingSoon = [
-  { title: 'Claim Scrubber',     description: 'Auto-detect unbundling errors and modifier mismatches before submission.' },
-  { title: 'E/M Level Advisor',  description: 'Upload encounter notes and get an instant E/M coding recommendation.' },
-  { title: 'Denial Tracker',     description: 'Track and manage denial patterns across payers with root-cause analysis.' },
+  { 
+    title: 'Claim Scrubber', 
+    description: 'Automatically detect unbundling issues, modifier errors, and compliance risks before submission.' 
+  },
+  { 
+    title: 'E/M Level Advisor', 
+    description: 'Upload encounter notes and receive instant, guideline-based E/M coding recommendations.' 
+  },
+  { 
+    title: 'Denial Tracker', 
+    description: 'Monitor denial trends, root causes, and recovery performance across all payers.' 
+  },
 ];
 
 export default function ToolsHub() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-
-      {/* Header */}
-      <section className="bg-white border-b border-slate-200 py-14 px-6 text-center">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-xs font-black uppercase tracking-widest text-indigo-600 mb-3">Professional Utilities</p>
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-3">
-            Billing <span className="text-indigo-600">Toolbox</span>
+      {/* Hero Header */}
+      <section className="bg-gradient-to-br from-slate-900 to-slate-950 py-24 px-6 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 rounded-full text-sm mb-6">
+            <span className="text-emerald-400">●</span>
+            PROFESSIONAL TOOLKIT
+          </div>
+          
+          <h1 className="text-5xl sm:text-6xl font-black tracking-tighter mb-6">
+            Tools that actually<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-violet-400">move the needle.</span>
           </h1>
-          <p className="text-slate-500 text-base">
-            Precision tools built for medical billing specialists and clinic administrators.
+          
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            Purpose-built utilities for medical billers, coders, and revenue cycle teams.
           </p>
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-6 py-14">
+      <div className="max-w-6xl mx-auto px-6 py-16">
+        {/* Available Tools */}
+        <div className="mb-6 flex items-center justify-between">
+          <p className="text-xs font-black uppercase tracking-widest text-indigo-600">Available Now</p>
+          <div className="h-px bg-slate-200 flex-1 mx-6" />
+        </div>
 
-        {/* Active tools */}
-        <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Available Now</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+        <div className="grid md:grid-cols-2 gap-8 mb-20">
           {billingTools.map((tool) => (
-            <Link key={tool.title} href={tool.link} className="group block">
-              <div className="h-full bg-white border border-slate-200 rounded-2xl p-7 hover:border-indigo-400 hover:shadow-lg transition-all duration-200 flex flex-col">
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
+            <Link 
+              key={tool.title} 
+              href={tool.link} 
+              className="group"
+            >
+              <div className="h-full bg-white border border-slate-100 hover:border-indigo-200 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col">
+                <div className="flex justify-between items-start mb-8">
+                  <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 group-hover:bg-indigo-100 transition-colors">
                     {tool.icon}
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-indigo-500 bg-indigo-50 px-2.5 py-1 rounded-full">
+                  <span className="px-4 py-1 text-xs font-bold bg-indigo-50 text-indigo-700 rounded-full tracking-widest">
                     {tool.tag}
                   </span>
                 </div>
-                <h3 className="text-xl font-black text-slate-900 mb-2">{tool.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed grow">{tool.description}</p>
-                <div className="mt-6 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-indigo-600 group-hover:gap-3 transition-all">
-                  Open Tool
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+
+                <h3 className="text-2xl font-black mb-3 tracking-tight">{tool.title}</h3>
+                <p className="text-slate-600 leading-relaxed mb-8 flex-1">{tool.description}</p>
+
+                <div className="flex items-center gap-2 text-indigo-600 font-semibold text-sm group-hover:gap-3 transition-all">
+                  Launch Tool
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7-7 7" />
                   </svg>
                 </div>
               </div>
@@ -77,67 +100,77 @@ export default function ToolsHub() {
           ))}
         </div>
 
-        {/* Coming soon */}
-        <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Coming Soon</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+        {/* Coming Soon */}
+        <div className="mb-6 flex items-center justify-between">
+          <p className="text-xs font-black uppercase tracking-widest text-slate-400">Coming Soon</p>
+          <div className="h-px bg-slate-200 flex-1 mx-6" />
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-20">
           {comingSoon.map((tool) => (
-            <div key={tool.title} className="bg-white border border-dashed border-slate-300 rounded-2xl p-6 opacity-60">
-              <div className="w-10 h-10 bg-slate-100 rounded-xl mb-4" />
-              <h3 className="font-bold text-slate-700 mb-1">{tool.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{tool.description}</p>
-              <span className="mt-4 inline-block text-[10px] font-bold text-slate-400 uppercase tracking-widest border border-slate-200 px-2.5 py-1 rounded-full">
+            <div 
+              key={tool.title} 
+              className="bg-white border border-dashed border-slate-300 hover:border-slate-400 rounded-3xl p-8 transition-all group"
+            >
+              <div className="w-12 h-12 bg-slate-100 rounded-2xl mb-6 group-hover:bg-slate-200 transition-colors" />
+              <h3 className="font-bold text-lg mb-2 text-slate-900">{tool.title}</h3>
+              <p className="text-slate-500 text-[15px] leading-relaxed">{tool.description}</p>
+              
+              <div className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 bg-slate-100 px-4 py-2 rounded-2xl">
+                <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
                 In Development
-              </span>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* --- NEW CAREER AUTHORITY SECTION --- */}
-        <div className="mb-14 bg-white border border-slate-200 rounded-[32px] p-8 md:p-12 shadow-sm flex flex-col md:flex-row items-center gap-8">
-          <div className="w-16 h-16 md:w-20 md:h-20 bg-indigo-600 rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-indigo-100">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div className="flex-1 text-center md:text-left space-y-3">
-            <h2 className="text-2xl font-black text-slate-900 leading-tight">
-              What does a <span className="text-indigo-600">Billing Specialist</span> actually do?
-            </h2>
-            <p className="text-slate-500 text-sm md:text-base max-w-2xl leading-relaxed">
-              Explore the <strong>billing specialist job description</strong>, average salaries for 2026, and the certifications you need to lead a successful career in Revenue Cycle Management.
-            </p>
-          </div>
-          <Link 
-            href="/billing-specialist-guide" 
-            className="w-full md:w-auto bg-slate-100 hover:bg-slate-200 text-slate-900 px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all text-center"
-          >
-            Explore Career Guide
-          </Link>
-        </div>
-
-        {/* Lead card */}
-        <div className="relative bg-slate-900 rounded-3xl p-10 text-white overflow-hidden">
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-600/10 rounded-full blur-3xl" />
-          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-            <div>
-              <p className="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-3">Revenue Cycle Management</p>
-              <h3 className="text-3xl font-black mb-3 tracking-tight">
-                Do you need a <span className="text-indigo-400">Biller</span>?
-              </h3>
-              <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-                Our experts manage your entire revenue cycle so you can focus on patients.
-                Reduce your billing burden and maximize collections today.
-              </p>
+        {/* Career Authority Section */}
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-10 md:p-16 mb-20 flex flex-col lg:flex-row items-center gap-12">
+          <div className="lg:w-2/5">
+            <div className="inline-flex items-center gap-3 bg-white/10 px-5 py-2 rounded-2xl mb-6">
+              <span className="text-2xl">📈</span>
+              <span className="font-semibold tracking-wide">CAREER GROWTH</span>
             </div>
+            <h2 className="text-4xl font-black tracking-tight leading-none mb-6">
+              What does a Billing Specialist actually do in 2026?
+            </h2>
+          </div>
+
+          <div className="lg:w-3/5 space-y-6">
+            <p className="text-slate-300 text-lg leading-relaxed">
+              Explore detailed billing specialist job descriptions, salary ranges, required certifications, 
+              and the skills that separate top performers in Revenue Cycle Management.
+            </p>
+            
             <Link
-              href="/#audit-form"
-              className="shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white px-7 py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-xl active:scale-95"
+              href="/billing-specialist-guide"
+              className="inline-flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold hover:bg-slate-100 transition-all group"
             >
-              Book Free Consultation
+              Read the Full Career Guide
+              <span className="group-hover:translate-x-1 transition">→</span>
             </Link>
           </div>
         </div>
 
+        {/* Final CTA */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-10 md:p-16 text-center">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-indigo-600 text-sm font-black tracking-[2px] mb-4">REVENUE CYCLE SUPPORT</div>
+            <h3 className="text-4xl font-black tracking-tight mb-6">
+              Need full-service billing support?
+            </h3>
+            <p className="text-slate-600 text-lg mb-10">
+              Let our certified team handle your revenue cycle from end to end — so you can focus on patient care.
+            </p>
+            
+            <Link
+              href="/#audit-form"
+              className="inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-5 rounded-2xl font-bold text-lg tracking-wider transition-all active:scale-95 shadow-lg"
+            >
+              Book a Free Revenue Consultation
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
