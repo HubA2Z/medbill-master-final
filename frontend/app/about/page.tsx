@@ -57,7 +57,7 @@ export default function About() {
           </h1>
 
           <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            EnhanceBilling synchronizes with live regulatory data to eliminate coding errors, 
+            Enhancely synchronizes with live regulatory data to eliminate coding errors, 
             accelerate reimbursements, and protect your revenue in an evolving healthcare landscape.
           </p>
 
@@ -109,7 +109,7 @@ export default function About() {
               <div className="prose prose-slate text-lg leading-relaxed">
                 <p>
                   The pace of regulatory change in healthcare demands more than static databases. 
-                  We built EnhanceBilling to move at the speed of the NLM — delivering real-time accuracy 
+                  We built Enhancely to move at the speed of the NLM — delivering real-time accuracy 
                   that protects both patient care and practice revenue.
                 </p>
                 <p className="mt-6">
