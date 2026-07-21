@@ -2,7 +2,7 @@ const sections = [
   {
     id:    'A',
     title: 'Acceptance of Terms',
-    body:  'By accessing EnhanceBilling, you agree to be bound by these Terms and all applicable laws and regulations governing the United States healthcare sector. If you do not agree with any part of these terms, you may not access the service.',
+    body:  'By accessing Enhancely, you agree to be bound by these Terms and all applicable laws and regulations governing the United States healthcare sector. If you do not agree with any part of these terms, you may not access the service.',
   },
   {
     id:    'B',
@@ -12,7 +12,7 @@ const sections = [
   {
     id:    'C',
     title: 'Accuracy Disclaimer',
-    body:  'EnhanceBilling is a reference tool powered by the NLM Clinical Tables API. We do not guarantee the accuracy or completeness of ICD-10-CM codes. All final coding decisions must be verified by a Certified Professional Coder (CPC) or equivalent credentialed specialist.',
+    body:  'Enhancely is a reference tool powered by the NLM Clinical Tables API. We do not guarantee the accuracy or completeness of ICD-10-CM codes. All final coding decisions must be verified by a Certified Professional Coder (CPC) or equivalent credentialed specialist.',
   },
   {
     id:    'D',
@@ -22,12 +22,12 @@ const sections = [
   {
     id:    'E',
     title: 'Financial Liability',
-    body:  'In no event shall EnhanceBilling or its partners be liable for any damages arising out of the use or inability to use this platform, including but not limited to claim denials, audit findings, or loss of clinic revenue resulting from reliance on search results.',
+    body:  'In no event shall Enhancely or its partners be liable for any damages arising out of the use or inability to use this platform, including but not limited to claim denials, audit findings, or loss of clinic revenue resulting from reliance on search results.',
   },
   {
     id:    'F',
     title: 'Modifications',
-    body:  'EnhanceBilling reserves the right to revise these terms at any time without notice. By continuing to use the platform after changes are posted, you agree to be bound by the revised terms.',
+    body:  'Enhancely reserves the right to revise these terms at any time without notice. By continuing to use the platform after changes are posted, you agree to be bound by the revised terms.',
   },
 ];
 
@@ -41,7 +41,7 @@ export default function TermsOfService() {
           <p className="text-xs font-black uppercase tracking-widest text-indigo-600 mb-3">Legal</p>
           <h1 className="text-4xl font-black tracking-tight mb-2">Terms of Service</h1>
           <p className="text-sm text-slate-400 italic">
-            Last updated: March 2026 · EnhanceBilling Platform
+            Last updated: March 2026 · Enhancely Platform
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export default function TermsOfService() {
             <div>
               <p className="font-bold text-indigo-900 mb-1">Important Notice</p>
               <p className="text-indigo-800 text-sm leading-relaxed">
-                EnhanceBilling is a reference tool. We do not guarantee the accuracy of ICD-10-CM
+                Enhancely is a reference tool. We do not guarantee the accuracy of ICD-10-CM
                 codes returned by search queries. Final coding decisions must be verified by a
                 Certified Professional Coder (CPC).
               </p>
@@ -78,7 +78,7 @@ export default function TermsOfService() {
         </div>
 
         <p className="text-xs text-slate-400 text-center mt-8">
-          © {new Date().getFullYear()} EnhanceBilling. All rights reserved.
+          © {new Date().getFullYear()} Enhancely. All rights reserved.
         </p>
       </div>
     </div>
