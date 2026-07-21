@@ -8,7 +8,7 @@ const sections = [
     num:   '2',
     title: 'HIPAA Compliance Statement',
     highlight: true,
-    body:  'EnhanceBilling operates in compliance with HIPAA\'s Administrative Simplification provisions. Our platform is designed as a non-PHI B2B reference utility. We strictly prohibit the entry of patient names, Social Security Numbers, or dates of birth through any interface on this platform.',
+    body:  'Enhancely operates in compliance with HIPAA\'s Administrative Simplification provisions. Our platform is designed as a non-PHI B2B reference utility. We strictly prohibit the entry of patient names, Social Security Numbers, or dates of birth through any interface on this platform.',
   },
   {
     num:   '3',
@@ -48,7 +48,7 @@ export default function PrivacyPolicy() {
 
         {/* Intro */}
         <p className="text-slate-600 leading-relaxed mb-10 text-base">
-          EnhanceBilling (&ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;) is committed to protecting the privacy of
+          Enhancely (&ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;) is committed to protecting the privacy of
           healthcare billing professionals who use our platform. This policy describes what information
           we collect, how we use it, and how we protect it.
         </p>
@@ -85,7 +85,7 @@ export default function PrivacyPolicy() {
           <span>HIPAA Compliant · AES-256 Encrypted · No PHI Stored</span>
         </div>
         <p className="text-xs text-slate-400 text-center mt-3">
-          © {new Date().getFullYear()} EnhanceBilling. All rights reserved.
+          © {new Date().getFullYear()} Enhancely. All rights reserved.
         </p>
       </div>
     </div>
