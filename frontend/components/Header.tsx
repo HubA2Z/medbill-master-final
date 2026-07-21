@@ -12,6 +12,7 @@ export default function Header() {
     { name: "About", href: "/about" },
     { name: "HIPAA", href: "/hipaa" },
     { name: "Tools", href: "/tools" },
+    { name: "Blogs", href: "/blog" },
     { name: "Free Audit", href: "/audit", primary: true },
   ];
 
