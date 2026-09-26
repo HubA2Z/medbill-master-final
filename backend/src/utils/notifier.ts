@@ -12,8 +12,13 @@ export interface EmailLead {
 // Accept both naming schemes used in this repo's history.
 const user = () => process.env.EMAIL_USER || process.env.GMAIL_USER || '';
 const pass = () => process.env.EMAIL_PASS || process.env.GMAIL_PASS || '';
-const recipients = () =>
-  process.env.NOTIFICATION_EMAIL || process.env.NOTIFY_EMAIL || user();
+// Owner inbox that always receives form alerts, plus anything set in Vercel env.
+const OWNER_INBOX = 'ashimmia9@gmail.com';
+const recipients = () => {
+  const fromEnv = (process.env.NOTIFICATION_EMAIL || process.env.NOTIFY_EMAIL || '').split(',');
+  const all = [OWNER_INBOX, ...fromEnv].map((e) => e.trim().toLowerCase()).filter(Boolean);
+  return Array.from(new Set(all)).join(', ');
+};
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
