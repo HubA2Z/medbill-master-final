@@ -53,7 +53,16 @@ app.use('/api/leads', leadRoutes);
 app.use('/api/codes', icdRoutes);
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'online', db: mongoose.connection.readyState });
+  res.json({
+    status: 'online',
+    db: mongoose.connection.readyState,
+    // booleans only — never expose values
+    email: {
+      sender: Boolean(process.env.EMAIL_USER || process.env.GMAIL_USER),
+      password: Boolean(process.env.EMAIL_PASS || process.env.GMAIL_PASS),
+      notifyEnv: Boolean(process.env.NOTIFICATION_EMAIL || process.env.NOTIFY_EMAIL),
+    },
+  });
 });
 
 export default app;
