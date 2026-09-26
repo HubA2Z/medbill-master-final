@@ -1,43 +1,57 @@
-import type { Metadata } from "next";
-import Script from "next/script";
-import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import type { Metadata, Viewport } from 'next';
+import './globals.css';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { JsonLd } from '@/components/ui';
+import { SITE } from '@/lib/site';
 
 export const metadata: Metadata = {
-  // Fixes: "Title is too short" & "Canonical issues"
-  metadataBase: new URL('https://www.enhancely.in'),
-  title: "Standardized RCM Call Note Builder Tool | Enhancely",
-  description: "Generate professional, standardized medical billing call notes instantly. Improve RCM efficiency and audit trails for free.",
-  
-  // Fixes: "Canonical" & "Hreflang"
-  alternates: {
-    canonical: '/',
-    languages: {
-      'en-US': '/en-US',
-    },
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: 'Enhancely — ICD-10 Search, Call Note Builder & RCM Tools',
+    template: '%s | Enhancely',
   },
-  
-  // Open Graph for better social media sharing
-  openGraph: {
-    title: 'Enhancely | Advanced RCM & Medical Billing Tools',
-    description: 'Professional tools designed for medical billers and RCM managers.',
-    url: 'https://www.enhancely.in',
-    siteName: 'Enhancely',
-    type: 'website',
+  description: SITE.defaultDescription,
+  applicationName: SITE.name,
+  // NOTE: no global canonical here on purpose — each page sets its own via pageMeta().
+  verification: { google: 'U5-_BabALTrXe-pVP1Jn3B21DAl614qbByTt7IkrHVw' },
+  openGraph: { siteName: SITE.name, type: 'website', locale: 'en_US', url: SITE.url },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#0d9488',
+  width: 'device-width',
+  initialScale: 1,
+};
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.tagline,
+};
+
+const siteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: SITE.url,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE.url}/icd10-intelligence?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <meta name="google-site-verification" content="U5-_BabALTrXe-pVP1Jn3B21DAl614qbByTt7IkrHVw" />
-      </head>
-      <body className="antialiased bg-slate-50 flex flex-col min-h-screen">
+    <html lang="en">
+      <body className="flex min-h-screen flex-col bg-white">
+        <JsonLd data={[orgLd, siteLd]} />
         <Header />
-        {/* Changed <ul> to <main> for better semantic HTML/SEO */}
-        <main className="flex-grow">{children}</main>
+        <main id="main" className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>

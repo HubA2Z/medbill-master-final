@@ -1,127 +1,71 @@
-
 import Link from 'next/link';
+import NewsletterForm from '@/components/NewsletterForm';
+import { Container, PageHero } from '@/components/ui';
+import { ArrowRight } from '@/components/icons';
+import { pageMeta } from '@/lib/site';
+import { POSTS, formatDate } from '@/lib/posts';
 
-const blogPosts = [
-  {
-    slug: '/blog/icd-10-2026-updates',
-    title: '2026 ICD-10-CM Highlights: Key Changes Every Medical Biller Must Know',
-    excerpt: 'Over 250 new codes, major updates in diabetes, mental health, and Long COVID. Stay compliant and avoid denials with this comprehensive breakdown.',
-    date: 'July 21, 2026',
-    readTime: '12 min',
-    category: 'Regulatory',
-    color: 'indigo',
-  },
-  {
-    slug: '/blog/reduce-claim-denials',
-    title: 'How to Reduce Claim Denials by 40% — Proven Strategies for 2026',
-    excerpt: 'Learn the exact systems top-performing billing teams use to cut denials dramatically and recover more revenue.',
-    date: 'July 15, 2026',
-    readTime: '11 min',
-    category: 'Revenue Cycle',
-    color: 'emerald',
-  },
-  {
-    slug: '/blog/em-coding-2026',
-    title: 'E/M Coding Changes in 2026: What Billers and Providers Need to Know',
-    excerpt: 'New guidelines, time-based billing updates, and documentation requirements that will impact your reimbursement rates.',
-    date: 'July 10, 2026',
-    readTime: '9 min',
-    category: 'Coding Tips',
-    color: 'violet',
-  },
-  {
-    slug: '/blog/ai-in-medical-billing',
-    title: 'The Role of AI in Modern Medical Billing: Opportunities & Risks',
-    excerpt: 'How artificial intelligence is transforming revenue cycle management and what human oversight is still essential.',
-    date: 'July 5, 2026',
-    readTime: '10 min',
-    category: 'Industry Trends',
-    color: 'amber',
-  },
-];
+export const metadata = pageMeta({
+  title: 'Medical Billing & Coding Blog — 2026 Updates and Strategies',
+  description:
+    'Expert guidance on medical billing, ICD-10 and E/M coding updates, denial reduction, AI in revenue cycle management, and career growth for billing professionals.',
+  path: '/blog',
+});
 
-export default function Blog() {
+export default function Page() {
+  const [featured, ...rest] = POSTS;
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
-      {/* Header */}
-      <div className="bg-slate-900 text-white py-20">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter mb-6">
-            Enhancely Insights
-          </h1>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Expert guidance on medical billing, coding updates, revenue cycle optimization, 
-            and career growth for healthcare professionals.
-          </p>
-        </div>
-      </div>
+    <>
+      <PageHero
+        crumbs={[{ name: 'Blog', href: '/blog' }]}
+        eyebrow="Enhancely insights"
+        title="Medical billing & coding, explained"
+        subtitle="Coding updates, revenue cycle strategy, and career growth for healthcare billing professionals."
+      />
 
-      <div className="max-w-5xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 gap-8">
-          {blogPosts.map((post, index) => (
-            <Link
-              key={index}
-              href={post.slug}
-              className="group bg-white border border-slate-200 hover:border-slate-300 rounded-3xl overflow-hidden transition-all hover:shadow-xl"
-            >
-              {/* Visual Header */}
-              <div className={`h-56 bg-gradient-to-br from-${post.color}-600 to-${post.color}-700 flex items-center justify-center relative`}>
-                <div className="text-6xl opacity-20 group-hover:opacity-30 transition-all">
-                  {post.category === 'Regulatory' && '📋'}
-                  {post.category === 'Revenue Cycle' && '💰'}
-                  {post.category === 'Coding Tips' && '🔍'}
-                  {post.category === 'Industry Trends' && '🚀'}
-                </div>
-                <div className="absolute top-6 left-6">
-                  <span className={`inline-block px-4 py-1 text-xs font-bold rounded-full bg-white/90 text-${post.color}-700`}>
-                    {post.category}
-                  </span>
-                </div>
-              </div>
+      <section className="py-14">
+        <Container>
+          <Link href={featured.slug} className="group grid overflow-hidden rounded-2xl border border-line bg-white transition-colors hover:border-brand/40 md:grid-cols-2">
+            <div className="relative flex min-h-48 items-end bg-navy p-8">
+              <div aria-hidden className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-brand/40 blur-3xl" />
+              <p className="relative font-mono text-5xl font-bold text-white/90">ICD-10<br /><span className="text-teal-300">2026</span></p>
+            </div>
+            <div className="p-8">
+              <p className="text-xs text-ink-3"><span className="font-semibold text-brand-ink">{featured.category}</span> · {formatDate(featured.date)} · {featured.readTime} read</p>
+              <h2 className="mt-3 text-2xl font-bold leading-tight text-ink group-hover:text-brand-ink">{featured.title}</h2>
+              <p className="mt-3 leading-relaxed text-ink-2">{featured.description}</p>
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-ink">Read article <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span>
+            </div>
+          </Link>
 
-              {/* Content */}
-              <div className="p-8">
-                <div className="text-xs text-slate-500 mb-3">
-                  {post.date} • {post.readTime} read
-                </div>
-
-                <h2 className="text-2xl font-bold leading-tight mb-4 group-hover:text-indigo-600 transition-colors line-clamp-3">
-                  {post.title}
-                </h2>
-
-                <p className="text-slate-600 line-clamp-3 leading-relaxed">
-                  {post.excerpt}
-                </p>
-
-                <div className="mt-8 flex items-center text-indigo-600 font-medium text-sm group-hover:gap-2 transition-all">
-                  Read Full Article
-                  <span className="text-lg leading-none">→</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Newsletter / Stay Updated Section */}
-        <div className="mt-20 bg-white border border-slate-200 rounded-3xl p-12 text-center">
-          <h3 className="text-3xl font-bold mb-4">Stay Ahead in Medical Billing</h3>
-          <p className="text-slate-600 max-w-md mx-auto mb-8">
-            Get monthly insights, coding updates, and revenue optimization tips delivered straight to your inbox.
-          </p>
-
-          <div className="max-w-md mx-auto flex gap-3">
-            <input
-              type="email"
-              placeholder="Your work email"
-              className="flex-1 px-6 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:border-indigo-300"
-            />
-            <button className="px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-2xl transition">
-              Subscribe
-            </button>
+          <div className="mt-6 grid gap-5 md:grid-cols-3">
+            {rest.map((p) => (
+              <Link key={p.slug} href={p.slug} className="group flex flex-col rounded-2xl border border-line bg-white p-6 transition-colors hover:border-brand/40">
+                <p className="text-xs text-ink-3"><span className="font-semibold text-brand-ink">{p.category}</span> · {formatDate(p.date)}</p>
+                <h2 className="mt-3 text-lg font-semibold leading-snug text-ink group-hover:text-brand-ink">{p.title}</h2>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-2">{p.description}</p>
+                <span className="mt-5 text-xs text-ink-3">{p.readTime} read</span>
+              </Link>
+            ))}
           </div>
-          <p className="text-xs text-slate-500 mt-4">We respect your inbox. Unsubscribe anytime.</p>
-        </div>
-      </div>
-    </div>
+
+          <Link href="/billing-specialist-guide" className="group mt-6 flex flex-col gap-3 rounded-2xl border border-line bg-bg-tint p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-brand">Career guide</p>
+              <p className="mt-1 font-semibold text-ink">Becoming a billing specialist: salary, certification, and resume tips</p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-ink">Read the guide <ArrowRight className="h-4 w-4" /></span>
+          </Link>
+
+          <div className="mt-14 flex flex-col items-start gap-5 rounded-2xl border border-line bg-bg-soft p-8 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-ink">Stay ahead in medical billing</h2>
+              <p className="mt-1 text-ink-2">Monthly coding updates and revenue tips. Unsubscribe anytime.</p>
+            </div>
+            <NewsletterForm />
+          </div>
+        </Container>
+      </section>
+    </>
   );
 }

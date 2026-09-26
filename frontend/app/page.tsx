@@ -1,253 +1,210 @@
-'use client';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import axios from 'axios';
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import HomeSearch from '@/components/HomeSearch';
+import AuditForm from '@/components/AuditForm';
+import { Container, Eyebrow, SectionHeading, CheckItem, ButtonLink } from '@/components/ui';
+import { SearchIcon, PhoneNoteIcon, ChartIcon, ShieldIcon, BookIcon, ArrowRight } from '@/components/icons';
+import { pageMeta } from '@/lib/site';
+import { POSTS, formatDate } from '@/lib/posts';
 
-type SearchResult = {
-  code: string;
-  description: string;
+export const metadata: Metadata = {
+  ...pageMeta({
+  title: 'Enhancely — Free ICD-10 Search, Call Note Builder & RCM Tools',
+  description:
+    'Real-time ICD-10-CM code search from the National Library of Medicine, a standardized insurance call note builder, and free 48-hour revenue audits for medical billing teams.',
+  path: '/',
+  }),
+  // Homepage uses the full title without the "| Enhancely" suffix.
+  title: { absolute: 'Enhancely — Free ICD-10 Search, Call Note Builder & RCM Tools' },
 };
 
-type BlogPost = {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  category: string;
-  slug: string;
-};
+const STATS = [
+  { v: '70,000+', l: 'ICD-10-CM codes' },
+  { v: '500+', l: 'Clinics served' },
+  { v: '98.7%', l: 'Coding accuracy' },
+  { v: '$2.4M', l: 'Revenue recovered' },
+];
 
-const API_BASE_URL = '/api';
-const QUICK_SEARCHES = ['Diabetes', 'Hypertension', 'Anxiety', 'Asthma', 'COVID-19', 'Depression'];
+const TOOLS = [
+  {
+    icon: SearchIcon,
+    title: 'ICD-10 code search',
+    body: 'Live lookup across the full ICD-10-CM set with autocomplete, lay-term synonyms, code lists, and CSV export.',
+    href: '/icd10-intelligence',
+    cta: 'Search codes',
+  },
+  {
+    icon: PhoneNoteIcon,
+    title: 'Call note builder',
+    body: 'Turn payer follow-up calls into consistent, audit-ready notes — paid, denied, in process, or not on file.',
+    href: '/call-note-builder',
+    cta: 'Build a note',
+  },
+  {
+    icon: ChartIcon,
+    title: '48-hour revenue audit',
+    body: 'Certified specialists find modifier errors, unbundling, and under-coded E/M levels. Free report in two days.',
+    href: '/audit',
+    cta: 'Request audit',
+  },
+];
+
+const SERVICES = [
+  'Full revenue cycle management',
+  'Denial appeals & recovery',
+  'Rapid 48-hour audits',
+  'E/M optimization',
+  'ICD-11 transition support',
+];
 
 export default function Home() {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
-  const [hasSearched, setHasSearched] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
-  const [copiedCode, setCopiedCode] = useState<string | null>(null);
-
-  const [leadData, setLeadData] = useState({ name: '', email: '', clinicName: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState('');
-
-  // Blog
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [isLoadingBlogs, setIsLoadingBlogs] = useState(true);
-
-  const searchContainerRef = useRef<HTMLDivElement>(null);
-
-  // Fetch Blogs
-  useEffect(() => {
-    axios.get<BlogPost[]>(`${API_BASE_URL}/blog`)
-      .then(res => setBlogPosts(res.data))
-      .catch(() => {
-        // Fallback
-        setBlogPosts([
-          { id: 1, title: "2026 ICD-10-CM Highlights", excerpt: "Major updates you need to know.", date: "Jul 18, 2026", readTime: "6 min", category: "Regulatory", slug: "/blog/icd-10-2026-updates" },
-          { id: 2, title: "Reducing Claim Denials", excerpt: "Strategies used by top billing teams.", date: "Jul 10, 2026", readTime: "8 min", category: "Revenue", slug: "/blog/reduce-claim-denials" },
-        ]);
-      })
-      .finally(() => setIsLoadingBlogs(false));
-  }, []);
-
-  const fetchCodes = async (searchTerm: string) => {
-    if (!searchTerm.trim()) return;
-    setIsSearching(true);
-    try {
-      const res = await axios.get(`${API_BASE_URL}/codes/search?query=${encodeURIComponent(searchTerm)}`);
-      setResults(res.data);
-      setHasSearched(true);
-    } catch {
-      setResults([]);
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
-  const handleSearch = () => {
-    setShowSuggestions(false);
-    fetchCodes(query);
-  };
-
-  const handleSuggestionPick = (item: SearchResult) => {
-    setQuery(item.description);
-    setShowSuggestions(false);
-    fetchCodes(item.code);
-  };
-
-  const handleCopy = (code: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedCode(code);
-    setTimeout(() => setCopiedCode(null), 1500);
-  };
-
-  // Debounced suggestions
-  useEffect(() => {
-    if (!query.trim()) {
-      setSuggestions([]);
-      return;
-    }
-    const timer = setTimeout(async () => {
-      try {
-        const res = await axios.get(`${API_BASE_URL}/codes/search?query=${encodeURIComponent(query)}`);
-        setSuggestions(res.data.slice(0, 6));
-        setShowSuggestions(true);
-      } catch {
-        setSuggestions([]);
-      }
-    }, 280);
-
-    return () => clearTimeout(timer);
-  }, [query]);
-
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans">
+    <>
       {/* HERO */}
-      <div className="relative pt-20 pb-16 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#4f46e520_1px,transparent_1px)] [background-size:50px_50px]" />
-        
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/5 border border-white/10 rounded-full text-sm mb-8">
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-            LIVE NLM SYNC — 2026
-          </div>
-
-          <h1 className="text-6xl md:text-7xl font-black tracking-tighter leading-none mb-6">
-            Accurate Codes.<br />
-            <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Faster Revenue.</span>
-          </h1>
-
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10">
-            Real-time ICD-10 search powered by the National Library of Medicine.<br />
-            Built for billing professionals who refuse to leave money on the table.
-          </p>
-
-          {/* Enhanced Search Bar */}
-          <div ref={searchContainerRef} className="max-w-3xl mx-auto relative">
-            <div className="relative flex bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
-              <div className="flex items-center pl-6 text-slate-400">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => { setQuery(e.target.value); setShowSuggestions(true); }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleSearch();
-                }}
-                placeholder="Search by condition or code (e.g. Type 2 Diabetes)..."
-                className="flex-1 py-7 px-4 text-lg bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none"
-              />
-              <button
-                onClick={handleSearch}
-                className="px-12 bg-indigo-600 hover:bg-indigo-700 font-semibold text-white transition-all active:scale-95"
-              >
-                {isSearching ? 'SEARCHING...' : 'SEARCH'}
-              </button>
+      <section className="relative overflow-hidden border-b border-line bg-bg-soft">
+        <div aria-hidden className="bg-grid absolute inset-0" />
+        <div aria-hidden className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-brand/10 blur-3xl" />
+        <Container className="relative grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink-2">
+              <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ok opacity-60" /><span className="relative h-2 w-2 rounded-full bg-ok" /></span>
+              Live NLM sync · 2026 code set
+            </p>
+            <h1 className="mt-5 text-4xl sm:text-6xl font-bold leading-[1.05] tracking-tight text-ink text-balance">
+              Accurate codes.<br /><span className="text-brand">Faster revenue.</span>
+            </h1>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-2">
+              Real-time ICD-10 search powered by the National Library of Medicine, plus the workflow tools and expert support billing teams need to get paid right the first time.
+            </p>
+            <div className="mt-8 max-w-xl">
+              <HomeSearch />
             </div>
+          </div>
 
-            {/* Suggestions Dropdown */}
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute mt-3 w-full bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-50 max-h-96 overflow-y-auto">
-                {suggestions.map((item, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleSuggestionPick(item)}
-                    className="w-full px-6 py-4 text-left hover:bg-slate-50 flex justify-between items-center border-b border-slate-100 last:border-none"
-                  >
-                    <span className="text-slate-700">{item.description}</span>
-                    <span className="font-mono text-indigo-600 font-bold">{item.code}</span>
-                  </button>
-                ))}
+          {/* Product preview card */}
+          <div className="hidden lg:block" aria-hidden>
+            <div className="rotate-1 rounded-2xl border border-line bg-white p-5 shadow-2xl shadow-slate-300/50">
+              <div className="flex items-center justify-between border-b border-line pb-3">
+                <p className="text-sm font-semibold text-ink">Results for “type 2 diabetes”</p>
+                <span className="rounded-full bg-brand-soft px-2 py-0.5 text-xs font-semibold text-brand-ink">NLM live</span>
               </div>
-            )}
+              {[
+                ['E11.9', 'Type 2 diabetes mellitus without complications'],
+                ['E11.65', 'Type 2 diabetes mellitus with hyperglycemia'],
+                ['E11.22', 'Type 2 DM with diabetic chronic kidney disease'],
+                ['E11.40', 'Type 2 DM with diabetic neuropathy, unspecified'],
+              ].map(([c, d]) => (
+                <div key={c} className="flex items-center gap-3 border-b border-line py-3 last:border-0">
+                  <span className="w-16 rounded-md bg-brand-soft py-1 text-center font-mono text-xs font-bold text-brand-ink">{c}</span>
+                  <span className="flex-1 text-sm text-ink-2">{d}</span>
+                  <span className="text-xs text-ink-3">Copy</span>
+                </div>
+              ))}
+            </div>
+            <div className="-mt-6 ml-10 w-72 -rotate-2 rounded-2xl border border-line bg-white p-4 shadow-xl">
+              <p className="text-xs font-semibold uppercase tracking-wider text-ink-3">Call note</p>
+              <p className="mt-2 font-mono text-[11px] leading-relaxed text-ink-2">
+                DOS: 08/14/2026 | CLM#: 4471-A<br />STATUS: [PAID] Paid: $182.40 …<br />ACTION: Post payment, bill secondary.
+              </p>
+            </div>
           </div>
-
-          <div className="flex flex-wrap justify-center gap-2 mt-6">
-            {QUICK_SEARCHES.map(term => (
-              <button
-                key={term}
-                onClick={() => { setQuery(term); fetchCodes(term); }}
-                className="text-xs px-5 py-2 bg-white/10 hover:bg-white/20 rounded-full transition"
-              >
-                {term}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+        </Container>
+      </section>
 
       {/* STATS */}
-      <div className="bg-white py-8 text-slate-900">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 px-6">
-          {[
-            { value: '70,000+', label: 'ICD-10 Codes' },
-            { value: '500+', label: 'Clinics Served' },
-            { value: '98.7%', label: 'Accuracy Rate' },
-            { value: '$2.4M', label: 'Revenue Recovered' },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-4xl font-black text-indigo-600">{stat.value}</p>
-              <p className="text-sm font-medium text-slate-500 mt-1">{stat.label}</p>
+      <section className="border-b border-line bg-white">
+        <Container className="grid grid-cols-2 gap-y-8 py-10 md:grid-cols-4">
+          {STATS.map((s) => (
+            <div key={s.l} className="text-center">
+              <p className="text-3xl sm:text-4xl font-bold tracking-tight text-ink">{s.v}</p>
+              <p className="mt-1 text-sm text-ink-3">{s.l}</p>
             </div>
           ))}
-        </div>
-      </div>
+        </Container>
+      </section>
 
-      {/* RESULTS SECTION */}
-      {hasSearched && (
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">Search Results</h2>
-            <span className="text-sm text-slate-400">{results.length} matches</span>
-          </div>
-
-          <div className="bg-white rounded-3xl shadow overflow-hidden">
-            {/* Table remains the same but wrapped in better UI */}
-            {/* ... paste your existing table code here or simplify ... */}
-            <div className="overflow-x-auto">
-              {/* Your existing table JSX */}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* LEAD FORM + BLOG */}
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-12 gap-10 py-16">
-        <div className="md:col-span-5">
-          <div className="bg-slate-900 rounded-3xl p-10 sticky top-8">
-            <h3 className="text-3xl font-black mb-6">Ready for a Revenue Boost?</h3>
-            <p className="text-slate-400 mb-8">Get a free 48-hour revenue audit from our certified team.</p>
-            
-            {/* Your existing lead form */}
-            {/* ... paste your form here ... */}
-          </div>
-        </div>
-
-        <div className="md:col-span-7">
-          <h3 className="text-xl font-bold mb-6 text-white">Latest Insights</h3>
-          {/* Dynamic Blog Cards */}
-          <div className="grid gap-6">
-            {blogPosts.map(post => (
-              <Link href={post.slug} key={post.id} className="block bg-slate-900/50 hover:bg-slate-800 border border-white/10 rounded-2xl p-6 transition">
-                <div className="flex justify-between text-xs mb-3">
-                  <span>{post.date}</span>
-                  <span className="text-indigo-400">{post.category}</span>
-                </div>
-                <h4 className="font-semibold text-lg mb-2">{post.title}</h4>
-                <p className="text-slate-400 text-sm line-clamp-2">{post.excerpt}</p>
+      {/* TOOLS */}
+      <section className="py-20">
+        <Container>
+          <SectionHeading eyebrow="Free tools" title="Everything a billing team reaches for, in one place" subtitle="No sign-up. No patient data. Just fast, accurate tools built by people who work claims every day." />
+          <div className="grid gap-5 md:grid-cols-3">
+            {TOOLS.map(({ icon: Icon, ...t }) => (
+              <Link key={t.href} href={t.href} className="group flex flex-col rounded-2xl border border-line bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-lg hover:shadow-slate-200/70">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand-ink"><Icon className="h-5 w-5" /></span>
+                <h3 className="mt-5 text-lg font-semibold text-ink">{t.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-2">{t.body}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-ink">
+                  {t.cta} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </span>
               </Link>
             ))}
           </div>
-        </div>
-      </div>
-    </div>
+        </Container>
+      </section>
+
+      {/* WHY / TRUST */}
+      <section className="border-y border-line bg-bg-soft py-20">
+        <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <Eyebrow className="mb-2">Why Enhancely</Eyebrow>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink text-balance">Medical coding moves fast. Your tools should keep up.</h2>
+            <p className="mt-4 leading-relaxed text-ink-2">
+              Most coding tools run on static databases updated quarterly. Enhancely connects directly to the NLM Clinical Tables API, so every lookup reflects the current code set — no downloads, no delays.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {[
+                { i: ShieldIcon, t: 'Zero PHI', d: 'We never request, transmit, or store protected health information.' },
+                { i: SearchIcon, t: 'Live NLM data', d: 'Validated against the latest 2026 ICD-10-CM schema in real time.' },
+                { i: ChartIcon, t: 'Revenue impact', d: 'Correct coding directly increases collections and cuts rework.' },
+                { i: BookIcon, t: 'ICD-11 ready', d: 'Built so your team isn’t caught off guard by the next transition.' },
+              ].map(({ i: I, t, d }) => (
+                <div key={t} className="rounded-xl border border-line bg-white p-4">
+                  <I className="h-5 w-5 text-brand" />
+                  <p className="mt-3 font-semibold text-ink">{t}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-2">{d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div id="audit-form" className="scroll-mt-24 rounded-2xl border border-line bg-white p-6 shadow-xl shadow-slate-200/60 sm:p-8">
+            <Eyebrow className="mb-2">For clinics</Eyebrow>
+            <h2 className="text-xl font-semibold text-ink">Get a free 48-hour revenue audit</h2>
+            <p className="mt-2 text-sm leading-relaxed text-ink-2">From real-time code validation to full denial management, we handle the complexity so you can focus on care.</p>
+            <ul className="my-5 grid gap-2 text-sm text-ink-2 sm:grid-cols-2">
+              {SERVICES.map((s) => <CheckItem key={s}>{s}</CheckItem>)}
+            </ul>
+            <AuditForm source="Home Page" compact />
+          </div>
+        </Container>
+      </section>
+
+      {/* GUIDE + BLOG */}
+      <section className="py-20">
+        <Container>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <SectionHeading eyebrow="Learn" title="Guides & insights for billing professionals" />
+            <ButtonLink href="/blog" variant="secondary" className="mb-8 sm:mt-6">All articles</ButtonLink>
+          </div>
+          <div className="grid gap-5 lg:grid-cols-3">
+            <Link href="/billing-specialist-guide" className="group flex flex-col justify-between rounded-2xl bg-navy p-7 text-white lg:row-span-2">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-300">Career guide</p>
+                <h3 className="mt-3 text-2xl font-bold leading-tight">The ultimate guide to becoming a billing specialist</h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">Salary benchmarks by state, CPC vs. CCS certification, and resume strategies for 2026 RCM roles.</p>
+              </div>
+              <span className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-white">Read the guide <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></span>
+            </Link>
+            {POSTS.map((p) => (
+              <Link key={p.slug} href={p.slug} className="group rounded-2xl border border-line bg-white p-6 transition-colors hover:border-brand/40">
+                <p className="text-xs text-ink-3"><span className="font-semibold text-brand-ink">{p.category}</span> · {formatDate(p.date)}</p>
+                <h3 className="mt-2 font-semibold leading-snug text-ink group-hover:text-brand-ink">{p.title}</h3>
+                <p className="mt-2 line-clamp-2 text-sm text-ink-2">{p.description}</p>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+    </>
   );
 }

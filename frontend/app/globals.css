@@ -1,73 +1,132 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────
+   Enhancely design tokens — clean clinical SaaS
+   Teal = brand / action, Navy = ink, Slate = structure
+   ───────────────────────────────────────────────────────────── */
 :root {
-  /* Light Mode Palette: Soft, low-fatigue off-white and deep slate */
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --muted: #64748b;
-  --muted-foreground: #475569;
-  
-  /* Brand Accents */
-  --primary: #4f46e5;         /* Indigo 600 */
-  --primary-hover: #4338ca;   /* Indigo 700 */
-  --accent: #06b6d4;          /* Cyan 500 */
-  --border: #e2e8f0;          /* Slate 200 */
-}
+  --bg: #ffffff;
+  --bg-soft: #f6f9fb;
+  --bg-tint: #eef7f6;
+  --ink: #0b1f33;
+  --ink-2: #334155;
+  --ink-3: #64748b;
+  --line: #e3e9ef;
+  --line-strong: #cbd5e1;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark Mode Palette: Deep, rich zinc/slate hybrid to reduce eye strain */
-    --background: #09090b;
-    --foreground: #f4f4f5;
-    --muted: #27272a;
-    --muted-foreground: #a1a1aa;
-    
-    /* Dark Mode Brand Accents */
-    --primary: #6366f1;       /* Indigo 500 */
-    --primary-hover: #4f46e5; /* Indigo 600 */
-    --accent: #22d3ee;        /* Cyan 400 */
-    --border: #27272a;        /* Zinc 800 */
-  }
+  --brand: #0d9488;
+  --brand-hover: #0f766e;
+  --brand-soft: #ccfbf1;
+  --brand-ink: #115e59;
+
+  --navy: #0b1f33;
+  --navy-2: #12304d;
+
+  --ok: #059669;
+  --warn: #b45309;
+  --warn-soft: #fef3c7;
+  --danger: #be123c;
+  --danger-soft: #ffe4e6;
 }
 
 @theme inline {
-  /* Custom utility mappings for Tailwind v4 */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-primary: var(--primary);
-  --color-primary-hover: var(--primary-hover);
-  --color-accent: var(--accent);
-  --color-border: var(--border);
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-tint: var(--bg-tint);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-ink: var(--brand-ink);
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
 
-  --font-sans: "Geist Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "Geist Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
-/* Base resets & global styles */
+html { scroll-behavior: smooth; }
+
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  /* Smoothly transition colors when user toggles dark mode */
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  text-rendering: optimizeLegibility;
 }
 
-/* Clean, modern scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
+::selection { background: var(--brand-soft); color: var(--brand-ink); }
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
-::-webkit-scrollbar-track {
-  background: var(--background);
+
+/* Subtle grid backdrop used in heroes */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(13, 148, 136, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(13, 148, 136, 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
 }
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
+
+/* ─────────── Article / long-form typography ─────────── */
+.prose-clinical { color: var(--ink-2); font-size: 1.0625rem; line-height: 1.8; }
+.prose-clinical > * + * { margin-top: 1.1em; }
+.prose-clinical .lead { font-size: 1.25rem; line-height: 1.7; color: var(--ink-2); }
+.prose-clinical h2 {
+  color: var(--ink); font-size: 1.625rem; line-height: 1.25; font-weight: 700;
+  letter-spacing: -0.015em; margin-top: 2.4em; padding-top: 0.2em;
+  scroll-margin-top: 6rem;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
+.prose-clinical h3 {
+  color: var(--ink); font-size: 1.2rem; line-height: 1.35; font-weight: 650;
+  margin-top: 1.9em;
+}
+.prose-clinical h2 + *, .prose-clinical h3 + * { margin-top: 0.6em; }
+.prose-clinical strong { color: var(--ink); font-weight: 650; }
+.prose-clinical a { color: var(--brand-hover); text-decoration: underline; text-underline-offset: 3px; }
+.prose-clinical ul, .prose-clinical ol { padding-left: 1.4em; }
+.prose-clinical ul { list-style: disc; }
+.prose-clinical ol { list-style: decimal; }
+.prose-clinical li + li { margin-top: 0.45em; }
+.prose-clinical li::marker { color: var(--brand); font-weight: 600; }
+.prose-clinical blockquote {
+  border-left: 3px solid var(--brand); padding: 0.25em 0 0.25em 1.1em;
+  color: var(--ink-2); font-style: italic;
+}
+
+/* Tables used in guides */
+.table-clinical { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.table-clinical th {
+  text-align: left; font-size: 0.72rem; font-weight: 650; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--ink-3); background: var(--bg-soft);
+  padding: 0.85rem 1rem; border-bottom: 1px solid var(--line);
+}
+.table-clinical td { padding: 0.95rem 1rem; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+.table-clinical tr:last-child td { border-bottom: 0; }
+
+/* Form fields */
+.field {
+  width: 100%; border: 1px solid var(--line-strong); background: #fff; color: var(--ink);
+  border-radius: 10px; padding: 0.7rem 0.85rem; font-size: 0.95rem; transition: border-color .15s, box-shadow .15s;
+}
+.field::placeholder { color: #94a3b8; }
+.field:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18); }
+.field-label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-2); margin-bottom: 0.35rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

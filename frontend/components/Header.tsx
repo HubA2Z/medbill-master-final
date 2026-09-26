@@ -1,109 +1,82 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link"; // Changed from "next/navigation"
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Logo, MenuIcon, XIcon } from './icons';
+
+const NAV = [
+  { name: 'ICD-10 Search', href: '/icd10-intelligence' },
+  { name: 'Call Notes', href: '/call-note-builder' },
+  { name: 'Tools', href: '/tools' },
+  { name: 'Career Guide', href: '/billing-specialist-guide' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'About', href: '/about' },
+];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const navLinks = [
-    { name: "About", href: "/about" },
-    { name: "HIPAA", href: "/hipaa" },
-    { name: "Tools", href: "/tools" },
-    { name: "Blogs", href: "/blog" },
-    { name: "Free Audit", href: "/audit", primary: true },
-  ];
+  useEffect(() => setOpen(false), [pathname]);
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   return (
-    <header className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50 shadow-xs transition-colors duration-350">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+    <header className="sticky top-0 z-50 border-b border-line bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:shadow">
+        Skip to content
+      </a>
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6" aria-label="Main">
+        <Link href="/" aria-label="Enhancely home"><Logo /></Link>
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            {/* Minimalist Spark/Enhance Icon */}
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:bg-primary-hover transition-colors shadow-xs">
-              <svg className="w-4.5 h-4.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21l-.813-5.096L3 15l5.096-.813L9 9l.813 5.187L15 15l-5.187.904zM18.007 6.134L17 10l-1.007-3.866L12 5l4.007-1.134L17 0l1.007 3.866L22 5l-3.993 1.134z" />
-              </svg>
-            </div>
-            <div className="leading-none">
-              <span className="font-black text-xl text-foreground tracking-tight uppercase">
-                Enhance<span className="text-primary font-medium lowercase">ly</span>
-              </span>
-              <span className="hidden sm:block text-[9px] font-bold text-muted-foreground uppercase tracking-widest mt-0.5">
-                Medical Optimization
-              </span>
-            </div>
+        <div className="hidden lg:flex items-center gap-1">
+          {NAV.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                isActive(l.href) ? 'text-brand-ink bg-bg-tint' : 'text-ink-2 hover:text-ink hover:bg-bg-soft'
+              }`}
+            >
+              {l.name}
+            </Link>
+          ))}
+          <Link href="/audit" className="ml-3 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-hover">
+            Free Audit
           </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-sm font-semibold transition-all duration-250 px-4 py-2 rounded-lg ${
-                    link.primary
-                      ? "bg-primary text-white ml-3 rounded-full px-5 py-2.5 shadow-sm hover:bg-primary-hover hover:shadow-md active:scale-95"
-                      : isActive
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-primary hover:bg-muted/40"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-muted-foreground hover:text-primary p-2 rounded-lg hover:bg-muted/40 transition-colors"
-            aria-label="Toggle menu"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              {isOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden py-3 border-t border-border">
-            <div className="flex flex-col gap-1 pb-2">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`block px-4 py-3 text-sm font-semibold rounded-xl transition-colors ${
-                      link.primary
-                        ? "bg-primary text-white mt-1 text-center"
-                        : isActive
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:bg-muted/40 hover:text-primary"
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="lg:hidden -mr-2 rounded-lg p-2 text-ink-2 hover:bg-bg-soft"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+        >
+          {open ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
+        </button>
       </nav>
+
+      {open && (
+        <div id="mobile-nav" className="lg:hidden border-t border-line bg-white">
+          <div className="mx-auto max-w-6xl px-4 py-3 flex flex-col gap-1">
+            {NAV.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`rounded-lg px-3 py-3 text-[0.95rem] font-medium ${isActive(l.href) ? 'bg-bg-tint text-brand-ink' : 'text-ink-2 hover:bg-bg-soft'}`}
+              >
+                {l.name}
+              </Link>
+            ))}
+            <Link href="/audit" className="mt-2 rounded-xl bg-brand px-4 py-3 text-center font-semibold text-white">
+              Request Free Audit
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

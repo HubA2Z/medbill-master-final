@@ -1,12 +1,10 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next';
+import { SITE } from '@/lib/site';
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: '/api/', // Keep your backend logic private
-    },
-    sitemap: 'https://www.enhancebilling.com/sitemap.xml',
-  }
+    rules: { userAgent: '*', allow: '/', disallow: '/api/' },
+    sitemap: `${SITE.url}/sitemap.xml`,
+    host: SITE.url,
+  };
 }
