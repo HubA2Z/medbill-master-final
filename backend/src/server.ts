@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import icdRoutes from './routes/icdRoutes';
 import leadRoutes from './routes/leadRoutes';
+import scrubRoutes from './routes/scrubRoutes';
 
 dotenv.config();
 const app = express();
@@ -51,6 +52,7 @@ app.use(async (req, res, next) => {
 
 app.use('/api/leads', leadRoutes);
 app.use('/api/codes', icdRoutes);
+app.use('/api/scrub', scrubRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({

@@ -1,0 +1,45 @@
+name: Load CMS NCCI data (claim scrubber)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ptp_urls:
+        description: "Optional: comma-separated PTP zip URLs (only if auto-discovery fails)"
+        required: false
+      mue_urls:
+        description: "Optional: comma-separated MUE zip URLs (only if auto-discovery fails)"
+        required: false
+  schedule:
+    # 5th of Jan/Apr/Jul/Oct — CMS publishes new quarterly NCCI files before each quarter starts
+    - cron: "0 9 5 1,4,7,10 *"
+  push:
+    branches: [main]
+    paths:
+      - "backend/scripts/import-ncci.ts"
+      - "backend/scripts/ncci-parse.ts"
+      - ".github/workflows/ncci-import.yml"
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - name: Import NCCI PTP + MUE into MongoDB
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          PTP_URLS: ${{ github.event.inputs.ptp_urls }}
+          MUE_URLS: ${{ github.event.inputs.mue_urls }}
+        run: |
+          if [ -z "$MONGO_URI" ]; then
+            echo "::error::Add a repository secret named MONGO_URI (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+          npx tsx scripts/import-ncci.ts

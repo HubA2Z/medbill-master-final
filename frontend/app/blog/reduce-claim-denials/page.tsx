@@ -24,7 +24,7 @@ export default function Page() {
       <p>Use the most specific ICD-10 code available — payers are increasingly rejecting unspecified codes. For example, instead of a general hypertension code, specify whether it’s with heart failure or chronic kidney disease. Our <Link href="/icd10-intelligence">ICD-10 search</Link> makes finding the specific code fast.</p>
 
       <h3>3. Implement pre-submission claim scrubbing</h3>
-      <p>Run every claim through automated validation before submission to catch missing modifiers, incorrect bundling, and eligibility issues. (Enhancely’s claim scrubber is <Link href="/tools">in development</Link>.)</p>
+      <p>Run every claim through automated validation before submission to catch missing modifiers, incorrect bundling, and unit limits. Try our free <Link href="/claim-scrubber">claim scrubber</Link>, which checks CMS NCCI edits and MUEs.</p>
 
       <h3>4. Strengthen insurance verification</h3>
       <p>Verify eligibility and benefits <strong>before</strong> every appointment. Many denials occur because coverage lapsed or the service wasn’t authorized.</p>

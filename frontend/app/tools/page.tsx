@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { Container, PageHero, SectionHeading, Badge, CtaBand } from '@/components/ui';
-import { SearchIcon, PhoneNoteIcon, ChartIcon, ArrowRight, BookIcon } from '@/components/icons';
+import { SearchIcon, PhoneNoteIcon, ChartIcon, ArrowRight, BookIcon, ShieldIcon } from '@/components/icons';
 import { pageMeta } from '@/lib/site';
 
 export const metadata = pageMeta({
   title: 'Free Medical Billing & Coding Tools for RCM Teams',
   description:
-    'Free tools for medical billers, coders, and revenue cycle teams: live ICD-10-CM code search, an insurance call note builder, and a 48-hour revenue audit. Claim scrubber and denial tracker coming soon.',
+    'Free tools for medical billers, coders, and revenue cycle teams: live ICD-10-CM code search, an NCCI claim scrubber, an insurance call note builder, and a 48-hour revenue audit.',
   path: '/tools',
 });
 
@@ -17,6 +17,13 @@ const AVAILABLE = [
     title: 'ICD-10 code search',
     body: 'Real-time search across 70,000+ ICD-10-CM codes via live NLM Clinical Tables. Smart synonyms, autocomplete, code lists, instant copy, and CSV export.',
     href: '/icd10-intelligence',
+  },
+  {
+    icon: ShieldIcon,
+    tag: 'New',
+    title: 'Claim scrubber',
+    body: 'Check CPT codes, modifiers, units, and diagnoses together against CMS NCCI procedure-pair edits and MUE limits before you submit.',
+    href: '/claim-scrubber',
   },
   {
     icon: PhoneNoteIcon,
@@ -35,7 +42,7 @@ const AVAILABLE = [
 ];
 
 const SOON = [
-  { title: 'Claim scrubber', body: 'Detect unbundling issues, modifier errors, and compliance risks before submission.' },
+  { title: 'Medical necessity check', body: 'Confirm a diagnosis supports the procedure under Medicare LCDs and NCDs for your state.' },
   { title: 'E/M level advisor', body: 'Guideline-based E/M level recommendations from encounter details.' },
   { title: 'Denial tracker', body: 'Monitor denial trends, root causes, and recovery performance across payers.' },
 ];
@@ -53,7 +60,7 @@ export default function Page() {
       <section className="py-16">
         <Container>
           <SectionHeading eyebrow="Available now" title="Start using today" />
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2">
             {AVAILABLE.map(({ icon: Icon, ...t }) => (
               <Link key={t.href} href={t.href} className="group flex flex-col rounded-2xl border border-line bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-lg hover:shadow-slate-200/70">
                 <div className="flex items-start justify-between">

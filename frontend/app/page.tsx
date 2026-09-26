@@ -34,6 +34,13 @@ const TOOLS = [
     cta: 'Search codes',
   },
   {
+    icon: ShieldIcon,
+    title: 'Claim scrubber',
+    body: 'Check CPT, modifiers, units, and ICD-10 codes against CMS NCCI edits and MUE limits before you submit.',
+    href: '/claim-scrubber',
+    cta: 'Check a claim',
+  },
+  {
     icon: PhoneNoteIcon,
     title: 'Call note builder',
     body: 'Turn payer follow-up calls into consistent, audit-ready notes — paid, denied, in process, or not on file.',
@@ -127,7 +134,7 @@ export default function Home() {
       <section className="py-20">
         <Container>
           <SectionHeading eyebrow="Free tools" title="Everything a billing team reaches for, in one place" subtitle="No sign-up. No patient data. Just fast, accurate tools built by people who work claims every day." />
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {TOOLS.map(({ icon: Icon, ...t }) => (
               <Link key={t.href} href={t.href} className="group flex flex-col rounded-2xl border border-line bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-lg hover:shadow-slate-200/70">
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand-ink"><Icon className="h-5 w-5" /></span>

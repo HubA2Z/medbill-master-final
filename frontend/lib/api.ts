@@ -34,3 +34,25 @@ export async function submitLead(payload: LeadPayload): Promise<void> {
     throw new Error(detail || `Request failed (${res.status})`);
   }
 }
+
+// ── Claim scrubber ───────────────────────────────────────────────────────────
+export type ScrubSeverity = 'error' | 'warning' | 'info' | 'pass';
+export type ScrubFinding = { severity: ScrubSeverity; rule: string; line?: number; code?: string; message: string; fix?: string };
+export type ScrubResponse = {
+  status: 'clean' | 'warnings' | 'errors';
+  counts: Record<ScrubSeverity, number>;
+  findings: ScrubFinding[];
+  diagnoses: { letter: string; code: string; valid: boolean; description?: string }[];
+  data: { ptp: boolean; mue: boolean; ptpVersion?: string; mueVersion?: string };
+};
+export type ScrubRequest = {
+  dos?: string;
+  diagnoses: string[];
+  lines: { cpt: string; modifiers: string[]; units: number; dxPointers: string[] }[];
+};
+
+export async function scrubClaim(body: ScrubRequest): Promise<ScrubResponse> {
+  const res = await fetch('/api/scrub', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if (!res.ok) throw new Error(`Check failed (${res.status})`);
+  return res.json();
+}
