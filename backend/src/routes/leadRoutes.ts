@@ -5,6 +5,21 @@ import { sendLeadEmail } from '../utils/notifier';
 
 const router = Router();
 
+// The collection has a unique index on email, so a returning visitor used to fail
+// with Mongo error 11000. Update their existing record instead of failing.
+async function saveLead(lead: Record<string, string>) {
+  try {
+    // @ts-ignore - mongoose model typing quirk on Vercel builds
+    return await Lead.create(lead);
+  } catch (err: any) {
+    if (err?.code === 11000) {
+      // @ts-ignore
+      return await Lead.updateOne({ email: lead.email }, { $set: { ...lead, createdAt: new Date() } });
+    }
+    throw err;
+  }
+}
+
 const clean = (v: unknown, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -30,8 +45,7 @@ router.post('/', async (req: Request, res: Response) => {
   // Save and notify independently, so a database hiccup never stops the email
   // (and a mail hiccup never loses the lead).
   const [saved, emailed] = await Promise.allSettled([
-    // @ts-ignore - mongoose model typing quirk on Vercel builds
-    Lead.create(lead),
+    saveLead(lead),
     sendLeadEmail(lead),
   ]);
 
