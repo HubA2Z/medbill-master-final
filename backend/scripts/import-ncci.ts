@@ -22,6 +22,18 @@ async function get(url: string): Promise<Buffer> {
   return Buffer.from(await r.arrayBuffer());
 }
 
+async function getZip(url: string): Promise<Buffer> {
+  const r = await fetch(url, { headers: UA, redirect: 'follow' });
+  const buf = Buffer.from(await r.arrayBuffer());
+  if (buf.subarray(0, 2).toString('latin1') !== 'PK') {
+    const peek = buf.toString('utf8', 0, 4000).replace(/\s+/g, ' ');
+    const title = (peek.match(/<title>([^<]*)/i) || [])[1] || '';
+    const forms = Array.from(peek.matchAll(/<(form|a)[^>]+(action|href)="([^"]*(licen|agree|accept)[^"]*)"/gi)).map((m) => m[3]).slice(0, 3);
+    throw new Error(`Not a zip: ${url} -> status ${r.status}, final URL ${r.url}, type ${r.headers.get('content-type')}, title "${title}", license links ${JSON.stringify(forms)}`);
+  }
+  return buf;
+}
+
 async function discover(page: string, match: RegExp, override?: string): Promise<string[]> {
   if (override) return override.split(',').map((s) => s.trim()).filter(Boolean);
   const html = (await get(page)).toString('utf8');
@@ -57,7 +69,7 @@ async function main() {
   const keepAfter = parseInt(d.toISOString().slice(0, 10).replace(/-/g, ''), 10);
 
   console.log('Discovering CMS files…');
-  const ptpUrls = await discover(PTP_PAGE, /practitioner.*ptp|ptp.*practitioner|ccipra/i, process.env.PTP_URLS);
+  const ptpUrls = await discover(PTP_PAGE, /practitioner-ptp-edits|ccipra/i, process.env.PTP_URLS);
   const mueUrls = await discover(MUE_PAGE, /practitioner/i, process.env.MUE_URLS);
   console.log('PTP:', ptpUrls, '\nMUE:', mueUrls);
   gh('notice', `Found ${ptpUrls.length} PTP and ${mueUrls.length} MUE files: ${[...ptpUrls, ...mueUrls].map((u) => u.split('/').pop()).join(', ')}`);
@@ -65,7 +77,7 @@ async function main() {
   // ── PTP ──
   const ptp = new Map<string, PtpEdit[]>();
   for (const u of ptpUrls) {
-    for (const f of textFiles(await get(u))) {
+    for (const f of textFiles(await getZip(u))) {
       const part = parsePtp(f.text, keepAfter);
       let rows = 0;
       part.forEach((edits, col1) => { rows += edits.length; ptp.set(col1, [...(ptp.get(col1) || []), ...edits]); });
@@ -78,7 +90,7 @@ async function main() {
   // ── MUE ──
   const mue = new Map<string, { v: number; a: string; r: string }>();
   for (const u of mueUrls) {
-    for (const f of textFiles(await get(u))) {
+    for (const f of textFiles(await getZip(u))) {
       const rows = parseMue(f.text);
       rows.forEach((r) => mue.set(r.code, { v: r.mue, a: r.mai, r: r.rationale }));
       console.log(`  ${f.name}: ${rows.length} MUE rows`);
