@@ -60,6 +60,7 @@ async function main() {
   const ptpUrls = await discover(PTP_PAGE, /practitioner.*ptp|ptp.*practitioner|ccipra/i, process.env.PTP_URLS);
   const mueUrls = await discover(MUE_PAGE, /practitioner/i, process.env.MUE_URLS);
   console.log('PTP:', ptpUrls, '\nMUE:', mueUrls);
+  gh('notice', `Found ${ptpUrls.length} PTP and ${mueUrls.length} MUE files: ${[...ptpUrls, ...mueUrls].map((u) => u.split('/').pop()).join(', ')}`);
 
   // ── PTP ──
   const ptp = new Map<string, PtpEdit[]>();
@@ -105,7 +106,12 @@ async function main() {
     { upsert: true },
   );
   await client.close();
-  console.log(`Done. ${ptpRows} PTP edits across ${ptp.size} codes; ${mue.size} MUEs.`);
+  gh('notice', `Loaded ${ptpRows} PTP edits across ${ptp.size} codes and ${mue.size} MUEs.`);
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+const gh = (level: 'notice' | 'error', msg: string) =>
+  process.env.GITHUB_ACTIONS ? console.log(`::${level}::${msg.replace(/\r?\n/g, ' | ').slice(0, 900)}`) : console.log(msg);
+
+main()
+  .then(() => gh('notice', 'NCCI import finished successfully.'))
+  .catch((e) => { console.error(e); gh('error', `NCCI import failed: ${e?.message || e}`); process.exit(1); });
