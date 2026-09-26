@@ -1,66 +1,48 @@
 // backend/src/routes/leadRoutes.ts
 import { Router, Request, Response } from 'express';
-import nodemailer from 'nodemailer';
-import Lead from '../models/Lead'; 
+import Lead from '../models/Lead';
+import { sendLeadEmail } from '../utils/notifier';
 
 const router = Router();
 
+const clean = (v: unknown, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
 router.post('/', async (req: Request, res: Response) => {
-  try {
-    const { name, email, clinicName, monthlyVolume, source, lastSearch } = req.body;
+  const body = req.body || {};
 
-    // 1. Save to MongoDB
-    // @ts-ignore - This bypasses the TS2349 "not callable" error during Vercel build
-    const newLead = await Lead.create({ 
-      name, 
-      email, 
-      clinicName, 
-      monthlyVolume, 
-      source: source || 'General Inquiry', 
-      lastSearch 
-    });
+  // Honeypot: real users never fill this hidden field; bots usually do.
+  if (clean(body.website)) return res.status(201).json({ success: true });
 
-    // 2. Setup Transporter for Email
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+  const lead = {
+    name: clean(body.name, 120),
+    email: clean(body.email, 200).toLowerCase(),
+    clinicName: clean(body.clinicName, 200),
+    monthlyVolume: clean(body.monthlyVolume, 50),
+    source: clean(body.source, 80) || 'General Inquiry',
+    lastSearch: clean(body.lastSearch, 200),
+  };
 
-    // 3. Prepare Email Content
-    const emailText = `
-      🚀 New Lead Received!
-      -----------------------
-      Source: ${source || 'Website Search'}
-      Name: ${name}
-      Email: ${email}
-      Clinic: ${clinicName}
-      ${monthlyVolume ? `Monthly Volume: ${monthlyVolume}` : ''}
-      ${lastSearch ? `Last ICD Search: ${lastSearch}` : ''}
-      -----------------------
-      Timestamp: ${new Date().toLocaleString()}
-    `;
-
-    // 4. Await Email Send
-    await transporter.sendMail({
-      from: `"Enhance Billing Leads" <${process.env.EMAIL_USER}>`,
-      to: process.env.NOTIFICATION_EMAIL || process.env.EMAIL_USER,
-      subject: `🔥 New Lead: ${name} (${clinicName})`,
-      text: emailText,
-    });
-
-    return res.status(201).json({ success: true, data: newLead });
-
-  } catch (error: any) {
-    console.error("Lead Route Error:", error);
-    return res.status(500).json({ 
-      success: false, 
-      error: 'Internal Server Error',
-      details: error.message 
-    });
+  if (!lead.name || !lead.clinicName || !isEmail(lead.email)) {
+    return res.status(400).json({ success: false, error: 'Name, practice name and a valid email are required.' });
   }
+
+  // Save and notify independently, so a database hiccup never stops the email
+  // (and a mail hiccup never loses the lead).
+  const [saved, emailed] = await Promise.allSettled([
+    // @ts-ignore - mongoose model typing quirk on Vercel builds
+    Lead.create(lead),
+    sendLeadEmail(lead),
+  ]);
+
+  if (saved.status === 'rejected') console.error('Lead save failed:', saved.reason);
+  if (emailed.status === 'rejected') console.error('Lead email failed:', emailed.reason);
+
+  if (saved.status === 'rejected' && emailed.status === 'rejected') {
+    return res.status(500).json({ success: false, error: 'Could not record your request. Please try again.' });
+  }
+
+  return res.status(201).json({ success: true });
 });
 
 export default router;

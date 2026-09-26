@@ -19,6 +19,7 @@ export type LeadPayload = {
   monthlyVolume?: string;
   source: string;
   lastSearch?: string;
+  website?: string; // honeypot — must stay empty
 };
 
 export async function submitLead(payload: LeadPayload): Promise<void> {

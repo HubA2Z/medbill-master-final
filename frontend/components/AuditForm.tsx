@@ -7,6 +7,7 @@ import { CheckIcon, LockIcon } from './icons';
 export default function AuditForm({ source = 'Revenue Audit Page', compact = false }: { source?: string; compact?: boolean }) {
   const uid = useId();
   const [data, setData] = useState({ name: '', clinicName: '', email: '', monthlyVolume: '0-500' });
+  const [hp, setHp] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
 
   const set = (k: keyof typeof data) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -16,7 +17,7 @@ export default function AuditForm({ source = 'Revenue Audit Page', compact = fal
     e.preventDefault();
     setState('sending');
     try {
-      await submitLead({ ...data, source });
+      await submitLead({ ...data, source, website: hp });
       setState('done');
     } catch (err) {
       console.error('Lead submission failed:', err);
@@ -41,6 +42,9 @@ export default function AuditForm({ source = 'Revenue Audit Page', compact = fal
 
   return (
     <form onSubmit={onSubmit} className="space-y-4" noValidate={false}>
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label>Website<input tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} name="website" /></label>
+      </div>
       <div className={compact ? 'grid gap-4' : 'grid gap-4 sm:grid-cols-2'}>
         <div>
           <label htmlFor={`${uid}-name`} className="field-label">Full name</label>

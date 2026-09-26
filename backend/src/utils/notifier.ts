@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-interface EmailLead {
+export interface EmailLead {
   name: string;
   email: string;
   clinicName?: string;
@@ -9,58 +9,64 @@ interface EmailLead {
   lastSearch?: string;
 }
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS,
-  },
-});
+// Accept both naming schemes used in this repo's history.
+const user = () => process.env.EMAIL_USER || process.env.GMAIL_USER || '';
+const pass = () => process.env.EMAIL_PASS || process.env.GMAIL_PASS || '';
+const recipients = () =>
+  process.env.NOTIFICATION_EMAIL || process.env.NOTIFY_EMAIL || user();
+
+const esc = (s: string) =>
+  s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
 
 export const sendLeadEmail = async (lead: EmailLead): Promise<void> => {
-  const notifyEmail = process.env.NOTIFY_EMAIL;
-  if (!notifyEmail || !process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
-    console.warn('⚠️  Email env vars not configured — skipping notification');
-    return;
+  if (!user() || !pass() || !recipients()) {
+    throw new Error('Email not configured: set EMAIL_USER, EMAIL_PASS and NOTIFICATION_EMAIL in Vercel.');
   }
 
-  const mailOptions = {
-    from: `"EnhanceBilling Leads" <${process.env.GMAIL_USER}>`,
-    to: notifyEmail,
-    subject: `New Lead: ${lead.clinicName || lead.name} — ${lead.source || 'Home Page'}`,
-    html: `
-      <div style="font-family: -apple-system, sans-serif; max-width: 520px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
-        <div style="background: #4f46e5; padding: 24px 28px;">
-          <h2 style="color: white; margin: 0; font-size: 20px; font-weight: 900; letter-spacing: -0.5px;">
-            New Revenue Audit Request
-          </h2>
-          <p style="color: #c7d2fe; margin: 6px 0 0; font-size: 13px;">
-            ${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}
-          </p>
-        </div>
-        <div style="padding: 28px; background: white;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-            ${[
-              ['Name',           lead.name],
-              ['Email',          lead.email],
-              ['Clinic',         lead.clinicName  || '—'],
-              ['Monthly Volume', lead.monthlyVolume || '—'],
-              ['Source',         lead.source       || 'Home Page'],
-              ['Last Search',    lead.lastSearch   || '—'],
-            ].map(([label, value]) => `
-              <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 10px 0; font-weight: 700; color: #64748b; width: 140px;">${label}</td>
-                <td style="padding: 10px 0; color: #1e293b;">${value}</td>
-              </tr>
-            `).join('')}
-          </table>
-        </div>
-        <div style="padding: 16px 28px; background: #f8fafc; border-top: 1px solid #f1f5f9;">
-          <p style="margin: 0; font-size: 11px; color: #94a3b8;">EnhanceBilling · ICD-10 Revenue Platform · 2026</p>
-        </div>
-      </div>
-    `,
-  };
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user: user(), pass: pass() },
+  });
 
-  await transporter.sendMail(mailOptions);
+  const when = new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short', timeZone: 'America/New_York' });
+  const rows: [string, string][] = [
+    ['Form', lead.source || 'Website'],
+    ['Name', lead.name],
+    ['Email', lead.email],
+    ['Practice', lead.clinicName || '—'],
+    ['Monthly volume', lead.monthlyVolume || '—'],
+    ...(lead.lastSearch && lead.lastSearch !== 'N/A' ? [['Last ICD search', lead.lastSearch] as [string, string]] : []),
+    ['Received', `${when} (ET)`],
+  ];
+
+  const text = ['New form submission on enhancely.in', '', ...rows.map(([k, v]) => `${k}: ${v}`)].join('\n');
+
+  const html = `
+  <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:560px;border:1px solid #e3e9ef;border-radius:12px;overflow:hidden">
+    <div style="background:#0d9488;padding:20px 24px">
+      <h2 style="color:#fff;margin:0;font-size:18px">New ${esc(lead.source || 'website')} submission</h2>
+      <p style="color:#ccfbf1;margin:6px 0 0;font-size:13px">${esc(when)} (ET)</p>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;background:#fff">
+      ${rows
+        .map(
+          ([k, v]) => `<tr style="border-bottom:1px solid #eef2f6">
+            <td style="padding:10px 24px;color:#64748b;width:150px;font-weight:600">${esc(k)}</td>
+            <td style="padding:10px 24px;color:#0b1f33">${esc(v)}</td></tr>`,
+        )
+        .join('')}
+    </table>
+    <p style="margin:0;padding:14px 24px;background:#f6f9fb;font-size:12px;color:#64748b">
+      Reply to this email to respond to ${esc(lead.name)} directly.
+    </p>
+  </div>`;
+
+  await transporter.sendMail({
+    from: `"Enhancely Website" <${user()}>`,
+    to: recipients(), // comma-separated list allowed
+    replyTo: `"${lead.name.replace(/"/g, '')}" <${lead.email}>`,
+    subject: `New lead: ${lead.name} — ${lead.clinicName || lead.source || 'Website'}`,
+    text,
+    html,
+  });
 };
