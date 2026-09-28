@@ -27,7 +27,7 @@ export const ROUTES: { path: string; priority: number; updated: string; changeFr
   { path: '/blog', priority: 0.8, updated: '2026-09-25', changeFrequency: 'weekly' },
   { path: '/blog/icd-10-2026-updates', priority: 0.7, updated: '2026-07-21', changeFrequency: 'yearly' },
   { path: '/blog/reduce-claim-denials', priority: 0.7, updated: '2026-07-15', changeFrequency: 'yearly' },
-  { path: '/blog/em-coding-2026', priority: 0.7, updated: '2026-07-12', changeFrequency: 'yearly' },
+  { path: '/blog/em-coding-2026', priority: 0.8, updated: '2026-09-28', changeFrequency: 'yearly' },
   { path: '/blog/ai-in-medical-billing', priority: 0.7, updated: '2026-07-08', changeFrequency: 'yearly' },
   { path: '/about', priority: 0.6, updated: '2026-09-25', changeFrequency: 'yearly' },
   { path: '/mission', priority: 0.5, updated: '2026-09-25', changeFrequency: 'yearly' },

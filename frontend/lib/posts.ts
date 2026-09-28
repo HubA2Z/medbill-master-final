@@ -31,12 +31,12 @@ export const POSTS: Post[] = [
   },
   {
     slug: '/blog/em-coding-2026',
-    title: 'E/M Coding in 2026: New Guidelines, Documentation Requirements & Billing Strategies',
-    seoTitle: 'E/M Coding 2026: Guidelines, Documentation & Tips',
+    title: 'Updated E/M Coding Guidelines 2026: MDM, Time, G2211 & Medicare Changes',
+    seoTitle: 'Updated E/M Coding Guidelines 2026: MDM, Time & G2211',
     description:
-      'Revised time thresholds, refined MDM guidelines, and new documentation standards — practical E/M strategies for providers, billers, and coders.',
-    date: '2026-07-12',
-    readTime: '14 min',
+      'The 2026 E/M coding guide: MDM levels, time thresholds, 99417 vs G2212, G2211, split/shared visits, modifier 25, and what changed in Medicare for 2026.',
+    date: '2026-09-28',
+    readTime: '12 min',
     category: 'Coding',
   },
   {
