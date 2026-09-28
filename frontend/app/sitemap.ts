@@ -2,7 +2,8 @@ import type { MetadataRoute } from 'next';
 import { ROUTES, SITE } from '@/lib/site';
 import { getDbPosts } from '@/lib/blog';
 
-export const revalidate = 300;
+// Rendered per request so articles published in /admin appear immediately.
+export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const fixed: MetadataRoute.Sitemap = ROUTES.map((r) => ({
