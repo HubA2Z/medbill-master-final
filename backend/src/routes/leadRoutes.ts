@@ -53,13 +53,7 @@ router.post('/', async (req: Request, res: Response) => {
   if (emailed.status === 'rejected') console.error('Lead email failed:', emailed.reason);
 
   if (saved.status === 'rejected' && emailed.status === 'rejected') {
-    const why = (r: PromiseRejectedResult) => String((r.reason && (r.reason.code || r.reason.message)) || r.reason).slice(0, 160);
-    return res.status(500).json({
-      success: false,
-      error: 'Could not record your request. Please try again.',
-      // TEMP diagnostics (no secrets): remove once alerts are confirmed working
-      diag: { db: why(saved as PromiseRejectedResult), email: why(emailed as PromiseRejectedResult) },
-    });
+    return res.status(500).json({ success: false, error: 'Could not record your request. Please try again.' });
   }
 
   return res.status(201).json({ success: true });

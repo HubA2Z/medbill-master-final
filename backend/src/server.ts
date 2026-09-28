@@ -61,13 +61,6 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
     db: mongoose.connection.readyState,
-    // booleans only — never expose values
-    email: {
-      sender: Boolean(process.env.EMAIL_USER || process.env.GMAIL_USER),
-      password: Boolean(process.env.EMAIL_PASS || process.env.GMAIL_PASS),
-      notifyEnv: Boolean(process.env.NOTIFICATION_EMAIL || process.env.NOTIFY_EMAIL),
-    },
-    blob: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
   });
 });
 
