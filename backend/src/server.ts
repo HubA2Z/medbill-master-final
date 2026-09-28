@@ -67,6 +67,7 @@ app.get('/api/health', (req, res) => {
       password: Boolean(process.env.EMAIL_PASS || process.env.GMAIL_PASS),
       notifyEnv: Boolean(process.env.NOTIFICATION_EMAIL || process.env.NOTIFY_EMAIL),
     },
+    blob: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
   });
 });
 
