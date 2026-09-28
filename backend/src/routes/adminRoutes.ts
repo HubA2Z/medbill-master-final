@@ -28,7 +28,15 @@ publicPosts.get('/:slug', async (req, res) => {
 // ── Admin API ────────────────────────────────────────────────────────────────
 export const admin = Router();
 
-admin.get('/me', (req, res) => res.json({ signedIn: verifyToken(readCookie(req)), configured: adminConfigured() }));
+admin.get('/me', (req, res) => res.json({
+  signedIn: verifyToken(readCookie(req)),
+  configured: adminConfigured(),
+  // Setup help: names only (never values) of env vars that look admin-related, plus whether they're empty.
+  ...(adminConfigured() ? {} : {
+    seen: Object.keys(process.env).filter((k) => /admin/i.test(k)).map((k) => `${k}${(process.env[k] || '').trim() ? '' : ' (empty)'}`),
+    vercelEnv: process.env.VERCEL_ENV || null,
+  }),
+}));
 
 admin.post('/login', (req: Request, res: Response) => {
   if (!adminConfigured()) return res.status(503).json({ error: 'Admin login is not set up. Add ADMIN_EMAIL and ADMIN_PASSWORD in Vercel.' });
