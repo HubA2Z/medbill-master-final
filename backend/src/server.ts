@@ -7,6 +7,7 @@ import icdRoutes from './routes/icdRoutes';
 import leadRoutes from './routes/leadRoutes';
 import scrubRoutes from './routes/scrubRoutes';
 import { admin, publicPosts } from './routes/adminRoutes';
+import sitemapRoutes from './routes/sitemapRoutes';
 
 dotenv.config();
 const app = express();
@@ -56,6 +57,7 @@ app.use('/api/codes', icdRoutes);
 app.use('/api/scrub', scrubRoutes);
 app.use('/api/posts', publicPosts);
 app.use('/api/admin', admin);
+app.use(sitemapRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({

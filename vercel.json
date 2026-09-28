@@ -12,6 +12,10 @@
   ],
   "rewrites": [
     {
+      "source": "/sitemap.xml",
+      "destination": "backend/src/server.ts"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "backend/src/server.ts"
     }
