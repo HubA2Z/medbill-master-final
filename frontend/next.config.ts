@@ -2,6 +2,10 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Local development only: forward /api to the Express server (in production Vercel routes /api via vercel.json).
+  async rewrites() {
+    return process.env.API_DEV_PROXY ? [{ source: '/api/:path*', destination: `${process.env.API_DEV_PROXY}/api/:path*` }] : [];
+  },
   async redirects() {
     return [
       // These two URLs were listed in the old sitemap but never existed (404).

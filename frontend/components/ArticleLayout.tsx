@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Breadcrumbs, Container, CtaBand, JsonLd } from './ui';
-import { getPost, POSTS, formatDate } from '@/lib/posts';
+import { getPost, POSTS, formatDate, type Post } from '@/lib/posts';
 import { pageMeta, SITE } from '@/lib/site';
 
 export function articleMeta(slug: string): Metadata {
@@ -12,15 +12,19 @@ export function articleMeta(slug: string): Metadata {
 
 export default function ArticleLayout({
   slug,
+  post,
+  coverImage,
   children,
   cta,
 }: {
   slug: string;
+  post?: Post; // admin-written articles pass their data directly
+  coverImage?: string;
   children: ReactNode;
   cta?: { title: string; body: string; label: string; href: string };
 }) {
-  const p = getPost(slug);
-  const related = POSTS.filter((x) => x.slug !== slug).slice(0, 3);
+  const p = post ?? getPost(slug);
+  const related = POSTS.filter((x) => x.slug !== p.slug).slice(0, 3);
 
   return (
     <>
@@ -65,6 +69,10 @@ export default function ArticleLayout({
       </header>
 
       <Container size="sm" className="py-12">
+        {coverImage && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={coverImage} alt="" className="mb-10 w-full rounded-2xl border border-line object-cover" />
+        )}
         <article className="prose-clinical">{children}</article>
 
         <aside className="mt-14 rounded-2xl border border-line bg-bg-tint p-6">

@@ -6,12 +6,13 @@ import mongoose from 'mongoose';
 import icdRoutes from './routes/icdRoutes';
 import leadRoutes from './routes/leadRoutes';
 import scrubRoutes from './routes/scrubRoutes';
+import { admin, publicPosts } from './routes/adminRoutes';
 
 dotenv.config();
 const app = express();
 
 app.use(helmet());
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 
 // 🌍 Simplified CORS for Vercel
 // Since your frontend and backend are on the same domain (/api), 
@@ -53,6 +54,8 @@ app.use(async (req, res, next) => {
 app.use('/api/leads', leadRoutes);
 app.use('/api/codes', icdRoutes);
 app.use('/api/scrub', scrubRoutes);
+app.use('/api/posts', publicPosts);
+app.use('/api/admin', admin);
 
 app.get('/api/health', (req, res) => {
   res.json({

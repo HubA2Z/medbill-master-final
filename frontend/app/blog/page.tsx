@@ -3,7 +3,10 @@ import NewsletterForm from '@/components/NewsletterForm';
 import { Container, PageHero } from '@/components/ui';
 import { ArrowRight } from '@/components/icons';
 import { pageMeta } from '@/lib/site';
-import { POSTS, formatDate } from '@/lib/posts';
+import { formatDate } from '@/lib/posts';
+import { getAllListings } from '@/lib/blog';
+
+export const revalidate = 60;
 
 export const metadata = pageMeta({
   title: 'Medical Billing & Coding Blog — 2026 Updates and Strategies',
@@ -12,8 +15,8 @@ export const metadata = pageMeta({
   path: '/blog',
 });
 
-export default function Page() {
-  const [featured, ...rest] = POSTS;
+export default async function Page() {
+  const [featured, ...rest] = await getAllListings();
   return (
     <>
       <PageHero
@@ -28,7 +31,7 @@ export default function Page() {
           <Link href={featured.slug} className="group grid overflow-hidden rounded-2xl border border-line bg-white transition-colors hover:border-brand/40 md:grid-cols-2">
             <div className="relative flex min-h-48 items-end bg-navy p-8">
               <div aria-hidden className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-brand/40 blur-3xl" />
-              <p className="relative font-mono text-5xl font-bold text-white/90">ICD-10<br /><span className="text-teal-300">2026</span></p>
+              <p className="relative text-3xl font-bold leading-tight text-white/90">{featured.category}<br /><span className="text-teal-300">{featured.date.slice(0, 4)}</span></p>
             </div>
             <div className="p-8">
               <p className="text-xs text-ink-3"><span className="font-semibold text-brand-ink">{featured.category}</span> · {formatDate(featured.date)} · {featured.readTime} read</p>
