@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { Container, PageHero, SectionHeading, Badge, CtaBand } from '@/components/ui';
-import { SearchIcon, PhoneNoteIcon, ChartIcon, ArrowRight, BookIcon, ShieldIcon } from '@/components/icons';
+import { SearchIcon, PhoneNoteIcon, ChartIcon, ArrowRight, BookIcon, ShieldIcon, TargetIcon } from '@/components/icons';
 import { pageMeta } from '@/lib/site';
 
 export const metadata = pageMeta({
   title: 'Free Medical Billing & Coding Tools for RCM Teams',
   description:
-    'Free tools for medical billers, coders, and revenue cycle teams: live ICD-10-CM code search, an NCCI claim scrubber, an insurance call note builder, and a 48-hour revenue audit.',
+    'Free tools for medical billers, coders, and revenue cycle teams: live ICD-10-CM code search, an NCCI claim scrubber, an E/M audit tool, an insurance call note builder, and a 48-hour revenue audit.',
   path: '/tools',
 });
 
@@ -26,6 +26,13 @@ const AVAILABLE = [
     href: '/claim-scrubber',
   },
   {
+    icon: TargetIcon,
+    tag: 'New',
+    title: 'E/M audit tool 2026',
+    body: 'Score office visits (99202–99215) by MDM or time, compare with the billed level, and catch G2211, modifier 25, and 99417/G2212 errors.',
+    href: '/em-audit-tool',
+  },
+  {
     icon: PhoneNoteIcon,
     tag: 'Workflow',
     title: 'Call note builder',
@@ -43,7 +50,6 @@ const AVAILABLE = [
 
 const SOON = [
   { title: 'Medical necessity check', body: 'Confirm a diagnosis supports the procedure under Medicare LCDs and NCDs for your state.' },
-  { title: 'E/M level advisor', body: 'Guideline-based E/M level recommendations from encounter details.' },
   { title: 'Denial tracker', body: 'Monitor denial trends, root causes, and recovery performance across payers.' },
 ];
 

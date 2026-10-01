@@ -18,6 +18,7 @@ export const ROUTES: { path: string; priority: number; updated: string; changeFr
   { path: '/tools', priority: 0.8, updated: '2026-09-25', changeFrequency: 'monthly' },
   { path: '/icd10-intelligence', priority: 0.9, updated: '2026-09-25', changeFrequency: 'weekly' },
   { path: '/claim-scrubber', priority: 0.9, updated: '2026-09-26', changeFrequency: 'monthly' },
+  { path: '/em-audit-tool', priority: 0.9, updated: '2026-10-01', changeFrequency: 'monthly' },
   { path: '/call-note-builder', priority: 0.9, updated: '2026-09-25', changeFrequency: 'monthly' },
   { path: '/audit', priority: 0.8, updated: '2026-09-25', changeFrequency: 'monthly' },
   { path: '/billing-specialist-guide', priority: 0.9, updated: '2026-09-25', changeFrequency: 'monthly' },

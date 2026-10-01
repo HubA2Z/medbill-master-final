@@ -8,6 +8,7 @@ const COLUMNS = [
     links: [
       { name: 'ICD-10 Code Search', href: '/icd10-intelligence' },
       { name: 'Claim Scrubber', href: '/claim-scrubber' },
+      { name: 'E/M Audit Tool 2026', href: '/em-audit-tool' },
       { name: 'Call Note Builder', href: '/call-note-builder' },
       { name: 'Free Revenue Audit', href: '/audit' },
       { name: 'All Tools', href: '/tools' },

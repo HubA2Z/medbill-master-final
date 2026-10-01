@@ -8,7 +8,7 @@ import { Logo, MenuIcon, XIcon } from './icons';
 const NAV = [
   { name: 'ICD-10 Search', href: '/icd10-intelligence' },
   { name: 'Claim Scrubber', href: '/claim-scrubber' },
-  { name: 'Call Notes', href: '/call-note-builder' },
+  { name: 'E/M Audit', href: '/em-audit-tool' },
   { name: 'Tools', href: '/tools' },
   { name: 'Career Guide', href: '/billing-specialist-guide' },
   { name: 'Blog', href: '/blog' },

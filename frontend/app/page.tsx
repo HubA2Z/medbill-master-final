@@ -3,7 +3,7 @@ import Link from 'next/link';
 import HomeSearch from '@/components/HomeSearch';
 import AuditForm from '@/components/AuditForm';
 import { Container, Eyebrow, SectionHeading, CheckItem, ButtonLink } from '@/components/ui';
-import { SearchIcon, PhoneNoteIcon, ChartIcon, ShieldIcon, BookIcon, ArrowRight } from '@/components/icons';
+import { SearchIcon, PhoneNoteIcon, ChartIcon, ShieldIcon, BookIcon, ArrowRight, TargetIcon } from '@/components/icons';
 import { pageMeta } from '@/lib/site';
 import { POSTS, formatDate } from '@/lib/posts';
 
@@ -39,6 +39,13 @@ const TOOLS = [
     body: 'Check CPT, modifiers, units, and ICD-10 codes against CMS NCCI edits and MUE limits before you submit.',
     href: '/claim-scrubber',
     cta: 'Check a claim',
+  },
+  {
+    icon: TargetIcon,
+    title: 'E/M audit tool 2026',
+    body: 'Score a visit by MDM or time and see if the billed 99202–99215 level holds up — plus G2211 and prolonged-service checks.',
+    href: '/em-audit-tool',
+    cta: 'Audit a visit',
   },
   {
     icon: PhoneNoteIcon,
@@ -134,7 +141,7 @@ export default function Home() {
       <section className="py-20">
         <Container>
           <SectionHeading eyebrow="Free tools" title="Everything a billing team reaches for, in one place" subtitle="No sign-up. No patient data. Just fast, accurate tools built by people who work claims every day." />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {TOOLS.map(({ icon: Icon, ...t }) => (
               <Link key={t.href} href={t.href} className="group flex flex-col rounded-2xl border border-line bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-lg hover:shadow-slate-200/70">
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand-ink"><Icon className="h-5 w-5" /></span>
