@@ -8,7 +8,7 @@ import { SITE } from '@/lib/site';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'Enhancely — ICD-10 Search, Call Note Builder & RCM Tools',
+    default: 'Enhancely | Medical Billing & Revenue Cycle Management Tools',
     template: '%s | Enhancely',
   },
   description: SITE.defaultDescription,

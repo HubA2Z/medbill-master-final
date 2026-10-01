@@ -9,13 +9,13 @@ import { POSTS, formatDate } from '@/lib/posts';
 
 export const metadata: Metadata = {
   ...pageMeta({
-  title: 'Enhancely — Free ICD-10 Search, Call Note Builder & RCM Tools',
+  title: 'Enhancely | Medical Billing & Revenue Cycle Management Tools',
   description:
-    'Real-time ICD-10-CM code search from the National Library of Medicine, a standardized insurance call note builder, and free 48-hour revenue audits for medical billing teams.',
+    'Professional medical billing and coding tools for RCM teams: ICD-10 code search, claim scrubber, E/M audit tool, and insurance call notes. Free, no sign-up.',
   path: '/',
   }),
   // Homepage uses the full title without the "| Enhancely" suffix.
-  title: { absolute: 'Enhancely — Free ICD-10 Search, Call Note Builder & RCM Tools' },
+  title: { absolute: 'Enhancely | Medical Billing & Revenue Cycle Management Tools' },
 };
 
 const STATS = [

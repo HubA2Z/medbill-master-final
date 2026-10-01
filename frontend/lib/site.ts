@@ -5,7 +5,7 @@ export const SITE = {
   url: 'https://www.enhancely.in',
   tagline: 'Precision clinical coding and revenue intelligence for modern healthcare teams.',
   defaultDescription:
-    'Free ICD-10 code search, a standardized call note builder, and 48-hour revenue audits for medical billers, coders, and RCM teams.',
+    'Professional medical billing and coding tools for RCM teams: ICD-10 code search, claim scrubber, E/M audit tool, and insurance call notes. Free, no sign-up.',
 };
 
 /**
