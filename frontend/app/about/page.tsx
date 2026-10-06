@@ -1,6 +1,6 @@
 import { Container, PageHero, SectionHeading, CheckItem, CtaBand, ButtonLink, Eyebrow } from '@/components/ui';
 import { TargetIcon, LockIcon, ChartIcon, SparkIcon } from '@/components/icons';
-import { pageMeta } from '@/lib/site';
+import { pageMeta, SITE } from '@/lib/site';
 
 export const metadata = pageMeta({
   title: 'About Us — Precision Coding & Revenue Intelligence',
@@ -61,6 +61,12 @@ export default function Page() {
               </div>
             </div>
 
+            <div id="author" className="scroll-mt-24 rounded-2xl border border-line p-7">
+              <Eyebrow className="mb-2">Who’s behind Enhancely</Eyebrow>
+              <h2 className="text-2xl font-bold tracking-tight text-ink">{SITE.author.name}, {SITE.author.role}</h2>
+              <p className="mt-3 leading-relaxed text-ink-2">{SITE.author.bio}</p>
+              <p className="mt-3 text-sm leading-relaxed text-ink-3">Articles and tools are general reference material based on CMS and payer rules. They aren’t legal advice and don’t guarantee payment.</p>
+            </div>
             <div className="rounded-2xl border border-line bg-bg-soft p-7">
               <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ok"><span className="h-2 w-2 rounded-full bg-ok" /> Live integration</p>
               <h3 className="mt-3 text-xl font-semibold text-ink">Always synced with the National Library of Medicine</h3>

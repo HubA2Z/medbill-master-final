@@ -110,6 +110,7 @@ export default function Page() {
 <li>For MDM, make sure two of three elements meet the level.</li>
 <li>For time, record the total minutes on the date of service and the activities.</li>
 <li>Link every addressed problem to a specific diagnosis and a plan (look up codes in our <Link href="/icd10-intelligence">ICD-10 search</Link>).</li>
+<li>Before you bill, score the visit in our free <Link href="/em-audit-tool">E/M audit tool</Link> to confirm MDM or time supports the level.</li>
 <li>Add G2211, FS, 25, or 57 only when the documentation supports it. Run the claim through our <Link href="/claim-scrubber">claim scrubber</Link> to catch modifier errors.</li>
 <li>Use the payer’s prolonged service code (99417 or G2212) and threshold.</li>
 </ol>

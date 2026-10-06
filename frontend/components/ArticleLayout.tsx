@@ -5,6 +5,12 @@ import { Breadcrumbs, Container, CtaBand, JsonLd } from './ui';
 import { getPost, POSTS, formatDate, type Post } from '@/lib/posts';
 import { pageMeta, SITE } from '@/lib/site';
 
+const TOOLS = [
+  { name: 'Claim scrubber', href: '/claim-scrubber', body: 'Catch modifier, unit, and diagnosis errors before submission.' },
+  { name: 'E/M audit tool', href: '/em-audit-tool', body: 'Check whether 99202–99215 is supported by MDM or time.' },
+  { name: 'ICD-10 search', href: '/icd10-intelligence', body: 'Look up any 2026 ICD-10-CM code mentioned here.' },
+];
+
 export function articleMeta(slug: string): Metadata {
   const p = getPost(slug);
   return pageMeta({ title: p.seoTitle, description: p.description, path: p.slug, type: 'article', publishedTime: p.date });
@@ -39,7 +45,7 @@ export default function ArticleLayout({
             dateModified: p.date,
             url: `${SITE.url}${p.slug}`,
             mainEntityOfPage: `${SITE.url}${p.slug}`,
-            author: { '@type': 'Organization', name: 'Enhancely Billing Intelligence Team' },
+            author: { '@type': 'Person', name: SITE.author.name, jobTitle: SITE.author.role, url: `${SITE.url}/about#author` },
             publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
           },
           {
@@ -59,7 +65,7 @@ export default function ArticleLayout({
           <p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-brand">{p.category}</p>
           <h1 className="mt-3 text-3xl sm:text-[2.6rem] font-bold leading-[1.15] tracking-tight text-ink text-balance">{p.title}</h1>
           <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-3">
-            <span>By the Enhancely Billing Intelligence Team</span>
+            <span>By <Link href="/about#author" className="font-medium text-ink-2 hover:text-brand-ink">{SITE.author.name}, {SITE.author.role}</Link></span>
             <span aria-hidden>·</span>
             <time dateTime={p.date}>{formatDate(p.date)}</time>
             <span aria-hidden>·</span>
@@ -76,10 +82,25 @@ export default function ArticleLayout({
         <article className="prose-clinical">{children}</article>
 
         <aside className="mt-14 rounded-2xl border border-line bg-bg-tint p-6">
-          <p className="font-semibold text-ink">Look up any code mentioned in this article</p>
-          <p className="mt-1 text-sm text-ink-2">Search the live 2026 ICD-10-CM code set from the National Library of Medicine — free.</p>
-          <Link href="/icd10-intelligence" className="mt-4 inline-block rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-hover">Open ICD-10 search →</Link>
+          <p className="font-semibold text-ink">Free tools for this topic</p>
+          <p className="mt-1 text-sm text-ink-2">Check your codes before you submit. No sign-up, no patient data.</p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {TOOLS.map((t) => (
+              <Link key={t.href} href={t.href} className="rounded-xl border border-line bg-white p-4 hover:border-brand/50">
+                <span className="block text-sm font-semibold text-brand-ink">{t.name} →</span>
+                <span className="mt-1 block text-xs leading-relaxed text-ink-3">{t.body}</span>
+              </Link>
+            ))}
+          </div>
         </aside>
+
+        <div className="mt-8 flex gap-4 rounded-2xl border border-line p-6">
+          <span aria-hidden className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-soft text-lg font-bold text-brand-ink">{SITE.author.name[0]}</span>
+          <div>
+            <p className="text-sm font-semibold text-ink">About the author: {SITE.author.name}, {SITE.author.role}</p>
+            <p className="mt-1 text-sm leading-relaxed text-ink-2">{SITE.author.bio}</p>
+          </div>
+        </div>
       </Container>
 
       <section className="border-t border-line bg-bg-soft py-14">

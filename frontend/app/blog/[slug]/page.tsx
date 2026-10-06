@@ -17,7 +17,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = await getDbPost(slug);
   if (!p) return { title: 'Article not found', robots: { index: false } };
   const meta = pageMeta({ title: p.seoTitle || p.title, description: p.description, path: `/blog/${p.slug}`, type: 'article', publishedTime: p.publishedAt });
-  if (p.coverImage) meta.openGraph = { ...meta.openGraph, images: [{ url: p.coverImage }] };
+  if (p.coverImage) {
+    meta.openGraph = { ...meta.openGraph, images: [{ url: p.coverImage }] };
+    meta.twitter = { ...meta.twitter, images: [p.coverImage] };
+  }
   return meta;
 }
 

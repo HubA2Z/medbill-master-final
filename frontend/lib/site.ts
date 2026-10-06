@@ -4,6 +4,12 @@ export const SITE = {
   name: 'Enhancely',
   url: 'https://www.enhancely.in',
   tagline: 'Precision clinical coding and revenue intelligence for modern healthcare teams.',
+  ogImage: '/og.png',
+  author: {
+    name: 'Ashim',
+    role: 'Medical Billing & RCM Specialist',
+    bio: 'Ashim works in US medical billing and revenue cycle management every day: claim follow-up, denial management and appeals, and claim status checks with payers including UnitedHealthcare, Cigna, Optum, UMR and Meritain Health. Hands-on with eClinicalWorks, Tebra, and Office Ally, Ashim builds the Enhancely tools to fix the problems billing teams actually run into.',
+  },
   defaultDescription:
     'Professional medical billing and coding tools for RCM teams: ICD-10 code search, claim scrubber, E/M audit tool, and insurance call notes. Free, no sign-up.',
 };
@@ -67,7 +73,8 @@ export function pageMeta({
       type,
       locale: 'en_US',
       ...(publishedTime ? { publishedTime } : {}),
+      images: [{ url: SITE.ogImage, width: 1200, height: 630, alt: SITE.name }],
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, images: [SITE.ogImage] },
   };
 }
