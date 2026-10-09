@@ -1,6 +1,8 @@
 // Adsterra ad units. Keys come from the Adsterra dashboard (Websites → Get code).
 export const ADS = {
   banner300x250: { key: '211d28f747c74499089a4fa5233b0a27', width: 300, height: 250, host: 'https://bauval.org' },
+  banner160x600: { key: 'a52f63b62fb161c6574910775af1a845', width: 160, height: 600, host: 'https://bauval.org' },
+  banner728x90: { key: 'aeebe57fee2f47a90a651345e8e2dded', width: 728, height: 90, host: 'https://bauval.org' },
 } as const;
 
 export const NATIVE = { src: 'https://bauval.org/21/865407913d69e27346ce83f7746c0fce', container: 'container-865407913d69e27346ce83f7746c0fce' };

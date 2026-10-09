@@ -76,6 +76,7 @@ export default function ArticleLayout({
         </Container>
       </header>
 
+      <div className="relative">
       <Container size="sm" className="py-12">
         {coverImage && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -106,6 +107,13 @@ export default function ArticleLayout({
           </div>
         </div>
       </Container>
+        {/* Desktop-only skyscraper in the empty right margin; sticky, never over the text. Hidden units don't load. */}
+        <aside className="absolute inset-y-0 hidden xl:block" style={{ left: 'calc(50% + 24rem + 2rem)' }} aria-label="Advertisement">
+          <div className="sticky top-24 pt-12">
+            <AdSlot unit="banner160x600" />
+          </div>
+        </aside>
+      </div>
 
       <Container size="sm" className="pb-12">
         <NativeBanner />

@@ -81,7 +81,8 @@ export default function Page() {
             ))}
           </div>
 
-          <AdSlot unit="banner300x250" className="mt-16" />
+          <div className="mt-16 hidden md:block"><AdSlot unit="banner728x90" /></div>
+          <div className="mt-16 md:hidden"><AdSlot unit="banner300x250" /></div>
 
           <div className="mt-16">
             <SectionHeading eyebrow="On the roadmap" title="Coming soon" />
