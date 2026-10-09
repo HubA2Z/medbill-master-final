@@ -10,6 +10,16 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    slug: '/blog/medical-claim-appeal-guide',
+    title: 'How to Appeal a Denied Medical Claim: Steps, Deadlines & Letter Template',
+    seoTitle: 'How to Appeal a Denied Medical Claim (+ Letter Template)',
+    description:
+      'Step-by-step guide to medical claim appeals: corrected claim vs appeal, Medicare\u2019s 5 appeal levels and deadlines, commercial payer appeals, and a copy-ready appeal letter.',
+    date: '2026-10-09',
+    readTime: '10 min',
+    category: 'Denials',
+  },
+  {
     slug: '/blog/year-end-billing-checklist-2027',
     title: 'Year-End Medical Billing Checklist: How to Prepare for 2027',
     seoTitle: 'Year-End Medical Billing Checklist: Prepare for 2027',

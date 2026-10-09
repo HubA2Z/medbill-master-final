@@ -30,7 +30,7 @@ export default function Page() {
       <p>Verify eligibility and benefits <strong>before</strong> every appointment. Many denials occur because coverage lapsed or the service wasn’t authorized.</p>
 
       <h3>5. Build a strong appeals process</h3>
-      <p>Not all denials are final. Create standardized appeal templates and track appeal success rates by payer. Many practices recover 35–50% of denied claims through persistent appeals. Log every payer call consistently with our <Link href="/call-note-builder">call note builder</Link>.</p>
+      <p>Not all denials are final. Create standardized appeal templates (see our <Link href="/blog/medical-claim-appeal-guide">appeal guide and letter template</Link>) and track appeal success rates by payer. Many practices recover 35–50% of denied claims through persistent appeals. Log every payer call consistently with our <Link href="/call-note-builder">call note builder</Link>.</p>
 
       <h3>6. Track denial trends</h3>
       <p>Analyze your denial data monthly. Are certain payers rejecting more? Are specific codes frequently denied? Use this intelligence to fix root causes.</p>

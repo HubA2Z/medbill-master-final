@@ -48,7 +48,7 @@ export default function Page() {
       <ul>
         <li>Run an aging report and work 90+ day claims first, oldest dates of service at the top.</li>
         <li>Resubmit rejections that never became claims. A clearinghouse rejection doesn’t stop the timely filing clock.</li>
-        <li>Keep proof of timely filing (clearinghouse acceptance reports) for anything you appeal.</li>
+        <li>Keep proof of timely filing (clearinghouse acceptance reports) for anything you appeal. Our <Link href="/blog/medical-claim-appeal-guide">claim appeal guide</Link> covers deadlines and a letter template.</li>
       </ul>
       <p>Our guide to <Link href="/blog/claim-denial-codes-explained">claim denial codes</Link> covers how to fix CO-29 and the other common denials.</p>
 
