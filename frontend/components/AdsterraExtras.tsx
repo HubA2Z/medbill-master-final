@@ -41,14 +41,58 @@ export function NativeBanner({ className = '' }: { className?: string }) {
   );
 }
 
-/** Adsterra Popunder. Loaded once per visit, only from pages that render this component (blog). */
+// Pages where people do their work. A popunder never runs on these.
+const TOOL_PATHS = ['/icd10-intelligence', '/claim-scrubber', '/call-note-builder', '/em-audit-tool', '/audit', '/admin'];
+const isToolPath = (path: string) => TOOL_PATHS.some((t) => path === t || path.startsWith(`${t}/`));
+const POP_KEY = 'enh_pop_at';
+const TOOL_USER_KEY = 'enh_tool_user';
+const DAY = 24 * 60 * 60 * 1000;
+
+const store = {
+  get(k: string) { try { return window.localStorage.getItem(k); } catch { return null; } },
+  set(k: string, v: string) { try { window.localStorage.setItem(k, v); } catch { /* storage blocked */ } },
+};
+
+type W = Window & { __enhPop?: boolean };
+
+/**
+ * Adsterra Popunder, rendered on blog articles only. To keep tool users happy:
+ * - never loads for anyone who has used one of the tools (they're our core audience),
+ * - at most once per 24 hours per browser,
+ * - once loaded, links to a tool open with a full page load so the popunder script is gone there.
+ */
 export function Popunder() {
   useEffect(() => {
-    const w = window as unknown as { __enhPop?: boolean };
+    const w = window as W;
     if (w.__enhPop) return;
-    w.__enhPop = true;
-    const t = window.setTimeout(() => addScript(POPUNDER_SRC, document.body, false), 2500);
+    if (store.get(TOOL_USER_KEY)) return;
+    const last = Number(store.get(POP_KEY) || 0);
+    if (last && Date.now() - last < DAY) return;
+
+    const t = window.setTimeout(() => {
+      w.__enhPop = true;
+      store.set(POP_KEY, String(Date.now()));
+      addScript(POPUNDER_SRC, document.body, false);
+      window.addEventListener('click', (e) => {
+        const a = (e.target as Element | null)?.closest?.('a[href]') as HTMLAnchorElement | null;
+        if (!a || a.target === '_blank') return;
+        const url = new URL(a.href, window.location.href);
+        if (url.origin !== window.location.origin || !isToolPath(url.pathname)) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        window.location.assign(url.href);
+      }, true);
+    }, 2500);
     return () => window.clearTimeout(t);
+  }, []);
+  return null;
+}
+
+/** Put on every tool page: marks the visitor as a tool user, and drops a popunder that came along from an article. */
+export function ToolPageGuard() {
+  useEffect(() => {
+    store.set(TOOL_USER_KEY, '1');
+    if ((window as W).__enhPop) window.location.reload();
   }, []);
   return null;
 }

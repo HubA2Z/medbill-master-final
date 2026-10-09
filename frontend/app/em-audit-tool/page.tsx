@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import EmAudit from '@/components/EmAudit';
 import { Container, PageHero, SectionHeading, CtaBand, JsonLd } from '@/components/ui';
+import { ToolPageGuard } from '@/components/AdsterraExtras';
 import { pageMeta, SITE } from '@/lib/site';
+import AdSlot from '@/components/AdSlot';
 
 export const metadata = pageMeta({
   title: 'E/M Audit Tool 2026: Free MDM & Time Calculator (99202–99215)',
@@ -29,6 +31,7 @@ const FAQ = [
 export default function Page() {
   return (
     <>
+      <ToolPageGuard />
       <JsonLd
         data={[
           { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Enhancely E/M Audit Tool 2026', url: `${SITE.url}/em-audit-tool`, applicationCategory: 'HealthApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } },
@@ -76,6 +79,7 @@ export default function Page() {
               ))}
             </div>
           </div>
+          <AdSlot unit="banner300x250" className="mt-14" />
         </Container>
       </section>
 

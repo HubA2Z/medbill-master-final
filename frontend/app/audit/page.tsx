@@ -1,6 +1,7 @@
 import AuditForm from '@/components/AuditForm';
 import { Container, Eyebrow, CheckItem } from '@/components/ui';
 import { CheckIcon } from '@/components/icons';
+import { ToolPageGuard } from '@/components/AdsterraExtras';
 import { pageMeta } from '@/lib/site';
 
 export const metadata = pageMeta({
@@ -25,6 +26,7 @@ const PROCESS = [
 export default function Page() {
   return (
     <>
+      <ToolPageGuard />
       <section className="relative overflow-hidden border-b border-line bg-bg-soft">
         <div aria-hidden className="bg-grid absolute inset-0" />
         <Container className="relative grid gap-12 py-12 sm:py-16 lg:grid-cols-[1fr_440px] lg:items-start">

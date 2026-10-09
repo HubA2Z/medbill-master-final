@@ -1,6 +1,8 @@
 import CallNoteBuilder from '@/components/CallNoteBuilder';
 import { Container, PageHero, SectionHeading, CtaBand, JsonLd } from '@/components/ui';
+import { ToolPageGuard } from '@/components/AdsterraExtras';
 import { pageMeta, SITE } from '@/lib/site';
+import AdSlot from '@/components/AdSlot';
 
 export const metadata = pageMeta({
   title: 'Medical Billing Call Note Builder — Free RCM Tool',
@@ -18,6 +20,7 @@ const STEPS = [
 export default function Page() {
   return (
     <>
+      <ToolPageGuard />
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -54,6 +57,7 @@ export default function Page() {
               </li>
             ))}
           </ol>
+          <AdSlot unit="banner300x250" className="mt-14" />
         </Container>
       </section>
 
