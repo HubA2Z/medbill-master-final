@@ -19,7 +19,7 @@ export interface PostDoc {
 }
 
 // Slugs used by the original hand-built articles — new posts can't take them.
-export const RESERVED_SLUGS = new Set(['icd-10-2026-updates', 'reduce-claim-denials', 'em-coding-2026', 'ai-in-medical-billing']);
+export const RESERVED_SLUGS = new Set(['icd-10-2026-updates', 'reduce-claim-denials', 'em-coding-2026', 'ai-in-medical-billing', 'year-end-billing-checklist-2027']);
 
 const PostSchema = new Schema(
   {

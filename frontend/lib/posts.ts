@@ -10,6 +10,16 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    slug: '/blog/year-end-billing-checklist-2027',
+    title: 'Year-End Medical Billing Checklist: How to Prepare for 2027',
+    seoTitle: 'Year-End Medical Billing Checklist: Prepare for 2027',
+    description:
+      'Get ready for January 1, 2027: new CPT/HCPCS codes, the Medicare fee schedule, deductible resets, timely filing, prior auths, credentialing, and E/M audits.',
+    date: '2026-10-09',
+    readTime: '9 min',
+    category: 'Revenue Cycle',
+  },
+  {
     slug: '/blog/icd-10-2026-updates',
     title: '2026 ICD-10-CM Highlights: Key Changes Every Medical Biller and Coder Must Know',
     seoTitle: '2026 ICD-10-CM Updates: Key Code Changes for Billers & Coders',

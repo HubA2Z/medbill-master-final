@@ -16,6 +16,7 @@ const ROUTES = [
   { path: '/billing-specialist-guide/certification', priority: 0.8, updated: '2026-09-25', changeFrequency: 'monthly' },
   { path: '/billing-specialist-guide/resume-tips', priority: 0.8, updated: '2026-09-25', changeFrequency: 'monthly' },
   { path: '/blog', priority: 0.8, updated: '2026-09-25', changeFrequency: 'weekly' },
+  { path: '/blog/year-end-billing-checklist-2027', priority: 0.8, updated: '2026-10-09', changeFrequency: 'monthly' },
   { path: '/blog/icd-10-2026-updates', priority: 0.7, updated: '2026-07-21', changeFrequency: 'yearly' },
   { path: '/blog/reduce-claim-denials', priority: 0.7, updated: '2026-07-15', changeFrequency: 'yearly' },
   { path: '/blog/em-coding-2026', priority: 0.8, updated: '2026-09-28', changeFrequency: 'yearly' },
