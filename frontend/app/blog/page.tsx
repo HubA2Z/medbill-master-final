@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import NewsletterForm from '@/components/NewsletterForm';
 import { Container, PageHero } from '@/components/ui';
+import AdSlot from '@/components/AdSlot';
 import { ArrowRight } from '@/components/icons';
 import { pageMeta } from '@/lib/site';
 import { formatDate } from '@/lib/posts';
@@ -59,6 +60,8 @@ export default async function Page() {
             </div>
             <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-ink">Read the guide <ArrowRight className="h-4 w-4" /></span>
           </Link>
+
+          <AdSlot unit="banner300x250" className="mt-14" />
 
           <div className="mt-14 flex flex-col items-start gap-5 rounded-2xl border border-line bg-bg-soft p-8 lg:flex-row lg:items-center lg:justify-between">
             <div>

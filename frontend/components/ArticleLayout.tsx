@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Breadcrumbs, Container, CtaBand, JsonLd } from './ui';
+import AdSlot from './AdSlot';
 import { getPost, POSTS, formatDate, type Post } from '@/lib/posts';
 import { pageMeta, SITE } from '@/lib/site';
 
@@ -80,6 +81,8 @@ export default function ArticleLayout({
           <img src={coverImage} alt="" className="mb-10 w-full rounded-2xl border border-line object-cover" />
         )}
         <article className="prose-clinical">{children}</article>
+
+        <AdSlot unit="banner300x250" className="mt-12" />
 
         <aside className="mt-14 rounded-2xl border border-line bg-bg-tint p-6">
           <p className="font-semibold text-ink">Free tools for this topic</p>

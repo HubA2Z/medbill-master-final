@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Container, PageHero, SectionHeading, Badge, CtaBand } from '@/components/ui';
 import { SearchIcon, PhoneNoteIcon, ChartIcon, ArrowRight, BookIcon, ShieldIcon, TargetIcon } from '@/components/icons';
 import { pageMeta } from '@/lib/site';
+import AdSlot from '@/components/AdSlot';
 
 export const metadata = pageMeta({
   title: 'Free Medical Billing & Coding Tools for RCM Teams',
@@ -79,6 +80,8 @@ export default function Page() {
               </Link>
             ))}
           </div>
+
+          <AdSlot unit="banner300x250" className="mt-16" />
 
           <div className="mt-16">
             <SectionHeading eyebrow="On the roadmap" title="Coming soon" />

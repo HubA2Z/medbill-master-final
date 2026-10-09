@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import ArticleLayout from '@/components/ArticleLayout';
+import AdSlot from '@/components/AdSlot';
 import { getDbPost, toListing } from '@/lib/blog';
 import { pageMeta } from '@/lib/site';
 
@@ -29,9 +30,22 @@ export default async function Page({ params }: Props) {
   const p = await getDbPost(slug);
   if (!p) notFound();
   const listing = toListing(p);
+  // Mid-article ad: before the 3rd section heading, when the article is long enough.
+  const html = p.contentHtml || '';
+  const idx = [...html.matchAll(/<h2[\s>]/g)].map((m) => m.index ?? -1)[2] ?? -1;
+  const first = idx > 0 ? html.slice(0, idx) : null;
+  const rest = idx > 0 ? html.slice(idx) : '';
   return (
     <ArticleLayout slug={listing.slug} post={listing} coverImage={p.coverImage}>
-      <div dangerouslySetInnerHTML={{ __html: p.contentHtml || '' }} />
+      {first !== null ? (
+        <>
+          <div dangerouslySetInnerHTML={{ __html: first }} />
+          <div className="not-prose my-10"><AdSlot unit="banner300x250" /></div>
+          <div dangerouslySetInnerHTML={{ __html: rest }} />
+        </>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      )}
     </ArticleLayout>
   );
 }
