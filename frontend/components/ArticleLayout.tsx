@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Breadcrumbs, Container, CtaBand, JsonLd } from './ui';
 import AdSlot from './AdSlot';
+import { NativeBanner, Popunder, SmartlinkCard } from './AdsterraExtras';
 import { getPost, POSTS, formatDate, type Post } from '@/lib/posts';
 import { pageMeta, SITE } from '@/lib/site';
 
@@ -105,6 +106,12 @@ export default function ArticleLayout({
           </div>
         </div>
       </Container>
+
+      <Container size="sm" className="pb-12">
+        <NativeBanner />
+        <SmartlinkCard className="mt-6" />
+      </Container>
+      <Popunder />
 
       <section className="border-t border-line bg-bg-soft py-14">
         <Container>
