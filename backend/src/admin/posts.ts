@@ -19,7 +19,7 @@ export interface PostDoc {
 }
 
 // Slugs used by the original hand-built articles — new posts can't take them.
-export const RESERVED_SLUGS = new Set(['icd-10-2026-updates', 'reduce-claim-denials', 'em-coding-2026', 'ai-in-medical-billing', 'year-end-billing-checklist-2027', 'medical-claim-appeal-guide', 'modifier-25-guide', 'prior-authorization-guide', 'insurance-eligibility-verification-guide', 'medical-billing-vs-medical-coding', 'category']);
+export const RESERVED_SLUGS = new Set(['icd-10-2026-updates', 'reduce-claim-denials', 'em-coding-2026', 'ai-in-medical-billing', 'year-end-billing-checklist-2027', 'medical-claim-appeal-guide', 'modifier-25-guide', 'prior-authorization-guide', 'insurance-eligibility-verification-guide', 'medical-billing-vs-medical-coding', 'category', 'timely-filing-limits-guide', 'modifier-59-x-modifiers-guide', 'coordination-of-benefits-secondary-claims', 'corrected-claims-frequency-codes', 'cms-1500-claim-form-guide', 'place-of-service-codes-guide', 'telehealth-billing-guide', 'accounts-receivable-follow-up-guide', 'payment-posting-era-guide', 'medical-necessity-lcd-ncd-abn', 'provider-credentialing-enrollment-guide', 'workers-compensation-billing-guide', 'medicare-advantage-billing-guide', 'ncci-edits-mue-explained', 'clearinghouse-rejections-guide']);
 
 const PostSchema = new Schema(
   {
