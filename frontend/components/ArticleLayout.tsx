@@ -2,9 +2,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Breadcrumbs, Container, CtaBand, JsonLd } from './ui';
-import AdSlot from './AdSlot';
-import { NativeBanner, Popunder, SmartlinkCard } from './AdsterraExtras';
-import { ENABLE_POPUNDER, ENABLE_SMARTLINK } from '@/lib/ads';
 import { getPost, POSTS, formatDate, type Post } from '@/lib/posts';
 import { pageMeta, SITE } from '@/lib/site';
 
@@ -85,8 +82,6 @@ export default function ArticleLayout({
         )}
         <article className="prose-clinical">{children}</article>
 
-        <AdSlot unit="banner300x250" className="mt-12" />
-
         <aside className="mt-14 rounded-2xl border border-line bg-bg-tint p-6">
           <p className="font-semibold text-ink">Free tools for this topic</p>
           <p className="mt-1 text-sm text-ink-2">Check your codes before you submit. No sign-up, no patient data.</p>
@@ -108,19 +103,7 @@ export default function ArticleLayout({
           </div>
         </div>
       </Container>
-        {/* Desktop-only skyscraper in the empty right margin; sticky, never over the text. Hidden units don't load. */}
-        <aside className="absolute inset-y-0 hidden xl:block" style={{ left: 'calc(50% + 24rem + 2rem)' }} aria-label="Advertisement">
-          <div className="sticky top-24 pt-12">
-            <AdSlot unit="banner160x600" />
-          </div>
-        </aside>
       </div>
-
-      <Container size="sm" className="pb-12">
-        <NativeBanner />
-        {ENABLE_SMARTLINK && <SmartlinkCard className="mt-6" />}
-      </Container>
-      {ENABLE_POPUNDER && <Popunder />}
 
       <section className="border-t border-line bg-bg-soft py-14">
         <Container>

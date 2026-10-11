@@ -55,7 +55,7 @@ export default function Page() {
               <p>Cookies are small files stored by your browser. We and our partners use them, along with local storage, for:</p>
               <ul className="mt-3 list-disc space-y-1.5 pl-5">
                 <li><strong>Essential functions:</strong> for example, keeping the site administrator signed in, and remembering your ICD-10 code list.</li>
-                <li><strong>Advertising:</strong> ad networks use cookies to show ads, limit how often you see the same ad, measure performance, and, where allowed, show ads based on your interests. We also store small settings in your browser to limit how often some ads appear.</li>
+                <li><strong>Advertising:</strong> ad networks use cookies to show ads, limit how often you see the same ad, measure performance, and, where allowed, show ads based on your interests.</li>
               </ul>
               <p className="mt-3">You can block or delete cookies in your browser settings. Some features may not work as expected if you do.</p>
             </>
@@ -66,7 +66,7 @@ export default function Page() {
           title: '5. Third-party advertising (including Google)',
           body: (
             <>
-              <p>Enhancely is free and supported by advertising. Ads may be served by third-party advertising networks, which may include Google AdSense and Adsterra. These companies may use cookies, web beacons, and similar technologies to collect information about your visits to this and other websites in order to provide ads.</p>
+              <p>Enhancely is free to use and may be supported by advertising. Ads may be served by third-party advertising vendors, including Google (Google AdSense). These companies may use cookies, web beacons, and similar technologies to collect information about your visits to this and other websites in order to provide ads.</p>
               <ul className="mt-3 list-disc space-y-1.5 pl-5">
                 <li>Third-party vendors, including Google, use cookies to serve ads based on a user’s prior visits to this website or other websites.</li>
                 <li>Google’s use of advertising cookies enables it and its partners to serve ads to you based on your visit to this site and/or other sites on the Internet.</li>

@@ -1,8 +1,6 @@
 import IcdSearch from '@/components/IcdSearch';
 import { Container, JsonLd, PageHero, SectionHeading, CtaBand } from '@/components/ui';
-import { ToolPageGuard } from '@/components/AdsterraExtras';
 import { pageMeta, SITE } from '@/lib/site';
-import AdSlot from '@/components/AdSlot';
 
 export const metadata = pageMeta({
   title: 'Free ICD-10-CM Code Search & Lookup (2026)',
@@ -37,7 +35,6 @@ const FAQ = [
 export default function Page() {
   return (
     <>
-      <ToolPageGuard />
       <JsonLd
         data={[
           {
@@ -83,7 +80,6 @@ export default function Page() {
               </details>
             ))}
           </div>
-          <AdSlot unit="banner300x250" className="mt-14" />
         </Container>
       </section>
 
