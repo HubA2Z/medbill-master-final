@@ -159,7 +159,7 @@ export function Callout({ title, children, tone = 'brand' }: { title?: string; c
 /** Dark navy call-to-action band used at the bottom of most pages. */
 export function CtaBand({
   title = 'Find the revenue your practice is missing.',
-  body = 'Get a complimentary 48-hour revenue integrity audit from our certified billing team. No obligation.',
+  body = 'Get a complimentary 48-hour revenue integrity audit from our experienced billing team. No obligation.',
   primary = { label: 'Request free audit', href: '/audit' },
   secondary = { label: 'Explore free tools', href: '/tools' },
 }: {

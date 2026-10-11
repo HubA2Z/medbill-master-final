@@ -293,7 +293,7 @@ export default function IcdSearch() {
         <div className="rounded-2xl bg-navy p-5 text-white">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-300">Billing support</p>
           <h2 className="mt-2 font-semibold">Coding denials eating your A/R?</h2>
-          <p className="mt-2 text-sm leading-relaxed text-slate-300">Our certified team audits your claims and reports coding leaks within 48 hours — free.</p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-300">Our billing team reviews your claims and reports coding leaks within 48 hours — free.</p>
           <Link href="/audit" className="mt-4 block rounded-lg bg-white px-4 py-2.5 text-center text-sm font-semibold text-navy hover:bg-brand-soft">Request free audit</Link>
         </div>
       </aside>

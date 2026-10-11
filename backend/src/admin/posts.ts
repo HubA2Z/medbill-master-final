@@ -19,7 +19,7 @@ export interface PostDoc {
 }
 
 // Slugs used by the original hand-built articles — new posts can't take them.
-export const RESERVED_SLUGS = new Set(['icd-10-2026-updates', 'reduce-claim-denials', 'em-coding-2026', 'ai-in-medical-billing', 'year-end-billing-checklist-2027', 'medical-claim-appeal-guide']);
+export const RESERVED_SLUGS = new Set(['icd-10-2026-updates', 'reduce-claim-denials', 'em-coding-2026', 'ai-in-medical-billing', 'year-end-billing-checklist-2027', 'medical-claim-appeal-guide', 'modifier-25-guide', 'prior-authorization-guide', 'insurance-eligibility-verification-guide', 'medical-billing-vs-medical-coding', 'category']);
 
 const PostSchema = new Schema(
   {

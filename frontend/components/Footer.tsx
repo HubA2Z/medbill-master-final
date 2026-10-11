@@ -22,16 +22,20 @@ const COLUMNS = [
       { name: 'Certification Guide', href: '/billing-specialist-guide/certification' },
       { name: 'Resume Tips', href: '/billing-specialist-guide/resume-tips' },
       { name: 'Blog', href: '/blog' },
+      { name: 'Denials & Appeals', href: '/blog/category/denials-appeals' },
+      { name: 'Medical Coding', href: '/blog/category/coding' },
     ],
   },
   {
     title: 'Company',
     links: [
       { name: 'About', href: '/about' },
+      { name: 'Contact Us', href: '/contact' },
       { name: 'Our Mission', href: '/mission' },
-      { name: 'HIPAA Compliance', href: '/hipaa' },
+      { name: 'HIPAA & Data Security', href: '/hipaa' },
       { name: 'Privacy Policy', href: '/privacy' },
       { name: 'Terms of Service', href: '/terms' },
+      { name: 'Disclaimer', href: '/disclaimer' },
     ],
   },
 ];

@@ -44,7 +44,7 @@ const AVAILABLE = [
     icon: ChartIcon,
     tag: 'Service',
     title: 'Free revenue audit',
-    body: 'Certified billing specialists review your revenue cycle for modifier errors, unbundling, and under-coded E/M — report in 48 hours.',
+    body: 'Experienced billing specialists review your revenue cycle for modifier errors, unbundling, and under-coded E/M — report in 48 hours.',
     href: '/audit',
   },
 ];
@@ -110,7 +110,7 @@ export default function Page() {
         </Container>
       </section>
 
-      <CtaBand title="Need full-service billing support?" body="Let our certified team handle your revenue cycle end to end — so you can focus on patient care." primary={{ label: 'Book a free consultation', href: '/audit' }} secondary={null} />
+      <CtaBand title="Need full-service billing support?" body="Let our experienced team handle your revenue cycle end to end — so you can focus on patient care." primary={{ label: 'Book a free consultation', href: '/audit' }} secondary={null} />
     </>
   );
 }

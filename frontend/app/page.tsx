@@ -20,9 +20,9 @@ export const metadata: Metadata = {
 
 const STATS = [
   { v: '70,000+', l: 'ICD-10-CM codes' },
-  { v: '500+', l: 'Clinics served' },
-  { v: '98.7%', l: 'Coding accuracy' },
-  { v: '$2.4M', l: 'Revenue recovered' },
+  { v: '4', l: 'Free billing tools' },
+  { v: '0', l: 'Patient data collected' },
+  { v: '48 hrs', l: 'Free audit turnaround' },
 ];
 
 const TOOLS = [
@@ -57,7 +57,7 @@ const TOOLS = [
   {
     icon: ChartIcon,
     title: '48-hour revenue audit',
-    body: 'Certified specialists find modifier errors, unbundling, and under-coded E/M levels. Free report in two days.',
+    body: 'Experienced billing specialists find modifier errors, unbundling, and under-coded E/M levels. Free report in two days.',
     href: '/audit',
     cta: 'Request audit',
   },

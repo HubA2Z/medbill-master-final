@@ -18,8 +18,8 @@ const VALUES = [
 
 const STATS = [
   { v: '70,000+', l: 'ICD-10 codes' },
-  { v: '500+', l: 'Clinics served' },
-  { v: '98.7%', l: 'Coding accuracy' },
+  { v: '4', l: 'Free billing tools' },
+  { v: '0', l: 'Patient data collected' },
   { v: '48 hrs', l: 'Avg. audit turnaround' },
 ];
 

@@ -7,7 +7,7 @@ import { pageMeta } from '@/lib/site';
 export const metadata = pageMeta({
   title: 'Free 48-Hour Medical Billing Revenue Audit',
   description:
-    'Find coding leaks, unbundling errors, and under-coded E/M levels. Certified billing specialists deliver a full revenue audit report within 48 hours — free, no credit card.',
+    'Find coding leaks, unbundling errors, and under-coded E/M levels. Experienced billing specialists deliver a full revenue audit report within 48 hours — free, no credit card.',
   path: '/audit',
 });
 
@@ -19,7 +19,7 @@ const REASONS = [
 
 const PROCESS = [
   { t: 'Tell us about your practice', d: 'Share your practice name, email, and monthly claim volume. No patient data.' },
-  { t: 'We review your revenue cycle', d: 'A certified specialist looks for denial patterns, coding gaps, and A/R leaks.' },
+  { t: 'We review your revenue cycle', d: 'An experienced billing specialist looks for denial patterns, coding gaps, and A/R leaks.' },
   { t: 'Get your report in 48 hours', d: 'A clear, prioritized list of what to fix — and what it is worth.' },
 ];
 
@@ -39,7 +39,7 @@ export default function Page() {
               Our billing experts identify coding leaks, unbundling errors, and under-coded E/M levels — and deliver a full report within 48 hours.
             </p>
             <ul className="mt-6 grid gap-2.5 text-ink-2 sm:grid-cols-2">
-              {['No credit card required', '48-hour report delivery', 'Certified billing specialists', 'Zero patient data needed'].map((x) => (
+              {['No credit card required', '48-hour report delivery', 'Experienced billing specialists', 'Zero patient data needed'].map((x) => (
                 <CheckItem key={x}>{x}</CheckItem>
               ))}
             </ul>

@@ -15,10 +15,11 @@ export async function searchIcd(query: string, limit = 50, signal?: AbortSignal)
 export type LeadPayload = {
   name: string;
   email: string;
-  clinicName: string;
+  clinicName?: string;
   monthlyVolume?: string;
   source: string;
   lastSearch?: string;
+  message?: string;
   website?: string; // honeypot — must stay empty
 };
 

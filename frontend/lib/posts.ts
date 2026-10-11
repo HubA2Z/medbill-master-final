@@ -10,6 +10,46 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    slug: '/blog/modifier-25-guide',
+    title: 'Modifier 25 Explained: When a Same-Day E/M Is Separately Billable',
+    seoTitle: 'Modifier 25 Explained: Rules, Examples & Denials',
+    description:
+      'When to use modifier 25 on a same-day E/M: global days, documentation, preventive + problem visits, modifier 57 vs 25, examples, and how to fix denials.',
+    date: '2026-10-11',
+    readTime: '7 min',
+    category: 'Coding',
+  },
+  {
+    slug: '/blog/prior-authorization-guide',
+    title: 'Prior Authorization Guide for Billing Teams: Requests to Denials',
+    seoTitle: 'Prior Authorization Guide for Medical Billing Teams',
+    description:
+      'How to check, submit, and track prior authorizations, handle peer-to-peer reviews and retro-auth, fix CO-197 denials, and compare MA vs Original Medicare rules.',
+    date: '2026-10-11',
+    readTime: '7 min',
+    category: 'Revenue Cycle',
+  },
+  {
+    slug: '/blog/insurance-eligibility-verification-guide',
+    title: 'Insurance Eligibility Verification: Checklist, Script & Note Format',
+    seoTitle: 'Insurance Eligibility Verification Checklist & Script',
+    description:
+      'What to verify before every visit: coverage, network, referrals, deductibles, COB, MA vs Medicare, 270/271 checks, a call script, and a note format to copy.',
+    date: '2026-10-11',
+    readTime: '7 min',
+    category: 'Revenue Cycle',
+  },
+  {
+    slug: '/blog/medical-billing-vs-medical-coding',
+    title: 'Medical Billing vs Medical Coding: Duties, Credentials & Careers',
+    seoTitle: 'Medical Billing vs Medical Coding: Which Career Fits?',
+    description:
+      'How medical billing and coding differ: daily duties, claim lifecycle handoffs, CPB, CPC, CCA, and CCS credentials, remote work, career paths, and how to start.',
+    date: '2026-10-11',
+    readTime: '6 min',
+    category: 'Careers',
+  },
+  {
     slug: '/blog/medical-claim-appeal-guide',
     title: 'How to Appeal a Denied Medical Claim: Steps, Deadlines & Letter Template',
     seoTitle: 'How to Appeal a Denied Medical Claim (+ Letter Template)',
@@ -31,22 +71,20 @@ export const POSTS: Post[] = [
   },
   {
     slug: '/blog/icd-10-2026-updates',
-    title: '2026 ICD-10-CM Highlights: Key Changes Every Medical Biller and Coder Must Know',
-    seoTitle: '2026 ICD-10-CM Updates: Key Code Changes for Billers & Coders',
-    description:
-      'Over 250 new codes, with major updates in diabetes, mental health, musculoskeletal, and Long COVID. What changes on October 1, 2026 and how to prepare.',
+    title: 'ICD-10-CM Code Updates for 2026–2027: What Billers and Coders Must Know',
+    seoTitle: 'ICD-10-CM Updates 2026–2027: Guide for Billers & Coders',
+    description: 'How annual ICD-10-CM updates work: October 1 effective dates, new, revised and deleted codes, no grace period, and how to prepare your practice.',
     date: '2026-07-21',
-    readTime: '12 min',
+    readTime: '8 min',
     category: 'Regulatory',
   },
   {
     slug: '/blog/reduce-claim-denials',
-    title: 'How to Reduce Claim Denials by 40% — Proven Strategies for 2026',
-    seoTitle: 'How to Reduce Claim Denials by 40%: 7 Proven Strategies (2026)',
-    description:
-      'Seven systems top-performing billing teams use to cut denials dramatically — from documentation and specificity to claim scrubbing and appeals.',
+    title: 'How to Reduce Claim Denials: A Front-to-Back Revenue Cycle Guide',
+    seoTitle: 'How to Reduce Claim Denials: Practical Guide for Billers',
+    description: 'Reduce claim denials at every stage: eligibility, authorization, coding, modifiers, claim scrubbing, appeals, root-cause fixes and the KPIs to track.',
     date: '2026-07-15',
-    readTime: '11 min',
+    readTime: '7 min',
     category: 'Revenue Cycle',
   },
   {
@@ -61,13 +99,12 @@ export const POSTS: Post[] = [
   },
   {
     slug: '/blog/ai-in-medical-billing',
-    title: 'The Role of AI in Medical Billing: Opportunities, Risks, and the Human Edge in 2026',
-    seoTitle: 'AI in Medical Billing 2026: Opportunities & Risks',
-    description:
-      'Where AI is making the biggest impact in revenue cycle management, the risks to understand, and why a human-in-the-loop approach wins.',
+    title: 'AI in Medical Billing: Real Uses, Risks, and What It Means for Billers',
+    seoTitle: 'AI in Medical Billing: Uses, Risks & Vendor Checklist',
+    description: 'Where AI fits in medical billing: eligibility, claim scrubbing, coding suggestions and denial prediction, plus HIPAA risks and how to evaluate vendors.',
     date: '2026-07-08',
-    readTime: '13 min',
-    category: 'Industry Trends',
+    readTime: '7 min',
+    category: 'Technology',
   },
 ];
 

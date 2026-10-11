@@ -63,7 +63,7 @@ export default function Page() {
 
       <CtaBand
         title="Too many claims to chase by phone?"
-        body="Our certified billing team handles payer follow-up, denials, and appeals end to end. Start with a free 48-hour audit."
+        body="Our experienced billing team handles payer follow-up, denials, and appeals end to end. Start with a free 48-hour audit."
       />
     </>
   );

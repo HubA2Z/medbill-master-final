@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { Breadcrumbs, Container, CtaBand, JsonLd } from './ui';
 import AdSlot from './AdSlot';
 import { NativeBanner, Popunder, SmartlinkCard } from './AdsterraExtras';
+import { ENABLE_POPUNDER, ENABLE_SMARTLINK } from '@/lib/ads';
 import { getPost, POSTS, formatDate, type Post } from '@/lib/posts';
 import { pageMeta, SITE } from '@/lib/site';
 
@@ -117,9 +118,9 @@ export default function ArticleLayout({
 
       <Container size="sm" className="pb-12">
         <NativeBanner />
-        <SmartlinkCard className="mt-6" />
+        {ENABLE_SMARTLINK && <SmartlinkCard className="mt-6" />}
       </Container>
-      <Popunder />
+      {ENABLE_POPUNDER && <Popunder />}
 
       <section className="border-t border-line bg-bg-soft py-14">
         <Container>

@@ -21,6 +21,7 @@ export const XIcon = (p: P) => (<svg {...base} strokeWidth={2} {...p}><path d="M
 export const MenuIcon = (p: P) => (<svg {...base} strokeWidth={2} {...p}><path d="M4 7h16M4 12h16M4 17h16" /></svg>);
 export const TargetIcon = (p: P) => (<svg {...base} {...p}><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1" /></svg>);
 export const RefreshIcon = (p: P) => (<svg {...base} {...p}><path d="M20 11a8 8 0 10-2.3 5.7M20 5v6h-6" /></svg>);
+export const ChevronDown = (p: P) => (<svg {...base} strokeWidth={2} {...p}><path d="M6 9l6 6 6-6" /></svg>);
 
 export function Logo({ className = '' }: { className?: string }) {
   return (

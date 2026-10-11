@@ -235,8 +235,8 @@ export default function EmAudit() {
   };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
-      <div className="space-y-6">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="min-w-0 space-y-6">
         <Section n={1} title="Visit details" sub="Office or other outpatient visit (99202–99215).">
           <div className="grid gap-4 sm:grid-cols-3">
             <div>

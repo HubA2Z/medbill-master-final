@@ -7,6 +7,7 @@ export interface EmailLead {
   monthlyVolume?: string;
   source?: string;
   lastSearch?: string;
+  message?: string;
 }
 
 // Accept both naming schemes used in this repo's history.
@@ -41,6 +42,7 @@ export const sendLeadEmail = async (lead: EmailLead): Promise<void> => {
     ['Practice', lead.clinicName || '—'],
     ['Monthly volume', lead.monthlyVolume || '—'],
     ...(lead.lastSearch && lead.lastSearch !== 'N/A' ? [['Last ICD search', lead.lastSearch] as [string, string]] : []),
+    ...(lead.message ? [['Message', lead.message] as [string, string]] : []),
     ['Received', `${when} (ET)`],
   ];
 
@@ -57,7 +59,7 @@ export const sendLeadEmail = async (lead: EmailLead): Promise<void> => {
         .map(
           ([k, v]) => `<tr style="border-bottom:1px solid #eef2f6">
             <td style="padding:10px 24px;color:#64748b;width:150px;font-weight:600">${esc(k)}</td>
-            <td style="padding:10px 24px;color:#0b1f33">${esc(v)}</td></tr>`,
+            <td style="padding:10px 24px;color:#0b1f33;white-space:pre-wrap">${esc(v)}</td></tr>`,
         )
         .join('')}
     </table>

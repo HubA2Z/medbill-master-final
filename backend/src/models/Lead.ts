@@ -8,6 +8,7 @@ export interface ILead extends Document {
   monthlyVolume?: string;
   source?: string;
   lastSearch?: string;
+  message?: string;
   createdAt: Date;
 }
 
@@ -15,10 +16,11 @@ export interface ILead extends Document {
 const LeadSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
-  clinicName: { type: String, required: true },
+  clinicName: { type: String },
   monthlyVolume: { type: String },
   source: { type: String, default: 'Website' },
   lastSearch: { type: String },
+  message: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 

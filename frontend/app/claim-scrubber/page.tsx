@@ -80,7 +80,7 @@ export default function Page() {
         </Container>
       </section>
 
-      <CtaBand title="Let us scrub every claim for you." body="Our certified billing team catches edits before submission and works the denials that slip through. Start with a free 48-hour audit." />
+      <CtaBand title="Let us scrub every claim for you." body="Our experienced billing team catches edits before submission and works the denials that slip through. Start with a free 48-hour audit." />
     </>
   );
 }

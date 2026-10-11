@@ -6,6 +6,7 @@ import { ArrowRight } from '@/components/icons';
 import { pageMeta } from '@/lib/site';
 import { formatDate } from '@/lib/posts';
 import { getAllListings } from '@/lib/blog';
+import { CATEGORIES, categoryByName } from '@/lib/categories';
 
 export const revalidate = 60;
 
@@ -29,6 +30,12 @@ export default async function Page() {
 
       <section className="py-14">
         <Container>
+          <nav aria-label="Topics" className="mb-8 flex flex-wrap gap-2">
+            <span className="rounded-full border border-brand bg-brand px-3.5 py-1.5 text-sm font-medium text-white">All articles</span>
+            {CATEGORIES.map((c) => (
+              <Link key={c.slug} href={`/blog/category/${c.slug}`} className="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm font-medium text-ink-2 hover:border-brand hover:text-brand-ink">{c.label}</Link>
+            ))}
+          </nav>
           <Link href={featured.slug} className="group grid overflow-hidden rounded-2xl border border-line bg-white transition-colors hover:border-brand/40 md:grid-cols-2">
             <div className="relative flex min-h-48 items-end bg-navy p-8">
               <div aria-hidden className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-brand/40 blur-3xl" />
@@ -45,7 +52,7 @@ export default async function Page() {
           <div className="mt-6 grid gap-5 md:grid-cols-3">
             {rest.map((p) => (
               <Link key={p.slug} href={p.slug} className="group flex flex-col rounded-2xl border border-line bg-white p-6 transition-colors hover:border-brand/40">
-                <p className="text-xs text-ink-3"><span className="font-semibold text-brand-ink">{p.category}</span> · {formatDate(p.date)}</p>
+                <p className="text-xs text-ink-3"><span className="font-semibold text-brand-ink">{categoryByName(p.category)?.label ?? p.category}</span> · {formatDate(p.date)}</p>
                 <h2 className="mt-3 text-lg font-semibold leading-snug text-ink group-hover:text-brand-ink">{p.title}</h2>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-2">{p.description}</p>
                 <span className="mt-5 text-xs text-ink-3">{p.readTime} read</span>

@@ -9,4 +9,9 @@ export const NATIVE = { src: 'https://bauval.org/21/865407913d69e27346ce83f7746c
 export const POPUNDER_SRC = 'https://abscloud.org/1/d93f95166e81bf83f4492b8bc25c6a8d';
 export const SMARTLINK_URL = 'https://araplhn.org/4/cf5c79da0090afc6d0c3016c14c1a6ef';
 
+// On/off switches. Popunder and Smartlink are OFF while the site is reviewed for Google AdSense
+// (Google rejects sites with pop-unders / aggressive redirects). Set to true to re-enable.
+export const ENABLE_POPUNDER = false;
+export const ENABLE_SMARTLINK = false;
+
 export type AdUnit = keyof typeof ADS;

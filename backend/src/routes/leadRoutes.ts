@@ -36,10 +36,16 @@ router.post('/', async (req: Request, res: Response) => {
     monthlyVolume: clean(body.monthlyVolume, 50),
     source: clean(body.source, 80) || 'General Inquiry',
     lastSearch: clean(body.lastSearch, 200),
+    message: clean(body.message, 3000),
   };
 
-  if (!lead.name || !lead.clinicName || !isEmail(lead.email)) {
-    return res.status(400).json({ success: false, error: 'Name, practice name and a valid email are required.' });
+  // The contact form doesn't ask for a practice name; the audit forms do.
+  const isContact = /contact/i.test(lead.source);
+  if (!lead.name || !isEmail(lead.email) || (!isContact && !lead.clinicName) || (isContact && !lead.message)) {
+    return res.status(400).json({
+      success: false,
+      error: isContact ? 'Name, a valid email and a message are required.' : 'Name, practice name and a valid email are required.',
+    });
   }
 
   // Save and notify independently, so a database hiccup never stops the email
