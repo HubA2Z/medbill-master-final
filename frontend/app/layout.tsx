@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   verification: { google: 'U5-_BabALTrXe-pVP1Jn3B21DAl614qbByTt7IkrHVw' },
   openGraph: { siteName: SITE.name, type: 'website', locale: 'en_US', url: SITE.url },
   robots: { index: true, follow: true },
+  // Google AdSense site verification (matches public/ads.txt).
+  other: { 'google-adsense-account': 'ca-pub-8713486194794848' },
 };
 
 export const viewport: Viewport = {
