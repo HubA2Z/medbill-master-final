@@ -39,7 +39,7 @@ const ROUTES = [
   { path: '/mission', priority: 0.5, updated: '2026-09-25', changeFrequency: 'yearly' },
   { path: '/hipaa', priority: 0.6, updated: '2026-09-25', changeFrequency: 'yearly' },
   { path: '/privacy', priority: 0.3, updated: '2026-10-11', changeFrequency: 'yearly' },
-  { path: '/terms', priority: 0.3, updated: '2026-09-25', changeFrequency: 'yearly' },
+  { path: '/terms', priority: 0.3, updated: '2026-10-12', changeFrequency: 'yearly' },
 ];
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
